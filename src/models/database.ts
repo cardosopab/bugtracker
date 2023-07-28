@@ -4,7 +4,7 @@ const STORIES = 'stories';
 
 const addMessage = async (message: string) => {
     try {
-        const docRef = await addDoc(collection(database, STORIES), { message: message, }); console.log("Document written with ID: ", docRef.id);
+        const docRef = await addDoc(collection(database, STORIES), { message: message, createdAt: Date.now() }); console.log("Document written with ID: ", docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
     }

@@ -3,7 +3,7 @@ import { auth } from "../models/firebase-config"
 import { useNavigate } from "react-router-dom";
 import { addMessage, readStories } from "../models/database";
 import { useEffect, useState } from "react";
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { database } from "../models/firebase-config";
 
 function Home() {
@@ -15,7 +15,7 @@ function Home() {
             navigateTo('/');
         });
     }
-    console.log('authHome', auth)
+    console.log('authHome', auth.currentUser)
     const email = auth.currentUser?.email;
     const handleMessageButton = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -26,17 +26,19 @@ function Home() {
         messageInput.value = '';
     };
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(database, 'stories'), (querySnapshot) => {
-            let arr: any = [];
-            querySnapshot.forEach((doc) => {
-                arr.push(doc.data().message);
-                console.log(doc.data().message)
-            });
-            setStories(arr);
-        });
+        const unsubscribe = onSnapshot(
+            query(collection(database, "stories"), orderBy("createdAt", "desc")),
+            (querySnapshot) => {
+                const arr: any[] = [];
+                querySnapshot.forEach((doc) => {
+                    arr.push(doc.data().message);
+                });
+                setStories(arr);
+            }
+        );
 
         return () => unsubscribe();
-    }, [])
+    }, []);
     return (
         <div className="card">
             <h1>{`Welcome home, ${email}`}</h1>
