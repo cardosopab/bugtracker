@@ -1,10 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
 import { useEffect, useState } from 'react';
-import { auth } from './models/firebase-config';
-import ProtectedRoutes from './components/ProtectedRoutes';
-import RegisterAndLogin from './components/RegisterAndLogin';
-import AuthWrapper from './components/AuthWrapper';
+import { auth } from './models/database/firebase-config';
+import ProtectedRoutes from './views/ProtectedRoutes';
+import RegisterAndLogin from './views/RegisterAndLogin';
+import Roles from './views/roles/Roles';
+import Dashboard from './views/dashboard/Dashboard';
+import { DASHBOARD, PROFILE, PROJECTS, ROLES, TICKETS, USERS } from './views/viewsUrls';
+import Tickets from './views/tickets/Tickets';
+import Profile from './views/profile/Profile';
+import ProjectsController from './controllers/ProjectsController';
+import UsersController from './controllers/UsersController';
 
 function App() {
     const [authInitialized, setAuthInitialized] = useState(false);
@@ -25,11 +30,14 @@ function App() {
         <BrowserRouter>
             <div>
                 <Routes>
-                    <Route element={<AuthWrapper />}>
-                        <Route path='/' element={<RegisterAndLogin />} />
-                    </Route>
                     <Route element={<ProtectedRoutes />}>
-                        <Route path='/home' element={<Home />} />
+                        <Route path='/' element={<RegisterAndLogin />} />
+                        <Route path={DASHBOARD} element={<Dashboard />} />
+                        <Route path={ROLES} element={<Roles />} />
+                        <Route path={USERS} element={<UsersController />} />
+                        <Route path={PROJECTS} element={<ProjectsController />} />
+                        <Route path={TICKETS} element={<Tickets />} />
+                        <Route path={PROFILE} element={<Profile />} />
                     </Route>
                 </Routes>
             </div>

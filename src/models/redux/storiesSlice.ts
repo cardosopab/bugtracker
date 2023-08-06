@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Story {
-  message: string;
-}
+import Story from '../Story';
 
 export const storiesSlice = createSlice({
   name: 'stories',
@@ -10,13 +7,12 @@ export const storiesSlice = createSlice({
     value: [] as Story[],
   },
   reducers: {
-    add: (state, action: PayloadAction<string>) => {
-      const newStory: Story = { message: action.payload };
-      state.value.push(newStory);
+    setStories: (state, action: PayloadAction<Story[]>) => {
+      state.value = action.payload;
     },
   },
 });
 
-export const { add } = storiesSlice.actions;
+export const { setStories } = storiesSlice.actions;
 
 export default storiesSlice.reducer;

@@ -1,37 +1,43 @@
-* {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  justify-items: center;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+.auth-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-
-
-  .card {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+  .MuiCard-root {
     display: flex;
     flex-direction: column;
-    justify-self: center;
-    align-items: center;
-    text-align: center;
 
-    input {
-      display: block;
-      margin-bottom: 1em;
+    form {
+      input {
+        display: block;
+        margin-bottom: 1em;
+      }
+
+      button {
+        display: block;
+        margin: auto;
+      }
     }
 
-    button {
-      display: block;
-    }
   }
 }
+
+// .MuiCard-root {
+//   margin-bottom: 1em;
+//   text-align: center;
+//   display: flex;
+//   align-items: center;
+//   /* Align items vertically */
+//   justify-content: center;
+//   /* Align items horizontally */
+//   height: min(500px, 40vw);
+//   width: min(500px, 40vw);
+// }
