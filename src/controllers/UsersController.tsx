@@ -7,11 +7,20 @@ import { batch, useDispatch, useSelector } from "react-redux";
 import { setUsers } from "../models/redux/usersSlice";
 import UsersView from "../views/users/UsersView";
 import { RootState } from "../models/redux/store";
+import { useForm } from "react-hook-form";
+import { createUser } from "../models/database/database";
 
 function UsersController() {
+    const { handleSubmit, register, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const users = useSelector((state: RootState) => state.users.value)
 
+    const onSubmit = (values: any) => {
+        console.log(values.name, values.email);
+        createUser(values.name, values.email);
+        // values.name = '';
+        // values.email = '';
+    };
     useEffect(() => {
         const unsubscribe =
             onSnapshot(
@@ -38,7 +47,7 @@ function UsersController() {
     }, [])
     return (
         <>
-            <UsersView users={users} />
+            <UsersView users={users} handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} errors={errors} />
         </>
     )
 }

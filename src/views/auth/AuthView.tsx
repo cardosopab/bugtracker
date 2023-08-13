@@ -1,12 +1,12 @@
-import { auth } from '../models/database/firebase-config';
+import { auth } from '../../models/database/firebase-config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DASHBOARD } from './viewsUrls';
-import { Button, Card } from '@mui/material';
+import { DASHBOARD } from '../viewsUrls';
+import { Button, Card, Input } from '@mui/material';
 import { useForm } from "react-hook-form";
 
-const RegisterAndLogin = () => {
+const AuthView = () => {
     const [isLogin, setIsLogin] = useState(true);
     const navigateTo = useNavigate();
     const { handleSubmit, register, formState: { errors } } = useForm();
@@ -34,7 +34,7 @@ const RegisterAndLogin = () => {
 
             <h1>{isLogin ? 'Sign In' : 'Sign Up'}</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input
+                <Input
                     type="email"
                     {...register("email", {
                         required: "Required",
@@ -46,7 +46,7 @@ const RegisterAndLogin = () => {
                 />
                 {/* {errors.email && errors.email.message} */}
 
-                <input
+                <Input
                     type="password"
                     {...register("password", {
                         // validate: value => value !== "admin" || "Nice try!"
@@ -64,4 +64,4 @@ const RegisterAndLogin = () => {
     );
 };
 
-export default RegisterAndLogin;
+export default AuthView;

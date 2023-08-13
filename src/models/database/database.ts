@@ -1,15 +1,8 @@
-import { collection, addDoc, onSnapshot, doc, setDoc, query, orderBy } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { database } from "./firebase-config";
 import Project from "../Project";
-import { PROJECTS } from "./databaseEndpoints";
-
-// const addMessage = async (message: string) => {
-//     try {
-//         const docRef = await addDoc(collection(database, STORIES), { message: message, createdAt: Date.now() }); console.log("Document written with ID: ", docRef.id);
-//     } catch (e) {
-//         console.error("Error adding document: ", e);
-//     }
-// }
+import { PROJECTS, USERS } from "./databaseEndpoints";
+import User from "../User";
 
 const createProject = async (name: string, description: string) => {
     try {
@@ -33,17 +26,31 @@ const createProject = async (name: string, description: string) => {
     }
 };
 
-// const readStories = (): any => {
-//     const arr: any = [];
-//     const unsub = onSnapshot(collection(database, STORIES), (querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//             arr.push(doc.data().message);
-//             console.log(doc.data().message)
-//         });
-//     });
-//     return [unsub, arr];
-// };
+const createUser = async (name: string, email: string) => {
+    try {
+        const docRef = doc(collection(database, USERS));
 
+        // Create the User object with the generated ID
+        const newUser: User = {
+            id: docRef.id,
+            createdAt: Date.now(),
+            name: name,
+            email: email,
+            role: "",
+        }
+        await setDoc(docRef, newUser);
+        console.log("Document written with ID: ", docRef.id);
 
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
 
-export { createProject };
+}
+
+const updateUserRole = async (uid: string, role: string) => {
+    const user = doc(database, USERS, uid);
+    setDoc(user, { role: role }, { merge: true });
+}
+
+export { createProject, createUser, updateUserRole };

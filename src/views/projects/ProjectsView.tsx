@@ -1,12 +1,13 @@
-import { Button, Card, CardHeader, List, ListItem, ListItemButton, ListItemText } from "@mui/material"
+import { Button, Card, CardHeader, Input, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import DrawerComponent from "../DrawerComponent"
 import { RegisterOptions } from "react-hook-form";
+import Project from "../../models/Project";
 
 interface ProjectsViewProps {
-  handleSubmit: any; // Replace with the correct type for handleSubmit
-  onSubmit: any; // Replace with the correct type for onSubmit
+  handleSubmit: any;
+  onSubmit: any;
   register: (name: string, options?: RegisterOptions) => any;
-  projects: { name: string; description: string; }[];
+  projects: Project[];
   errors: any;
 }
 
@@ -16,9 +17,9 @@ function ProjectsView(props: ProjectsViewProps) {
     <>
       <DrawerComponent />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" {...register('name', { required: "Required" })} />
+        <Input type="text" {...register('name', { required: "Required" })} />
         {errors.name && <p>{errors.name.message}</p>}
-        <input type="text" {...register('description', { required: "Required" })} />
+        <Input type="text" {...register('description', { required: "Required" })} />
         {errors.description && <p>{errors.description.message}</p>}
         <Button variant={'contained'} type="submit" >Create Project</Button>
       </form>
@@ -26,15 +27,25 @@ function ProjectsView(props: ProjectsViewProps) {
         <CardHeader title='Projects' subheader='Projects you are a part of:' style={{ backgroundColor: '#1976d2', color: 'white', }} subheaderTypographyProps={{ color: 'white' }} />
         {
           projects.length !== 0 ?
-            <List>
-              {projects.map(({ name, description }) => (
-                <ListItem key={name} disablePadding >
-                  <ListItemButton>
-                    <ListItemText primary={name + ': ' + description} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List> :
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Project Name</TableCell>
+                    <TableCell>Description</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {projects.map(({ id, name, description }) => (
+                    <TableRow key={id}>
+                      <TableCell>{name}</TableCell>
+                      <TableCell>{description}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            :
             <p>No Projects found</p>
         }
       </Card>

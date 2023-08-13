@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import RegisterAndLogin from './RegisterAndLogin';
+import AuthView from './auth/AuthView';
 import { auth } from '../models/database/firebase-config';
 import { useEffect } from 'react';
 
@@ -14,7 +14,7 @@ function ProtectedRoutes() {
             navigateTo('/')
         }
     }, [isAuth, navigateTo]);
-    return isAuth ? <Outlet /> : <RegisterAndLogin />;
+    return isAuth ? <Outlet /> : <AuthView />;
 }
 
 export default ProtectedRoutes;
