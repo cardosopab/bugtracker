@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import AuthView from './auth/AuthView';
 import { auth } from '../models/database/firebase-config';
 import { useEffect } from 'react';
+import AuthController from '../controllers/AuthController';
 
 function ProtectedRoutes() {
     // Check if the user is authenticated
@@ -14,7 +14,7 @@ function ProtectedRoutes() {
             navigateTo('/')
         }
     }, [isAuth, navigateTo]);
-    return isAuth ? <Outlet /> : <AuthView />;
+    return isAuth ? <Outlet /> : <AuthController />;
 }
 
 export default ProtectedRoutes;

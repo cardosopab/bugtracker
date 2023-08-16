@@ -24,7 +24,7 @@ function UsersView(props: UsersViewProps) {
         <Button variant={'contained'} type="submit" >Create User</Button>
       </form>
       <Card style={{ margin: '1em' }}>
-        <CardHeader title='Users' subheader='Users in your database' style={{ backgroundColor: '#1976d2', color: 'white', }} subheaderTypographyProps={{ color: 'white' }} />
+        <CardHeader title='Users' subheader='Users in your database' />
         {users.length !== 0 ?
           <TableContainer component={Paper}>
             <Table>

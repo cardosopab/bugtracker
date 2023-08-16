@@ -1,40 +1,25 @@
+$Mui-blue: #1976d2;
+
 :root {
 
-  .dashboard-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-content: center;
-    justify-items: center;
-  }
-
-  .auth-card {
+  .center {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-    .MuiCard-root {
-      display: flex;
-      flex-direction: column;
-
-      form {
-        input {
-          display: block;
-          margin-bottom: 1em;
-        }
-
-        button {
-          display: block;
-          margin: auto;
-        }
-      }
-
-    }
   }
 
   .row {
     display: flex;
     justify-content: space-evenly;
+  }
+
+  @media (max-width:800px) {
+    .row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   .column {
@@ -43,4 +28,21 @@
     justify-content: space-evenly;
   }
 
+  @media (max-width:800px) {
+    .column {
+      margin: 1em;
+    }
+  }
+
+  .MuiCardHeader-root {
+    background-color: $Mui-blue;
+  }
+
+  .MuiCardHeader-title {
+    color: white;
+  }
+
+  .MuiCardHeader-subheader {
+    color: white;
+  }
 }

@@ -21,7 +21,7 @@ function RolesView(props: RolesViewProps) {
         <>
             <DrawerComponent />
             <div className="row">
-                <div className="column">
+                <div className="column" style={{ maxHeight: '50vh' }}>
                     <UserDropdown users={users} selectedValue={selectedUserName} onChange={handleUserDropdown} />
                     <RoleDropdown roles={roles} selectedValue={selectedRole} onChange={handleRoleDropdown} />
                     <Button onClick={handleRoleSubmit} variant="contained">Set Role</Button>
@@ -56,7 +56,7 @@ function RolesView(props: RolesViewProps) {
                         }
                     </Card>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

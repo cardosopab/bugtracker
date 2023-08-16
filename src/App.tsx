@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { auth } from './models/database/firebase-config';
 import ProtectedRoutes from './views/ProtectedRoutes';
-import AuthView from './views/auth/AuthView';
 import Dashboard from './views/dashboard/Dashboard';
 import { DASHBOARD, PROFILE, PROJECTS, ROLES, TICKETS, USERS } from './views/viewsUrls';
 import Tickets from './views/tickets/Tickets';
@@ -10,6 +9,7 @@ import Profile from './views/profile/Profile';
 import ProjectsController from './controllers/ProjectsController';
 import UsersController from './controllers/UsersController';
 import RolesController from './controllers/RolesController';
+import AuthController from './controllers/AuthController';
 
 function App() {
     const [authInitialized, setAuthInitialized] = useState(false);
@@ -31,7 +31,7 @@ function App() {
             <div>
                 <Routes>
                     <Route element={<ProtectedRoutes />}>
-                        <Route path='/' element={<AuthView />} />
+                        <Route path='/' element={<AuthController />} />
                         <Route path={DASHBOARD} element={<Dashboard />} />
                         <Route path={ROLES} element={<RolesController />} />
                         <Route path={USERS} element={<UsersController />} />
