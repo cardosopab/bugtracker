@@ -5,6 +5,7 @@ import storiesReducer from './storiesSlice';
 import drawerReducer from './drawerSlice';
 import projectsReducer from './projectsSlice';
 import usersReducer from './usersSlice';
+import detailsReducer from './detailsSlice';
 
 const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
         stories: storiesReducer,
         projects: projectsReducer,
         users: usersReducer,
+        details: detailsReducer,
     },
 });
 

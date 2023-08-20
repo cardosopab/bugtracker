@@ -3,7 +3,12 @@ import Comment from "./Comment";
 interface Ticket {
     id: string;
     projectId: string;
-    message: string;
+    title: string;
+    name: string;
+    dev: string;
+    priority: string;
+    status: string;
+    type: string;
     createdAt: number;
     comments: Comment[];
 }

@@ -1,8 +1,9 @@
 import { collection, doc, setDoc } from "firebase/firestore";
 import { database } from "./firebase-config";
 import Project from "../Project";
-import { PROJECTS, USERS } from "./databaseEndpoints";
+import { PROJECTS, USERS, TICKETS } from "./databaseEndpoints";
 import User from "../User";
+import Ticket from "../Ticket";
 
 const createProject = async (name: string, description: string) => {
     try {
@@ -53,4 +54,32 @@ const updateUserRole = async (uid: string, role: string) => {
     setDoc(user, { role: role }, { merge: true });
 }
 
-export { createProject, createUser, updateUserRole };
+const createTicket = async (projectId: string, title: string, projectName: string, dev: string, priority: string, status: string, type: string) => {
+    try {
+        const docRef = doc(collection(database, TICKETS));
+
+        // Create the User object with the generated ID
+        const newTicket: Ticket = {
+            id: docRef.id,
+            projectId: projectId,
+            title: title,
+            name: projectName,
+            dev: dev,
+            priority: priority,
+            status: status,
+            type: type,
+            createdAt: Date.now(),
+            comments: [],
+
+        }
+        await setDoc(docRef, newTicket);
+        console.log("Document written with ID: ", docRef.id);
+
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+
+}
+
+export { createProject, createUser, updateUserRole, createTicket };

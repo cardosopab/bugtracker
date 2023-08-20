@@ -5,6 +5,8 @@ import Project from "../../models/Project";
 
 interface ProjectsViewProps {
   handleSubmit: any;
+  navigateToUsers: any;
+  navigateToDetails: (project: Project) => void;
   onSubmit: any;
   register: (name: string, options?: RegisterOptions) => any;
   projects: Project[];
@@ -12,17 +14,19 @@ interface ProjectsViewProps {
 }
 
 function ProjectsView(props: ProjectsViewProps) {
-  const { handleSubmit, onSubmit, register, errors, projects } = props;
+  const { handleSubmit, navigateToUsers, navigateToDetails, onSubmit, register, errors, projects } = props;
   return (
     <>
       <DrawerComponent />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="text" {...register('name', { required: "Required" })} />
-        {errors.name && <p>{errors.name.message}</p>}
-        <Input type="text" {...register('description', { required: "Required" })} />
-        {errors.description && <p>{errors.description.message}</p>}
-        <Button variant={'contained'} type="submit" >Create Project</Button>
-      </form>
+      <div className="row">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input placeholder="Project Name" type="text" {...register('name', { required: "Required" })} />
+          {errors.name && <p>{errors.name.message}</p>}
+          <Input placeholder="Description" type="text" {...register('description', { required: "Required" })} style={{ margin: '0 1em' }} />
+          {errors.description && <p>{errors.description.message}</p>}
+          <Button variant={'contained'} type="submit" >Create Project</Button>
+        </form>
+      </div>
       <Card style={{ margin: '1em' }}>
         <CardHeader title='Projects' subheader='Projects you are a part of:' style={{ backgroundColor: '#1976d2', color: 'white', }} subheaderTypographyProps={{ color: 'white' }} />
         {
@@ -33,13 +37,26 @@ function ProjectsView(props: ProjectsViewProps) {
                   <TableRow>
                     <TableCell>Project Name</TableCell>
                     <TableCell>Description</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {projects.map(({ id, name, description }) => (
+                  {projects.map(({ id, name, description, createdAt, personnel }) => (
                     <TableRow key={id}>
                       <TableCell>{name}</TableCell>
                       <TableCell>{description}</TableCell>
+                      <TableCell>
+                        <div className="column">
+                          <Button onClick={() => navigateToUsers()}>Users</Button>
+                          <Button onClick={() => navigateToDetails({
+                            id: id,
+                            name: name,
+                            description: description,
+                            createdAt: createdAt,
+                            personnel: personnel,
+                          })}>Details</Button>
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

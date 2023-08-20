@@ -12,7 +12,7 @@ import { createUser } from "../models/database/database";
 
 function UsersController() {
     const { handleSubmit, register, formState: { errors } } = useForm();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const users = useSelector((state: RootState) => state.users.value)
 
     const onSubmit = (values: any) => {
@@ -21,30 +21,30 @@ function UsersController() {
         // values.name = '';
         // values.email = '';
     };
-    useEffect(() => {
-        const unsubscribe =
-            onSnapshot(
-                query(collection(database, USERS), orderBy("createdAt", "desc")),
-                (querySnapshot) => {
-                    const arr: User[] = [];
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        const user: User = {
-                            id: data.id,
-                            createdAt: data.createdAt,
-                            name: data.name,
-                            email: data.email,
-                            role: data.role,
-                        };
-                        arr.push(user)
-                        console.log(user)
-                    });
-                    batch(() => {
-                        dispatch(setUsers(arr));
-                    });
-                });
-        return () => unsubscribe();
-    }, [])
+    // useEffect(() => {
+    //     const unsubscribe =
+    //         onSnapshot(
+    //             query(collection(database, USERS), orderBy("createdAt", "desc")),
+    //             (querySnapshot) => {
+    //                 const arr: User[] = [];
+    //                 querySnapshot.forEach((doc) => {
+    //                     const data = doc.data();
+    //                     const user: User = {
+    //                         id: data.id,
+    //                         createdAt: data.createdAt,
+    //                         name: data.name,
+    //                         email: data.email,
+    //                         role: data.role,
+    //                     };
+    //                     arr.push(user)
+    //                     console.log(user)
+    //                 });
+    //                 batch(() => {
+    //                     dispatch(setUsers(arr));
+    //                 });
+    //             });
+    //     return () => unsubscribe();
+    // }, [])
     return (
         <>
             <UsersView users={users} handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} errors={errors} />

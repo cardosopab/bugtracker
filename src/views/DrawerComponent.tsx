@@ -15,7 +15,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListIcon from "@mui/icons-material/List";
 import { Dashboard, Group, GroupAdd, Handyman, Logout, Person, Menu, ChevronLeft, ChevronRight } from "@mui/icons-material";
-
 import { auth } from "../models/database/firebase-config";
 import { useNavigate } from "react-router-dom";
 import { DASHBOARD, PROFILE, PROJECTS, ROLES, TICKETS, USERS } from "./viewsUrls";
@@ -78,8 +77,6 @@ export default function DrawerComponent() {
     const navigateTo = useNavigate();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    // const [drawerIndex, setSelectedIndex] = React.useState(0);
-
     const dispatch = useDispatch();
     const drawerIndex = useSelector((state: RootState) => state.drawer.index);
 
@@ -116,14 +113,8 @@ export default function DrawerComponent() {
                 return <Dashboard />
         }
     }
-
-    {/*const handleNavClick = (url: string) => {
-        console.log(url);
-        navigateTo(url)
-
-    }*/}
     const handleListItemClick = (
-        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
         index: number,
         url: string,
     ) => {
@@ -147,7 +138,6 @@ export default function DrawerComponent() {
                     <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                         {auth.currentUser?.email}
                     </Typography>
-                    {/* Logout Icon */}
                     <IconButton color="inherit" onClick={handleLogout} edge="end">
                         <Logout />
                     </IconButton>
@@ -188,7 +178,6 @@ export default function DrawerComponent() {
                         <ListItem key={name} disablePadding >
                             <ListItemButton
                                 selected={drawerIndex === i} onClick={(event) => handleListItemClick(event, i, url)}>
-                                {/* <ListItemButton onClick={() => handleNavClick(url)}> */}
                                 <ListItemIcon>
                                     {handleIconSwitch(icon)}
                                 </ListItemIcon>
@@ -198,18 +187,6 @@ export default function DrawerComponent() {
                     ))}
                 </List>
                 <Divider />
-                {/* <List>
-                    {["All mail", "Trash", "Spam"].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List> */}
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />

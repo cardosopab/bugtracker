@@ -16,13 +16,15 @@ function UsersView(props: UsersViewProps) {
   return (
     <>
       <DrawerComponent />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="text" {...register('name', { required: "Required" })} />
-        {errors.name && <p>{errors.name.message}</p>}
-        <Input type="text" {...register('email', { required: "Required" })} />
-        {errors.description && <p>{errors.description.message}</p>}
-        <Button variant={'contained'} type="submit" >Create User</Button>
-      </form>
+      <div className="row">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input placeholder="Full Name" type="text" {...register('name', { required: "Required" })} />
+          {errors.name && <p>{errors.name.message}</p>}
+          <Input placeholder="Email" type="text" {...register('email', { required: "Required" })} style={{ margin: '0 1em' }} />
+          {errors.description && <p>{errors.description.message}</p>}
+          <Button variant={'contained'} type="submit" >Create User</Button>
+        </form>
+      </div>
       <Card style={{ margin: '1em' }}>
         <CardHeader title='Users' subheader='Users in your database' />
         {users.length !== 0 ?

@@ -10,7 +10,7 @@ import { setUsers } from "../models/redux/usersSlice";
 import RolesView from "../views/roles/RolesView";
 
 function RolesController() {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const users = useSelector((state: RootState) => state.users.value);
     const roles = ['Admin', 'Manager', 'Developer', 'Submitter',];
     const [selectedUserName, setSelectedUserName] = useState(users.length > 0 ? users[0].name : '');
@@ -36,32 +36,32 @@ function RolesController() {
         updateUserRole(selectedUserId, selectedRole);
 
     }
-    useEffect(() => {
-        const unsubscribe =
-            onSnapshot(
-                query(collection(database, USERS), orderBy("createdAt", "desc")),
-                (querySnapshot) => {
-                    const arr: User[] = [];
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        console.log('data', data)
-                        const user: User = {
-                            id: data.id,
-                            name: data.name,
-                            createdAt: data.createdAt,
-                            email: data.email,
-                            role: data.role,
-                        };
-                        arr.push(user)
-                    });
-                    batch(() => {
-                        dispatch(setUsers(arr));
-                    });
-                    setSelectedUserName(arr[0].name)
-                    setSelectedRole(arr[0].role)
-                });
-        return () => unsubscribe();
-    }, [])
+    // useEffect(() => {
+        // const unsubscribe =
+        //     onSnapshot(
+        //         query(collection(database, USERS), orderBy("createdAt", "desc")),
+        //         (querySnapshot) => {
+        //             const arr: User[] = [];
+        //             querySnapshot.forEach((doc) => {
+        //                 const data = doc.data();
+        //                 console.log('data', data)
+        //                 const user: User = {
+        //                     id: data.id,
+        //                     name: data.name,
+        //                     createdAt: data.createdAt,
+        //                     email: data.email,
+        //                     role: data.role,
+        //                 };
+        //                 arr.push(user)
+        //             });
+        //             batch(() => {
+        //                 dispatch(setUsers(arr));
+        //             });
+        //             setSelectedUserName(arr[0].name)
+        //             setSelectedRole(arr[0].role)
+        //         });
+        // return () => unsubscribe();
+    // }, [])
     return (
         <RolesView users={users} selectedUserName={selectedUserName} handleUserDropdown={handleUserDropdown} roles={roles} handleRoleDropdown={handleRoleDropdown} handleRoleSubmit={handleRoleSubmit} selectedRole={selectedRole} />
     )
