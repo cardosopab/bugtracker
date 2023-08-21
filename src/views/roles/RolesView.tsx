@@ -1,7 +1,5 @@
 import DrawerComponent from "../DrawerComponent"
-import UserDropdown from "./UserDropdown"
-import RoleDropdown from "./RoleDropdown";
-import { Button, Card, CardHeader, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, Card, CardHeader, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import User from "../../models/User";
 
 interface RolesViewProps {
@@ -22,8 +20,37 @@ function RolesView(props: RolesViewProps) {
             <DrawerComponent />
             <div className="row">
                 <div className="column" style={{ maxHeight: '50vh' }}>
-                    <UserDropdown users={users} selectedValue={selectedUserName} onChange={handleUserDropdown} />
-                    <RoleDropdown roles={roles} selectedValue={selectedRole} onChange={handleRoleDropdown} />
+                    <FormControl>
+                        <InputLabel id="dropdown-label">Select an option</InputLabel>
+                        <Select
+                            labelId="dropdown-label"
+                            value={selectedUserName}
+                            name={selectedUserName}
+                            label="Select an option"
+                            onChange={handleUserDropdown}
+                        >
+                            {users.map(option => (
+                                <MenuItem key={option.id} value={option.name} >
+                                    {option.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel id="dropdown-label">Select an option</InputLabel>
+                        <Select
+                            labelId="dropdown-label"
+                            value={selectedRole}
+                            label="Select an option"
+                            onChange={handleRoleDropdown}
+                        >
+                            {roles.map((option: any) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <Button onClick={handleRoleSubmit} variant="contained">Set Role</Button>
                 </div>
                 <div className="column">

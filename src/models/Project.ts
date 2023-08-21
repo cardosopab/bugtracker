@@ -5,7 +5,7 @@ interface Project {
     name: string;
     description: string;
     createdAt: number;
-    personnel: User[];
+    personnel: string[];
 }
 
 export default Project;

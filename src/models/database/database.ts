@@ -1,4 +1,4 @@
-import { collection, doc, setDoc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { database } from "./firebase-config";
 import Project from "../Project";
 import { PROJECTS, USERS, TICKETS } from "./databaseEndpoints";
@@ -19,6 +19,30 @@ const createProject = async (name: string, description: string) => {
         };
 
         await setDoc(docRef, newProject);
+        console.log("Document written with ID: ", docRef.id);
+
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+};
+const removeUserFromProject = async (uid: string, projectId: string) => {
+    try {
+        const docRef = doc(database, PROJECTS, projectId);
+        await updateDoc(docRef, {
+            personnel: arrayRemove(uid)
+        });
+        console.log("Document removed with ID: ", docRef.id);
+
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+};
+const addUserToProject = async (uid: string, projectId: string) => {
+    try {
+        const docRef = doc(database, PROJECTS, projectId);
+        await setDoc(docRef, { personnel: arrayUnion(uid) }, { merge: true });
         console.log("Document written with ID: ", docRef.id);
 
     } catch (e) {
@@ -82,4 +106,4 @@ const createTicket = async (projectId: string, title: string, projectName: strin
 
 }
 
-export { createProject, createUser, updateUserRole, createTicket };
+export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket };
