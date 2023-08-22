@@ -1,13 +1,13 @@
-import { arrayRemove, arrayUnion, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, collection, doc, setDoc, updateDoc, } from "firebase/firestore";
 import { database } from "./firebase-config";
 import Project from "../Project";
-import { PROJECTS, USERS, TICKETS } from "./databaseEndpoints";
+import { PROJECTS_COLLECTION, USERS_COLLECTION, TICKETS_COLLECTION } from "./collections";
 import User from "../User";
 import Ticket from "../Ticket";
 
 const createProject = async (name: string, description: string) => {
     try {
-        const docRef = doc(collection(database, PROJECTS));
+        const docRef = doc(collection(database, PROJECTS_COLLECTION));
 
         // Create the Project object with the generated ID
         const newProject: Project = {
@@ -28,7 +28,7 @@ const createProject = async (name: string, description: string) => {
 };
 const removeUserFromProject = async (uid: string, projectId: string) => {
     try {
-        const docRef = doc(database, PROJECTS, projectId);
+        const docRef = doc(database, PROJECTS_COLLECTION, projectId);
         await updateDoc(docRef, {
             personnel: arrayRemove(uid)
         });
@@ -41,7 +41,7 @@ const removeUserFromProject = async (uid: string, projectId: string) => {
 };
 const addUserToProject = async (uid: string, projectId: string) => {
     try {
-        const docRef = doc(database, PROJECTS, projectId);
+        const docRef = doc(database, PROJECTS_COLLECTION, projectId);
         await setDoc(docRef, { personnel: arrayUnion(uid) }, { merge: true });
         console.log("Document written with ID: ", docRef.id);
 
@@ -53,7 +53,7 @@ const addUserToProject = async (uid: string, projectId: string) => {
 
 const createUser = async (name: string, email: string) => {
     try {
-        const docRef = doc(collection(database, USERS));
+        const docRef = doc(collection(database, USERS_COLLECTION));
 
         // Create the User object with the generated ID
         const newUser: User = {
@@ -74,13 +74,13 @@ const createUser = async (name: string, email: string) => {
 }
 
 const updateUserRole = async (uid: string, role: string) => {
-    const user = doc(database, USERS, uid);
+    const user = doc(database, USERS_COLLECTION, uid);
     setDoc(user, { role: role }, { merge: true });
 }
 
 const createTicket = async (projectId: string, title: string, projectName: string, dev: string, priority: string, status: string, type: string) => {
     try {
-        const docRef = doc(collection(database, TICKETS));
+        const docRef = doc(collection(database, TICKETS_COLLECTION));
 
         // Create the User object with the generated ID
         const newTicket: Ticket = {

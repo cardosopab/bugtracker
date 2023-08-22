@@ -17,7 +17,7 @@ import ListIcon from "@mui/icons-material/List";
 import { Dashboard, Group, GroupAdd, Handyman, Logout, Person, Menu, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { auth } from "../models/database/firebase-config";
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD, PROFILE, PROJECTS, ROLES, TICKETS, USERS } from "./viewsUrls";
+import { DASHBOARD_URL, PROFILE_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL } from "./viewsUrls";
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawerIndex } from '../models/redux/drawerSlice'
 import { RootState } from '../models/redux/store'
@@ -168,12 +168,12 @@ export default function DrawerComponent() {
                 <Divider />
                 <List>
                     {[
-                        { name: "Dashboard Home", icon: 'dashboard', url: DASHBOARD },
-                        { name: "Manage Role Assignment", icon: 'group-add', url: ROLES },
-                        { name: "Manage Project Users", icon: 'group', url: USERS },
-                        { name: "My Projects", icon: 'handy-man', url: PROJECTS },
-                        { name: "My Tickets", icon: 'list', url: TICKETS },
-                        { name: "User Profile", icon: 'person', url: PROFILE },
+                        { name: "Dashboard Home", icon: 'dashboard', url: DASHBOARD_URL },
+                        { name: "Manage Role Assignment", icon: 'group-add', url: ROLES_URL },
+                        { name: "Manage Project Users", icon: 'group', url: USERS_URL },
+                        { name: "My Projects", icon: 'handy-man', url: PROJECTS_URL },
+                        { name: "My Tickets", icon: 'list', url: TICKETS_URL },
+                        { name: "User Profile", icon: 'person', url: PROFILE_URL },
                     ].map(({ name, icon, url }, i) => (
                         <ListItem key={name} disablePadding >
                             <ListItemButton

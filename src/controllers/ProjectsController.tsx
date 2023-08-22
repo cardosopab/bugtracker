@@ -1,17 +1,13 @@
-import { useEffect } from "react";
-import { batch, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { RootState } from "../models/redux/store";
 import { createProject } from "../models/database/database";
-import { database } from "../models/database/firebase-config";
 import Project from "../models/Project";
-import { setProjects } from "../models/redux/projectsSlice";
 import ProjectsView from "../views/projects/ProjectsView";
-import { PROJECTS } from "../models/database/databaseEndpoints";
 import { useNavigate } from "react-router-dom";
 import { setDrawerIndex } from "../models/redux/drawerSlice";
-import { setDetails } from "../models/redux/detailsSlice";
+import { setProjectDetails } from "../models/redux/projectDetailsSlice";
+import { PROJECT_DETAILS_URL, USERS_URL } from "../views/viewsUrls";
 
 function ProjectsController() {
     const navigateTo = useNavigate();
@@ -27,39 +23,15 @@ function ProjectsController() {
     };
 
     function navigateToUsers() {
-        navigateTo('/users')
+        navigateTo(USERS_URL)
         dispatch(setDrawerIndex(2));
     }
 
     function navigateToDetails(details: Project) {
-        navigateTo('/details')
+        navigateTo(PROJECT_DETAILS_URL)
         dispatch(setDrawerIndex(90));
-        dispatch(setDetails(details))
+        dispatch(setProjectDetails(details))
     }
-    // useEffect(() => {
-    //     const unsubscribe =
-    //         onSnapshot(
-    //             query(collection(database, PROJECTS), orderBy("createdAt", "desc")),
-    //             (querySnapshot) => {
-    //                 const arr: Project[] = [];
-    //                 querySnapshot.forEach((doc) => {
-    //                     const data = doc.data();
-    //                     console.log('data', data)
-    //                     const project: Project = {
-    //                         id: data.id,
-    //                         name: data.name,
-    //                         description: data.description,
-    //                         createdAt: data.createdAt,
-    //                         personnel: data.personnel,
-    //                     };
-    //                     arr.push(project)
-    //                 });
-    //                 batch(() => {
-    //                     dispatch(setProjects(arr));
-    //                 });
-    //             });
-    //     return () => unsubscribe();
-    // }, [])
     return (
         <>
             <ProjectsView handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} projects={projects} errors={errors} navigateToUsers={navigateToUsers} navigateToDetails={navigateToDetails} />
