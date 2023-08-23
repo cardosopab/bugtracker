@@ -16,9 +16,9 @@ interface DetailsProps {
 const ProjectDetailsView = (props: DetailsProps) => {
     const { details, users, tickets, register, handleSubmit, onSubmit, errors } = props;
     const name = details.name;
-    const id = details.id;
-    const description = details.description;
-    const createdAt = details.createdAt;
+    // const id = details.id;
+    // const description = details.description;
+    // const createdAt = details.createdAt;
     const personnel = details.personnel;
     return (
         <>
@@ -78,14 +78,21 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {tickets.map(({ id, title, dev, status, createdAt, }) => (
-                                            <TableRow key={id}>
-                                                <TableCell>{title}</TableCell>
-                                                <TableCell>{dev}</TableCell>
-                                                <TableCell>{status}</TableCell>
-                                                <TableCell>{createdAt}</TableCell>
-                                            </TableRow>
-                                        ))}
+                                        {tickets.map(({ id, title, projectId, submitterId, personnelId, status, createdAt, }) => {
+                                            const submitter = users.find(user => user.id === submitterId);
+                                            const personnel = users.find(user => user.id === personnelId);
+                                            // const project = projects.find(project => project.id === projectId);
+                                            return (
+                                                <TableRow key={id}>
+                                                    <TableCell>{title}</TableCell>
+                                                    <TableCell>{submitter?.name}</TableCell>
+                                                    <TableCell>{personnel?.name}</TableCell>
+                                                    <TableCell>{status}</TableCell>
+                                                    <TableCell>{createdAt}</TableCell>
+                                                    <TableCell></TableCell>
+                                                </TableRow>
+                                            )
+                                        })}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
