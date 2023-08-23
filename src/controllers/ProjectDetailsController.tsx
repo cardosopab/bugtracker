@@ -7,20 +7,26 @@ import { createTicket } from "../models/database/database";
 
 const ProjectDetailsController = () => {
     const details = useSelector((state: RootState) => state.projectDetails.value);
-    const tickets = useSelector((state: RootState) => state.tickets.value);
+    let tickets = useSelector((state: RootState) => state.tickets.value);
     const users = useSelector((state: RootState) => state.users.value);
     const { handleSubmit, register, formState: { errors } } = useForm();
 
     const onSubmit = (values: any) => {
         console.log(values.title)
-        createTicket(details.id, values.title, details.name, '', 'low', 'on-going', 'bug');
+        createTicket(details.id, values.title, 'low', 'on-going', 'bug');
         values.name = ''
         values.description = '';
     };
     console.log('details', details, 'isPop', details.id)
     if (details.id === undefined) {
-        return <div className='center'>No project was selected.</div>;
+        return (
+            <>
+                <DrawerComponent />
+                <div className='center'>No project was selected.</div>
+            </>
+        );
     }
+    tickets = tickets.filter(ticket => ticket.projectId === details.id);
     return (
         <>
             <DrawerComponent />
