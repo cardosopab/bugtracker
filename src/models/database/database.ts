@@ -1,9 +1,12 @@
 import { arrayRemove, arrayUnion, collection, doc, setDoc, updateDoc, } from "firebase/firestore";
-import { database } from "./firebase-config";
+import { database, auth } from "./firebase-config";
 import Project from "../Project";
 import { PROJECTS_COLLECTION, USERS_COLLECTION, TICKETS_COLLECTION } from "./collections";
 import User from "../User";
 import Ticket from "../Ticket";
+
+
+const currentUser = auth.currentUser;
 
 const createProject = async (name: string, description: string) => {
     try {
@@ -78,7 +81,7 @@ const updateUserRole = async (uid: string, role: string) => {
     setDoc(user, { role: role }, { merge: true });
 }
 
-const createTicket = async (projectId: string, title: string, projectName: string, dev: string, priority: string, status: string, type: string) => {
+const createTicket = async (projectId: string, title: string, priority: string, status: string, type: string) => {
     try {
         const docRef = doc(collection(database, TICKETS_COLLECTION));
 
@@ -87,14 +90,13 @@ const createTicket = async (projectId: string, title: string, projectName: strin
             id: docRef.id,
             projectId: projectId,
             title: title,
-            name: projectName,
-            dev: dev,
+            personnelId: '',
             priority: priority,
             status: status,
             type: type,
             createdAt: Date.now(),
             comments: [],
-
+            submitterId: currentUser?.uid ?? '',
         }
         await setDoc(docRef, newTicket);
         console.log("Document written with ID: ", docRef.id);
