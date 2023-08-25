@@ -1,20 +1,21 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { auth } from '../models/database/firebase-config';
 import { useEffect } from 'react';
 import AuthController from '../controllers/AuthController';
+import { useSelector } from 'react-redux';
+import { RootState } from '../models/redux/store';
 
 function ProtectedRoutes() {
     // Check if the user is authenticated
-    const isAuth = auth.currentUser !== null;
-    console.log('ProtectedRoutes', isAuth)
+    const authStatus = useSelector((state: RootState) => state.auth.authStatus)
+    console.log('ProtectedRoutes', authStatus)
     const navigateTo = useNavigate();
 
     useEffect(() => {
-        if (!isAuth) {
+        if (!authStatus) {
             navigateTo('/')
         }
-    }, [isAuth, navigateTo]);
-    return isAuth ? <Outlet /> : <AuthController />;
+    }, [authStatus, navigateTo]);
+    return authStatus ? <Outlet /> : <AuthController />;
 }
 
 export default ProtectedRoutes;

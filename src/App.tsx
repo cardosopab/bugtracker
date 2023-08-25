@@ -1,16 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { auth, database } from './models/database/firebase-config';
+import { auth, database } from './models/database/firebase-init';
 import ProtectedRoutes from './views/ProtectedRoutes';
 import Dashboard from './views/dashboard/Dashboard';
 import { DASHBOARD_URL, PROJECT_DETAILS_URL, PROFILE_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL } from './views/viewsUrls';
 import TicketsController from './controllers/TicketsController';
 import Profile from './views/profile/Profile';
 import ProjectsController from './controllers/ProjectsController';
-import UsersController from './controllers/UsersController';
-import RolesController from './controllers/RolesController';
-import AuthController from './controllers/AuthController';
-import ProjectDetailsController from './controllers/ProjectDetailsController';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import Project from './models/Project';
 import { batch, useDispatch } from 'react-redux';
@@ -20,13 +16,24 @@ import { setUsers } from './models/redux/usersSlice';
 import Ticket from './models/Ticket';
 import { setTickets } from './models/redux/ticketsSlice';
 import { PROJECTS_COLLECTION, TICKETS_COLLECTION, USERS_COLLECTION } from './models/database/collections';
+import { onAuthStateChanged } from 'firebase/auth';
+import AuthController from './controllers/AuthController';
+import RolesController from './controllers/RolesController';
+import UsersController from './controllers/UsersController';
+import ProjectDetailsController from './controllers/ProjectDetailsController';
+import { setAuthStatus, setCurrentUser } from './models/redux/authSlice';
 
 function App() {
     const [authInitialized, setAuthInitialized] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
-        const unsubscribeAuth = auth.onAuthStateChanged((_) => {
+        const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
             setAuthInitialized(true);
+            console.log('onAuthStateChanged', user);
+            const isAuth = user?.uid != undefined;
+            console.log('isAuth', isAuth)
+            dispatch(setAuthStatus(isAuth));
+            dispatch(setCurrentUser(user?.uid ?? ''));
         });
 
         const unsubscribeProjects =
@@ -83,14 +90,14 @@ function App() {
                         console.log('data', data)
                         const ticket: Ticket = {
                             id: data.id,
-                            name: data.name,
-                            createdAt: data.createdAt,
-                            projectId: data.projectId,
                             title: data.title,
-                            dev: data.dev,
+                            projectId: data.projectId,
+                            submitterId: data.submitterId,
+                            personnelId: data.personnelId,
                             priority: data.priority,
                             status: data.status,
                             type: data.type,
+                            createdAt: data.createdAt,
                             comments: data.comments,
                         };
                         arr.push(ticket)
