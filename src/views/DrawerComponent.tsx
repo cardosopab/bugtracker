@@ -15,7 +15,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListIcon from "@mui/icons-material/List";
 import { Dashboard, Group, GroupAdd, Handyman, Logout, Person, Menu, ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { auth } from "../models/database/firebase-config";
+import { auth } from "../models/database/firebase-init";
 import { useNavigate } from "react-router-dom";
 import { DASHBOARD_URL, PROFILE_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL } from "./viewsUrls";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,6 +89,7 @@ export default function DrawerComponent() {
     };
     const handleLogout = () => {
         dispatch(setDrawerIndex(0));
+        console.log('currentUser', auth.currentUser);
         auth.signOut().then((response) => {
             console.log("response", response);
             navigateTo("/");

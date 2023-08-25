@@ -2,9 +2,10 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import { auth } from '../models/database/firebase-config';
+import { auth } from '../models/database/firebase-init';
 import { DASHBOARD_URL } from '../views/viewsUrls';
 import AuthView from '../views/auth/AuthView';
+import { createUser } from '../models/database/database';
 
 const AuthController = () => {
     const [isSignIn, setIsSignIn] = useState(true);
@@ -21,6 +22,7 @@ const AuthController = () => {
             });
         } else {
             createUserWithEmailAndPassword(auth, values.email, values.password).then(data => {
+                // TODO: createUser()
                 console.log('authData', data)
                 navigateTo(DASHBOARD_URL)
             }).catch(err => {
