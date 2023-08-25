@@ -1,12 +1,9 @@
-import { arrayRemove, arrayUnion, collection, doc, setDoc, updateDoc, } from "firebase/firestore";
-import { database, auth } from "./firebase-config";
+import { arrayRemove, arrayUnion, collection, deleteDoc, doc, setDoc, updateDoc, } from "firebase/firestore";
+import { database } from "./firebase-init";
 import Project from "../Project";
 import { PROJECTS_COLLECTION, USERS_COLLECTION, TICKETS_COLLECTION } from "./collections";
 import User from "../User";
 import Ticket from "../Ticket";
-
-
-const currentUser = auth.currentUser;
 
 const createProject = async (name: string, description: string) => {
     try {
@@ -29,6 +26,7 @@ const createProject = async (name: string, description: string) => {
         return null;
     }
 };
+
 const removeUserFromProject = async (uid: string, projectId: string) => {
     try {
         const docRef = doc(database, PROJECTS_COLLECTION, projectId);
@@ -42,6 +40,7 @@ const removeUserFromProject = async (uid: string, projectId: string) => {
         return null;
     }
 };
+
 const addUserToProject = async (uid: string, projectId: string) => {
     try {
         const docRef = doc(database, PROJECTS_COLLECTION, projectId);
@@ -81,7 +80,7 @@ const updateUserRole = async (uid: string, role: string) => {
     setDoc(user, { role: role }, { merge: true });
 }
 
-const createTicket = async (projectId: string, title: string, priority: string, status: string, type: string) => {
+const createTicket = async (projectId: string, submitterId: string, title: string, priority: string, status: string, type: string) => {
     try {
         const docRef = doc(collection(database, TICKETS_COLLECTION));
 
@@ -89,6 +88,7 @@ const createTicket = async (projectId: string, title: string, priority: string, 
         const newTicket: Ticket = {
             id: docRef.id,
             projectId: projectId,
+            submitterId: submitterId,
             title: title,
             personnelId: '',
             priority: priority,
@@ -96,7 +96,6 @@ const createTicket = async (projectId: string, title: string, priority: string, 
             type: type,
             createdAt: Date.now(),
             comments: [],
-            submitterId: currentUser?.uid ?? '',
         }
         await setDoc(docRef, newTicket);
         console.log("Document written with ID: ", docRef.id);
@@ -108,4 +107,16 @@ const createTicket = async (projectId: string, title: string, priority: string, 
 
 }
 
-export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket };
+const removeTicket = async (ticketId: string) => {
+    try {
+        const docRef = doc(database, TICKETS_COLLECTION, ticketId);
+        await deleteDoc(docRef);
+        console.log("Document removed with ID: ", docRef.id);
+
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+};
+
+export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, removeTicket };

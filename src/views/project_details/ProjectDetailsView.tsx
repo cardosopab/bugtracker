@@ -10,11 +10,12 @@ interface DetailsProps {
     tickets: Ticket[];
     register: (name: string, options?: RegisterOptions) => any;
     handleSubmit: any;
+    handleTickeRemoval: any;
     onSubmit: any;
     errors: any;
 }
 const ProjectDetailsView = (props: DetailsProps) => {
-    const { details, users, tickets, register, handleSubmit, onSubmit, errors } = props;
+    const { details, users, tickets, register, handleSubmit, handleTickeRemoval, onSubmit, errors } = props;
     const name = details.name;
     // const id = details.id;
     // const description = details.description;
@@ -60,7 +61,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                 {errors.title && <p>{errors.title.message}</p>}
                                 {/* <Input placeholder="Description" type="text" {...register('description', { required: "Required" })} style={{ margin: '0 1em' }} /> */}
                                 {/* {errors.description && <p>{errors.description.message}</p>} */}
-                                <Button variant={'contained'} type="submit" >Create Ticket</Button>
+                                <Button variant={'contained'} type="submit">Create Ticket</Button>
                             </form>
                         </div>
                         <Card>
@@ -89,7 +90,9 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                                     <TableCell>{personnel?.name}</TableCell>
                                                     <TableCell>{status}</TableCell>
                                                     <TableCell>{createdAt}</TableCell>
-                                                    <TableCell></TableCell>
+                                                    <TableCell>
+                                                        <Button onClick={() => handleTickeRemoval(id)} />
+                                                    </TableCell>
                                                 </TableRow>
                                             )
                                         })}
