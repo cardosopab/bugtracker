@@ -1,4 +1,7 @@
-# Software Requirements
+# Bug Tracker
+This repository contains a bug tracking application built using the MVC architecture, Vite, HTML, Material UI, TypeScript, React, Redux Toolkit, and React Router. The primary goal of this project is to create a comprehensive system for managing tickets and comments, enabling users to efficiently create, read, update, and delete records in a Firebase Firestore database.
+
+## Software Requirements
 []   -Demo User Accounts
 []
 []   -Inputs
@@ -37,20 +40,3 @@
 []            -Add Attachment
 []         -User Profile
 
-# Sprints
-
-# Issues
-
-# Documentation
-
-# Project Goals and Scope
-
-# Project Overview and Architecture
-   MVC Architecture
-# User Stories or Use Cases
-
-# Development Environment Setup
-
-# Testing and Quality Assurance
-
-# Deployment and Configuration
