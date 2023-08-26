@@ -19,11 +19,8 @@ function UsersController() {
             return;
         }
 
-        const projectIndex = projects.findIndex(project => project.id === selectedProject.id);
-        if (projectIndex !== -1) {
-            const isUserInPersonnelArray = projects[projectIndex].personnel.includes(selectedUser.id);
-            setIsRemoveButtonDisabled(!isUserInPersonnelArray);
-        }
+        const isUserInPersonnelArray = selectedProject.personnel.includes(selectedUser.id)
+        setIsRemoveButtonDisabled(!isUserInPersonnelArray)
     };
     const handleUserDropdown = (event: React.ChangeEvent<{ value: unknown }>) => {
         const selectedUserName = event.target.value as string;
@@ -44,14 +41,19 @@ function UsersController() {
     const handleAddUser = () => {
         console.log(selectedUser.id, selectedProject.id);
         addUserToProject(selectedUser.id, selectedProject.id);
+        setIsRemoveButtonDisabled(!isRemoveButtonDisabled)
     }
+
     const handleRemoveUser = () => {
         console.log(selectedUser.id, selectedProject.id);
         removeUserFromProject(selectedUser.id, selectedProject.id);
+        setIsRemoveButtonDisabled(!isRemoveButtonDisabled)
     }
+
     useEffect(() => {
         findProjectAndUserAvailability()
     }, [selectedUser.id, selectedProject.id]);
+
     return (
         <>
             <UsersView users={users} projects={projects} selectedUser={selectedUser} handleUserDropdown={handleUserDropdown} selectedProject={selectedProject} handleProjectDropdown={handleProjectDropdown} handleAddUser={handleAddUser} handleRemoveUser={handleRemoveUser} isRemoveButtonDisabled={isRemoveButtonDisabled} />
