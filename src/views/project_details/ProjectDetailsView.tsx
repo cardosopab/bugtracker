@@ -1,4 +1,4 @@
-import { Button, Card, CardHeader, Input, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Box, Button, Card, CardHeader, Input, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import Project from "../../models/Project";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
@@ -8,19 +8,30 @@ interface DetailsProps {
     details: Project;
     users: User[];
     tickets: Ticket[];
-    register: (name: string, options?: RegisterOptions) => any;
-    handleSubmit: any;
-    handleTickeRemoval: any;
-    onSubmit: any;
-    errors: any;
+    handleTicketRemoval: any;
+    handleModal: any;
+    open: boolean;
 }
 const ProjectDetailsView = (props: DetailsProps) => {
-    const { details, users, tickets, register, handleSubmit, handleTickeRemoval, onSubmit, errors } = props;
+    const { details, users, tickets, handleTicketRemoval, handleModal, open } = props;
     const name = details.name;
     // const id = details.id;
     // const description = details.description;
     // const createdAt = details.createdAt;
+
     const personnel = details.personnel;
+
+    const style = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
     return (
         <>
             <Card>
@@ -56,13 +67,27 @@ const ProjectDetailsView = (props: DetailsProps) => {
                     </div>
                     <div className="column">
                         <div className="row">
-                            <form onSubmit={handleSubmit(onSubmit)}>
+                            {/* <form onSubmit={handleSubmit(onSubmit)}>
                                 <Input placeholder="Ticket Title" type="text" {...register('title', { required: "Required" })} />
                                 {errors.title && <p>{errors.title.message}</p>}
-                                {/* <Input placeholder="Description" type="text" {...register('description', { required: "Required" })} style={{ margin: '0 1em' }} /> */}
-                                {/* {errors.description && <p>{errors.description.message}</p>} */}
                                 <Button variant={'contained'} type="submit">Create Ticket</Button>
-                            </form>
+                            </form> */}
+                            <Button onClick={handleModal}>Open modal</Button>
+                            <Modal
+                                open={open}
+                                onClose={handleModal}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                                        Text in a modal
+                                    </Typography>
+                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                                    </Typography>
+                                </Box>
+                            </Modal>
                         </div>
                         <Card>
                             <CardHeader title={`Tickets for ${name}`} />
@@ -82,16 +107,22 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                         {tickets.map(({ id, title, projectId, submitterId, personnelId, status, createdAt, }) => {
                                             const submitter = users.find(user => user.id === submitterId);
                                             const personnel = users.find(user => user.id === personnelId);
-                                            // const project = projects.find(project => project.id === projectId);
                                             return (
                                                 <TableRow key={id}>
                                                     <TableCell>{title}</TableCell>
                                                     <TableCell>{submitter?.name}</TableCell>
                                                     <TableCell>{personnel?.name}</TableCell>
                                                     <TableCell>{status}</TableCell>
-                                                    <TableCell>{createdAt}</TableCell>
+                                                    <TableCell>{new Date(createdAt).toLocaleString(undefined, {
+                                                        month: "2-digit",
+                                                        day: "2-digit",
+                                                        year: "2-digit",
+                                                        hour: "numeric",
+                                                        minute: "numeric",
+                                                        hour12: true,
+                                                    })}</TableCell>
                                                     <TableCell>
-                                                        <Button onClick={() => handleTickeRemoval(id)} />
+                                                        <Button onClick={() => handleTicketRemoval(id)} >Delete</Button>
                                                     </TableCell>
                                                 </TableRow>
                                             )
