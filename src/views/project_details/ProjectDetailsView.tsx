@@ -2,7 +2,7 @@ import { Box, Button, Card, CardHeader, Modal, Paper, Table, TableBody, TableCel
 import Project from "../../models/Project";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
-import EditTicketController from "../EditTicketController";
+import EditTicketController from "../../controllers/EditTicketController";
 
 interface DetailsProps {
     details: Project;
