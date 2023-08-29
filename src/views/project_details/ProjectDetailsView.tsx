@@ -1,8 +1,8 @@
-import { Box, Button, Card, CardHeader, Input, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Box, Button, Card, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import Project from "../../models/Project";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
-import { RegisterOptions } from "react-hook-form";
+import EditTicketController from "../EditTicketController";
 
 interface DetailsProps {
     details: Project;
@@ -15,10 +15,6 @@ interface DetailsProps {
 const ProjectDetailsView = (props: DetailsProps) => {
     const { details, users, tickets, handleTicketRemoval, handleModal, open } = props;
     const name = details.name;
-    // const id = details.id;
-    // const description = details.description;
-    // const createdAt = details.createdAt;
-
     const personnel = details.personnel;
 
     const style = {
@@ -26,9 +22,10 @@ const ProjectDetailsView = (props: DetailsProps) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        minWidth: 400,
         bgcolor: 'background.paper',
-        border: '2px solid #000',
+        border: '3px solid #1976d2',
+        borderRadius: '1em',
         boxShadow: 24,
         p: 4,
     };
@@ -67,11 +64,6 @@ const ProjectDetailsView = (props: DetailsProps) => {
                     </div>
                     <div className="column">
                         <div className="row">
-                            {/* <form onSubmit={handleSubmit(onSubmit)}>
-                                <Input placeholder="Ticket Title" type="text" {...register('title', { required: "Required" })} />
-                                {errors.title && <p>{errors.title.message}</p>}
-                                <Button variant={'contained'} type="submit">Create Ticket</Button>
-                            </form> */}
                             <Button onClick={handleModal}>Open modal</Button>
                             <Modal
                                 open={open}
@@ -80,12 +72,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                 aria-describedby="modal-modal-description"
                             >
                                 <Box sx={style}>
-                                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                                        Text in a modal
-                                    </Typography>
-                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                                    </Typography>
+                                    <EditTicketController />
                                 </Box>
                             </Modal>
                         </div>
