@@ -80,7 +80,7 @@ const updateUserRole = async (uid: string, role: string) => {
     setDoc(user, { role: role }, { merge: true });
 }
 
-const createTicket = async (projectId: string, submitterId: string, title: string, priority: string, status: string, type: string) => {
+const createTicket = async (projectId: string, submitterId: string, title: string, description: string, priority: string, status: string, type: string) => {
     try {
         const docRef = doc(collection(database, TICKETS_COLLECTION));
 
@@ -90,6 +90,7 @@ const createTicket = async (projectId: string, submitterId: string, title: strin
             projectId: projectId,
             submitterId: submitterId,
             title: title,
+            description: description,
             personnelId: '',
             priority: priority,
             status: status,

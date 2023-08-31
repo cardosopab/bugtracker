@@ -91,6 +91,7 @@ function App() {
                         const ticket: Ticket = {
                             id: data.id,
                             title: data.title,
+                            description: data.description,
                             projectId: data.projectId,
                             submitterId: data.submitterId,
                             personnelId: data.personnelId,

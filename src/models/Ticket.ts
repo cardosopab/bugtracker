@@ -3,6 +3,7 @@ import Comment from "./Comment";
 interface Ticket {
     id: string;
     title: string;
+    description: string;
     projectId: string;
     submitterId: string;
     personnelId: string;
