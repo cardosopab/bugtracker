@@ -1,8 +1,8 @@
-import { Box, Button, Card, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Box, Button, Card, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import Project from "../../models/Project";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
-import EditTicketController from "../../controllers/EditTicketController";
+import CreateTicketController from "../../controllers/CreateTicketController";
 
 interface DetailsProps {
     details: Project;
@@ -64,7 +64,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                     </div>
                     <div className="column">
                         <div className="row">
-                            <Button onClick={handleModal}>Open modal</Button>
+                            <Button onClick={handleModal}>Create Ticket</Button>
                             <Modal
                                 open={open}
                                 onClose={handleModal}
@@ -72,7 +72,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                 aria-describedby="modal-modal-description"
                             >
                                 <Box sx={style}>
-                                    <EditTicketController />
+                                    <CreateTicketController project={details} />
                                 </Box>
                             </Modal>
                         </div>
