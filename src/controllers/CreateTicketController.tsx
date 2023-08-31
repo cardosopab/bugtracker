@@ -6,17 +6,18 @@ import Project from "../models/Project";
 import { createTicket } from "../models/database/database";
 
 interface CreateTicketProps {
-    project: Project | null
+    project: Project | null;
+    handleModal: any;
 }
 const CreateTicketController = (props: CreateTicketProps) => {
-    const { project } = props
+    const { project, handleModal } = props
     const projects = useSelector((state: RootState) => state.projects.value);
     const users = useSelector((state: RootState) => state.users.value);
     const currentUser = useSelector((state: RootState) => state.auth.currentUser);
     const [selectedProject, setSelectedProject] = useState('');
     const [selectedPriority, setSelectedPriority] = useState('');
     const [selectedType, setSelectedType] = useState('');
-    const [selectedDeveloper, setSelectedDeveloper] = useState('');
+    const [selectedPersonnel, setSelectedDeveloper] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
     const [titleValue, setTitleValue] = useState('');
     const [descriptionValue, setDescriptionValue] = useState('');
@@ -29,7 +30,10 @@ const CreateTicketController = (props: CreateTicketProps) => {
     }
 
     const handleTicketCreate = () => {
-        createTicket(project?.id ?? (projects.find(project => project.name == selectedProject)!.id), currentUser, titleValue, descriptionValue, selectedPriority, selectedStatus, selectedType,)
+        const personnelId = users.find(user => user.name === selectedPersonnel)?.id;
+        createTicket(project?.id ?? (projects.find(project => project.name == selectedProject)!.id), currentUser, personnelId!, titleValue, descriptionValue, selectedPriority, selectedStatus, selectedType,)
+        handleModal()
+
     }
     return (
         <Card>
@@ -113,7 +117,7 @@ const CreateTicketController = (props: CreateTicketProps) => {
                                     labelId="developer-dropdown-label"
                                     label="Developer"
                                     id="developer-dropdown"
-                                    value={selectedDeveloper} // Connect to state
+                                    value={selectedPersonnel} // Connect to state
                                     onChange={(event) => setSelectedDeveloper(event.target.value)} // Update state on change
 
                                 >

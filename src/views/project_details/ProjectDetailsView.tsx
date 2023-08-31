@@ -72,7 +72,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                 aria-describedby="modal-modal-description"
                             >
                                 <Box sx={style}>
-                                    <CreateTicketController project={details} />
+                                    <CreateTicketController project={details} handleModal={handleModal} />
                                 </Box>
                             </Modal>
                         </div>
@@ -91,7 +91,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {tickets.map(({ id, title, projectId, submitterId, personnelId, status, createdAt, }) => {
+                                        {tickets.map(({ id, title, submitterId, personnelId, status, createdAt, }) => {
                                             const submitter = users.find(user => user.id === submitterId);
                                             const personnel = users.find(user => user.id === personnelId);
                                             return (
