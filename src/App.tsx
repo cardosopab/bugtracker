@@ -9,7 +9,7 @@ import Profile from './views/profile/Profile';
 import ProjectsController from './controllers/ProjectsController';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import Project from './models/Project';
-import { batch, useDispatch } from 'react-redux';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { setProjects } from './models/redux/projectsSlice';
 import User from './models/User';
 import { setUsers } from './models/redux/usersSlice';
@@ -22,10 +22,13 @@ import RolesController from './controllers/RolesController';
 import UsersController from './controllers/UsersController';
 import ProjectDetailsController from './controllers/ProjectDetailsController';
 import { setAuthStatus, setCurrentUser } from './models/redux/authSlice';
+import { RootState } from './models/redux/store';
 
 function App() {
     const [authInitialized, setAuthInitialized] = useState(false);
+    const authStatus = useSelector((state: RootState) => state.auth.authStatus);
     const dispatch = useDispatch();
+
     useEffect(() => {
         const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
             setAuthInitialized(true);
@@ -36,92 +39,99 @@ function App() {
             dispatch(setCurrentUser(user?.uid ?? ''));
         });
 
-        const unsubscribeProjects =
-            onSnapshot(
-                query(collection(database, PROJECTS_COLLECTION), orderBy("createdAt", "desc")),
-                (querySnapshot) => {
-                    const arr: Project[] = [];
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        console.log('data', data)
-                        const project: Project = {
-                            id: data.id,
-                            name: data.name,
-                            description: data.description,
-                            createdAt: data.createdAt,
-                            personnel: data.personnel,
-                        };
-                        arr.push(project)
-                    });
-                    batch(() => {
-                        console.log('subscribedProjects')
-                        dispatch(setProjects(arr));
-                    });
-                });
-        const unsubscribeUsers =
-            onSnapshot(
-                query(collection(database, USERS_COLLECTION), orderBy("createdAt", "desc")),
-                (querySnapshot) => {
-                    const arr: User[] = [];
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        console.log('data', data)
-                        const user: User = {
-                            id: data.id,
-                            name: data.name,
-                            createdAt: data.createdAt,
-                            email: data.email,
-                            role: data.role,
-                        };
-                        arr.push(user)
-                    });
-                    batch(() => {
-                        console.log('subscribedUsers')
-                        dispatch(setUsers(arr));
-                    });
-                });
-        const unsubscribeTickets =
-            onSnapshot(
-                query(collection(database, TICKETS_COLLECTION), orderBy("createdAt", "desc")),
-                (querySnapshot) => {
-                    const arr: Ticket[] = [];
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        console.log('data', data)
-                        const ticket: Ticket = {
-                            id: data.id,
-                            title: data.title,
-                            description: data.description,
-                            projectId: data.projectId,
-                            submitterId: data.submitterId,
-                            personnelId: data.personnelId,
-                            priority: data.priority,
-                            status: data.status,
-                            type: data.type,
-                            createdAt: data.createdAt,
-                            comments: data.comments,
-                        };
-                        arr.push(ticket)
-                    });
-                    batch(() => {
-                        console.log('subscribedTickets')
-                        dispatch(setTickets(arr));
-                    });
-                });
-
         return () => {
-            console.log('unsubscribe')
+            console.log('unsubscribeAuth');
             unsubscribeAuth();
-            unsubscribeProjects();
-            unsubscribeUsers();
-            unsubscribeTickets();
-        }
+        };
     }, []);
+
+    useEffect(() => {
+        if (authInitialized && authStatus) {
+            const unsubscribeProjects =
+                onSnapshot(
+                    query(collection(database, PROJECTS_COLLECTION), orderBy("createdAt", "desc")),
+                    (querySnapshot) => {
+                        const arr: Project[] = [];
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            console.log('data', data)
+                            const project: Project = {
+                                id: data.id,
+                                name: data.name,
+                                description: data.description,
+                                createdAt: data.createdAt,
+                                personnel: data.personnel,
+                            };
+                            arr.push(project)
+                        });
+                        batch(() => {
+                            console.log('subscribedProjects')
+                            dispatch(setProjects(arr));
+                        });
+                    });
+            const unsubscribeUsers =
+                onSnapshot(
+                    query(collection(database, USERS_COLLECTION), orderBy("createdAt", "desc")),
+                    (querySnapshot) => {
+                        const arr: User[] = [];
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            console.log('data', data)
+                            const user: User = {
+                                id: data.id,
+                                name: data.name,
+                                createdAt: data.createdAt,
+                                email: data.email,
+                                role: data.role,
+                            };
+                            arr.push(user)
+                        });
+                        batch(() => {
+                            console.log('subscribedUsers')
+                            dispatch(setUsers(arr));
+                        });
+                    });
+            const unsubscribeTickets =
+                onSnapshot(
+                    query(collection(database, TICKETS_COLLECTION), orderBy("createdAt", "desc")),
+                    (querySnapshot) => {
+                        const arr: Ticket[] = [];
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            console.log('data', data)
+                            const ticket: Ticket = {
+                                id: data.id,
+                                title: data.title,
+                                description: data.description,
+                                projectId: data.projectId,
+                                submitterId: data.submitterId,
+                                personnelId: data.personnelId,
+                                priority: data.priority,
+                                status: data.status,
+                                type: data.type,
+                                createdAt: data.createdAt,
+                                comments: data.comments,
+                            };
+                            arr.push(ticket)
+                        });
+                        batch(() => {
+                            console.log('subscribedTickets')
+                            dispatch(setTickets(arr));
+                        });
+                    });
+
+            return () => {
+                console.log('unsubscribe')
+                unsubscribeProjects();
+                unsubscribeUsers();
+                unsubscribeTickets();
+            }
+        }
+    }, [authInitialized, authStatus]);
 
     if (!authInitialized) {
         return <div className='center'>Loading...</div>;
     }
-
     return (
         <BrowserRouter>
             <div>
@@ -141,6 +151,5 @@ function App() {
         </BrowserRouter>
     );
 }
-
 export default App;
 
