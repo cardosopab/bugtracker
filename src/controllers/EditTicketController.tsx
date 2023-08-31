@@ -11,21 +11,23 @@ const EditTicketController = (props: EditTicketProps) => {
   const { ticket } = props
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
-  const [selectedProject, setSelectedProject] = useState('');
-  const [selectedPriority, setSelectedPriority] = useState('');
-  const [selectedType, setSelectedType] = useState('');
-  const [selectedDeveloper, setSelectedDeveloper] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
+  const [titleValue, setTitleValue] = useState(ticket.title)
+  const [descriptionValue, setDescriptionValue] = useState(ticket.description)
+  const [selectedProject, setSelectedProject] = useState(projects.find(project => project.id === ticket.projectId)?.name);
+  const [selectedPriority, setSelectedPriority] = useState(ticket.priority);
+  const [selectedType, setSelectedType] = useState(ticket.type);
+  const [selectedPersonnel, setSelectedPersonnel] = useState(users.find(user => user.id === ticket.personnelId)?.name);
+  const [selectedStatus, setSelectedStatus] = useState(ticket.status);
   return (
     <Card>
-      <CardHeader title={`Edit Ticket: ${ticket.title}`}/>
+      <CardHeader title={`Edit Ticket: ${ticket.title}`} />
       <Table>
         <TableBody>
           <TableRow>
             <TableCell style={{ width: '50%', verticalAlign: 'top' }}>
               <FormControl fullWidth={true} margin={"normal"}>
                 <InputLabel htmlFor="title-input">Title</InputLabel>
-                <Input id="title-input" />
+                <Input id="title-input" value={titleValue} onChange={(event) => setTitleValue(event.target.value)} />
               </FormControl>
               <FormControl fullWidth={true} margin={"normal"} color="success">
                 <InputLabel id="project-dropdown-label">Project</InputLabel>
@@ -79,18 +81,18 @@ const EditTicketController = (props: EditTicketProps) => {
             <TableCell style={{ width: '50%', verticalAlign: 'top' }}>
               <FormControl fullWidth={true} margin={"normal"}>
                 <InputLabel htmlFor="description-input">Description</InputLabel>
-                <Input id="description-input" multiline rows={4} />
+                <Input id="description-input" value={descriptionValue} onChange={(event) => setDescriptionValue(event.target.value)} multiline rows={4} />
               </FormControl>
               <FormControl fullWidth={true} margin={"normal"}>
                 <InputLabel id="developer-dropdown-label">
-                  Developer
+                  Personnel
                 </InputLabel>
                 <Select
                   labelId="developer-dropdown-label"
-                  label="Developer"
+                  label="Personnel"
                   id="developer-dropdown"
-                  value={selectedDeveloper} // Connect to state
-                  onChange={(event) => setSelectedDeveloper(event.target.value)} // Update state on change
+                  value={selectedPersonnel} // Connect to state
+                  onChange={(event) => setSelectedPersonnel(event.target.value)} // Update state on change
 
                 >
                   {users.map((user) => (
