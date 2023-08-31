@@ -2,8 +2,13 @@ import { Button, Card, CardHeader, FormControl, InputLabel, Input, MenuItem, Sel
 import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 import { useState } from "react";
+import Ticket from "../models/Ticket";
 
-const EditTicketController = () => {
+interface EditTicketProps {
+  ticket: Ticket
+}
+const EditTicketController = (props: EditTicketProps) => {
+  const { ticket } = props
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
   const [selectedProject, setSelectedProject] = useState('');
@@ -13,7 +18,7 @@ const EditTicketController = () => {
   const [selectedStatus, setSelectedStatus] = useState('');
   return (
     <Card>
-      <CardHeader title="Edit Ticket" />
+      <CardHeader title={`Edit Ticket: ${ticket.title}`}/>
       <Table>
         <TableBody>
           <TableRow>
