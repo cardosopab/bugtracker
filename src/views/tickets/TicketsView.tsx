@@ -3,8 +3,6 @@ import DrawerComponent from "../DrawerComponent"
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import Project from "../../models/Project";
-import { useSelector } from "react-redux";
-import { RootState } from "../../models/redux/store";
 import EditTicketController from "../../controllers/EditTicketController";
 
 interface TicketsProps {
@@ -12,11 +10,10 @@ interface TicketsProps {
   users: User[];
   projects: Project[];
   handleModal: any;
-  open: boolean;
+  openTickets: boolean[];
 }
 function Tickets(props: TicketsProps) {
-  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
-  const { tickets, users, projects, handleModal, open } = props;
+  const { tickets, users, projects, handleModal, openTickets } = props;
 
   const style = {
     position: 'absolute' as 'absolute',
@@ -39,6 +36,7 @@ function Tickets(props: TicketsProps) {
             <TableRow>
               <TableCell colSpan={2}>Title</TableCell>
               <TableCell>Project Name</TableCell>
+              <TableCell>Submitter</TableCell>
               <TableCell>Developer</TableCell>
               <TableCell>Priority</TableCell>
               <TableCell>Status</TableCell>
@@ -48,29 +46,34 @@ function Tickets(props: TicketsProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tickets.map(ticket => {
+            {tickets.map((ticket, index) => {
+
+              const isModalOpen = openTickets[index] ?? false;
               const { id, title, projectId, submitterId, personnelId, priority, status, type, createdAt } = ticket
               const submitter = users.find(user => user.id === submitterId);
+              const personnel = users.find(user => user.id === personnelId);
               const project = projects.find(project => project.id === projectId);
               return (
                 <TableRow key={id}>
                   <TableCell colSpan={2}>{title}</TableCell>
                   <TableCell>{project?.name}</TableCell>
                   <TableCell>{submitter?.name}</TableCell>
+                  <TableCell>{personnel?.name}</TableCell>
                   <TableCell>{priority}</TableCell>
                   <TableCell>{status}</TableCell>
                   <TableCell>{type}</TableCell>
                   <TableCell>{createdAt}</TableCell>
                   <TableCell>
                     <div className="column">
-                      <Button onClick={handleModal}>Edit</Button>
+                      <Button onClick={() => handleModal(index)}>Edit</Button>
                       <Modal
-                        open={open}
-                        onClose={handleModal}
+                        open={isModalOpen}
+                        onClose={() => handleModal(index)}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                       >
                         <Box sx={style}>
+                          <p>{title}</p>
                           <EditTicketController ticket={ticket} />
                         </Box>
                       </Modal>
