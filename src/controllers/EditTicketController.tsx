@@ -3,12 +3,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 import { useState } from "react";
 import Ticket from "../models/Ticket";
+import { updateTicket } from "../models/database/database";
 
 interface EditTicketProps {
   ticket: Ticket
+  handleModal: any;
+  index: number;
 }
 const EditTicketController = (props: EditTicketProps) => {
-  const { ticket } = props
+  const { ticket, handleModal, index } = props
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
   const [titleValue, setTitleValue] = useState(ticket.title)
@@ -18,6 +21,12 @@ const EditTicketController = (props: EditTicketProps) => {
   const [selectedType, setSelectedType] = useState(ticket.type);
   const [selectedPersonnel, setSelectedPersonnel] = useState(users.find(user => user.id === ticket.personnelId)?.name);
   const [selectedStatus, setSelectedStatus] = useState(ticket.status);
+
+  const handleUpdate = (tickeId: string, ticket: Ticket) => {
+    handleModal(index);
+    updateTicket(tickeId, ticket)
+  }
+
   return (
     <Card>
       <CardHeader title={`Edit Ticket: ${ticket.title}`} />
@@ -125,7 +134,23 @@ const EditTicketController = (props: EditTicketProps) => {
           <TableRow>
             <TableCell colSpan={2} align="center">
               <Button>Back to List</Button>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleUpdate(ticket.id, {
+                  id: ticket.id,
+                  title: titleValue,
+                  description: descriptionValue,
+                  projectId: projects.find(project => project.name === selectedProject)!.id,
+                  submitterId: ticket.submitterId,
+                  personnelId: users.find(user => user.name === selectedPersonnel)!.id,
+                  priority: selectedPriority,
+                  status: selectedStatus,
+                  type: selectedType,
+                  createdAt: ticket.createdAt,
+                  comments: ticket.comments
+                })}
+              >
                 Update Ticket
               </Button>
             </TableCell>

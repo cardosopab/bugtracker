@@ -108,6 +108,18 @@ const createTicket = async (projectId: string, submitterId: string, personnelId:
 
 }
 
+const updateTicket = async (ticketId: string, ticket: Ticket) => {
+    try {
+        const docRef = doc(database, TICKETS_COLLECTION, ticketId);
+        await setDoc(docRef, ticket);
+        console.log("Updated document with ID: ", docRef.id);
+
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+};
+
 const removeTicket = async (ticketId: string) => {
     try {
         const docRef = doc(database, TICKETS_COLLECTION, ticketId);
@@ -120,4 +132,4 @@ const removeTicket = async (ticketId: string) => {
     }
 };
 
-export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, removeTicket };
+export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, updateTicket, removeTicket };

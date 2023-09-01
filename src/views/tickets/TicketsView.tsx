@@ -74,7 +74,7 @@ function Tickets(props: TicketsProps) {
                       >
                         <Box sx={style}>
                           <p>{title}</p>
-                          <EditTicketController ticket={ticket} />
+                          <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
                         </Box>
                       </Modal>
                       <Button>Details</Button>
