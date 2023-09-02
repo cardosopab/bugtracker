@@ -126,7 +126,7 @@ const EditTicketController = (props: EditTicketProps) => {
                   <MenuItem value="In Progress">In Progress</MenuItem>
                   <MenuItem value="Needs Attention">Needs Attention</MenuItem>
                   <MenuItem value="Ready for Review">Ready for Review</MenuItem>
-                  <MenuItem value="Finished">Finished</MenuItem>
+                  <MenuItem value="Resolved">Resolved</MenuItem>
                 </Select>
               </FormControl>
             </TableCell>
