@@ -1,4 +1,3 @@
-// import { Card } from "@mui/material"
 import DrawerComponent from "../DrawerComponent"
 import { BarChart } from '@mui/x-charts/BarChart';
 import { PieChart } from "@mui/x-charts/PieChart";
@@ -51,84 +50,85 @@ function Dashboard() {
     return (
         <>
             <DrawerComponent />
-
             <div className="column">
                 <div className="row">
+                    <div className="chart-container">
+                        <BarChart
+                            title="Ticket Priority"
+                            xAxis={[
+                                {
+                                    id: 'priority',
+                                    data: priorityOptions,
+                                    scaleType: 'band',
+                                },
+                            ]}
+                            series={[
+                                {
+                                    data: priorityCount,
+                                },
+                            ]}
+                        />
+                    </div>
+                    <div className="chart-container">
+                        <PieChart
+                            series={[
+                                {
+                                    data: typeCount,
+                                    innerRadius: 40,
+                                    outerRadius: 100,
+                                    paddingAngle: 1,
+                                    cornerRadius: 5,
+                                    startAngle: -180,
+                                    endAngle: 180,
 
-                    <BarChart
-                        title="Ticket Priority"
-                        xAxis={[
-                            {
-                                id: 'priority',
-                                data: priorityOptions,
-                                scaleType: 'band',
-                            },
-                        ]}
-                        series={[
-                            {
-                                data: priorityCount,
-                            },
-                        ]}
-                        width={700}
-                        height={300}
-                    />
-                    <PieChart
-                        series={[
-                            {
-                                data: typeCount,
-                                innerRadius: 40,
-                                outerRadius: 100,
-                                paddingAngle: 1,
-                                cornerRadius: 5,
-                                startAngle: -180,
-                                endAngle: 180,
-                                cx: 150,
-                                cy: 150,
-                            },
-                        ]}
-                        width={400}
-                        height={400}
-                    />
+                                },
+                            ]}
+                            legend={{
+                                direction: 'column',
+                                offset: { x: 150, y: 150 }
+                            }}
+                        />
+                    </div>
                 </div>
                 <div className="row">
-
-                    <BarChart
-                        title="Ticket Status"
-                        xAxis={[
-                            {
-                                id: 'status',
-                                data: statusOptions,
-                                scaleType: 'band',
-                            },
-                        ]}
-                        series={[
-                            {
-                                data: statusCount,
-                            },
-                        ]}
-                        width={700}
-                        height={300}
-                    />
-                    <PieChart
-                        series={[
-                            {
-                                data: personnelCount,
-                                innerRadius: 40,
-                                outerRadius: 100,
-                                paddingAngle: 1,
-                                cornerRadius: 5,
-                                startAngle: -180,
-                                endAngle: 180,
-                                cx: 150,
-                                cy: 150,
-                            },
-                        ]}
-                        width={400}
-                        height={400}
-                    />
+                    <div className="chart-container">
+                        <BarChart
+                            title="Ticket Status"
+                            xAxis={[
+                                {
+                                    id: 'status',
+                                    data: statusOptions,
+                                    scaleType: 'band',
+                                },
+                            ]}
+                            series={[
+                                {
+                                    data: statusCount,
+                                },
+                            ]}
+                        />
+                    </div>
+                    <div className="chart-container">
+                        <PieChart
+                            series={[
+                                {
+                                    data: personnelCount,
+                                    innerRadius: 40,
+                                    outerRadius: 100,
+                                    paddingAngle: 1,
+                                    cornerRadius: 5,
+                                    startAngle: -180,
+                                    endAngle: 180,
+                                },
+                            ]}
+                            legend={{
+                                direction: 'column',
+                                offset: { x: 150, y: 150 }
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
-
         </>
     )
 }

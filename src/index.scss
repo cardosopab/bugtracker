@@ -10,6 +10,18 @@ $Max-Width: 600px;
     transform: translate(-50%, -50%);
   }
 
+  .chart-container {
+    width: 45vw;
+    height: 40vh;
+  }
+
+  @media (max-width:$Max-Width) {
+    .chart-container {
+      width: 100vw;
+      height: 50vh;
+    }
+  }
+
   .row {
     display: flex;
     justify-content: space-evenly;
@@ -33,6 +45,15 @@ $Max-Width: 600px;
     .column {
       margin: 1em;
     }
+  }
+
+  .MuiChartsAxis-tickLabel {
+    transform: rotate(10deg);
+    transform-origin: top left;
+  }
+
+  .MuiChartsLegend-column {
+    background-color: #1976d2;
   }
 
   .MuiCardHeader-root {
