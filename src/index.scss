@@ -52,8 +52,12 @@ $Max-Width: 600px;
     transform-origin: top left;
   }
 
-  .MuiChartsLegend-column {
-    background-color: #1976d2;
+  .MuiCard-root {
+    background-color: #eee;
+  }
+
+  .MuiTableRow-head {
+    background-color: #eee;
   }
 
   .MuiCardHeader-root {
