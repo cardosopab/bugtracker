@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Box, Button, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import DrawerComponent from "../DrawerComponent"
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
@@ -31,6 +31,7 @@ function Tickets(props: TicketsProps) {
     <>
       <DrawerComponent />
       <TableContainer component={Paper}>
+        <CardHeader title="Tickets" subheader="You are a part of:" />
         <Table>
           <TableHead>
             <TableRow>
