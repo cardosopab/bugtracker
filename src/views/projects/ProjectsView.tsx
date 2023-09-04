@@ -28,7 +28,7 @@ function ProjectsView(props: ProjectsViewProps) {
         </form>
       </div>
       <Card style={{ margin: '1em' }}>
-        <CardHeader title='Projects' subheader='Projects you are a part of:' style={{ backgroundColor: '#1976d2', color: 'white', }} subheaderTypographyProps={{ color: 'white' }} />
+        <CardHeader title='Projects' subheader='You are a part of:' style={{ backgroundColor: '#1976d2', color: 'white', }} subheaderTypographyProps={{ color: 'white' }} />
         {
           projects.length !== 0 ?
             <TableContainer component={Paper}>
