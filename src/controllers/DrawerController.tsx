@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,34 +14,15 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListIcon from "@mui/icons-material/List";
-import { Dashboard, Group, GroupAdd, Handyman, Logout, Person, Menu, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Dashboard, Group, GroupAdd, Handyman, Logout, Person, Menu } from "@mui/icons-material";
 import { auth } from "../models/database/firebase-init";
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD_URL, PROFILE_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL } from "./viewsUrls";
+import { DASHBOARD_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL } from "../views/viewsUrls";
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawerIndex } from '../models/redux/drawerSlice'
 import { RootState } from '../models/redux/store'
 
 const drawerWidth = 240;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-    open?: boolean;
-}>(({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-        transition: theme.transitions.create("margin", {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    }),
-}));
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -73,20 +54,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end",
 }));
 
-export default function DrawerComponent() {
+interface DrawerControllerProps {
+    children: React.ReactNode;
+}
+const DrawerController = ({ children }: DrawerControllerProps) => {
     const navigateTo = useNavigate();
-    const theme = useTheme();
+    // const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
     const drawerIndex = useSelector((state: RootState) => state.drawer.index);
+    const currentUserId = useSelector((state: RootState) => state.auth.currentUser);
+    const users = useSelector((state: RootState) => state.users.value);
+    const currentUser = users.find(user => currentUserId === user.id);
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const handleDrawerToggle = () => {
+        setOpen(!open);
+    }
     const handleLogout = () => {
         dispatch(setDrawerIndex(0));
         console.log('currentUser', auth.currentUser);
@@ -122,17 +105,52 @@ export default function DrawerComponent() {
         dispatch(setDrawerIndex(index));
         navigateTo(url);
     };
+
+    const drawer = (
+        <>
+            <DrawerHeader>
+                <Typography>
+                    {currentUser?.name}
+                </Typography>
+            </DrawerHeader>
+            <Divider />
+            <List>
+                {[
+                    { name: "Dashboard Home", icon: 'dashboard', url: DASHBOARD_URL },
+                    { name: "Manage Role Assignment", icon: 'group-add', url: ROLES_URL },
+                    { name: "Manage Project Users", icon: 'group', url: USERS_URL },
+                    { name: "My Projects", icon: 'handy-man', url: PROJECTS_URL },
+                    { name: "My Tickets", icon: 'list', url: TICKETS_URL },
+                    // { name: "User Profile", icon: 'person', url: PROFILE_URL },
+                ].map(({ name, icon, url }, i) => (
+                    <ListItem key={name} disablePadding >
+                        <ListItemButton
+                            selected={drawerIndex === i} onClick={(event) => handleListItemClick(event, i, url)}>
+                            <ListItemIcon>
+                                {handleIconSwitch(icon)}
+                            </ListItemIcon>
+                            <ListItemText primary={name} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
+            <Divider />
+        </>
+    )
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open} >
+            <AppBar position="fixed" sx={{
+                width: { sm: `calc(100% - ${drawerWidth}px)` },
+                ml: { sm: `${drawerWidth}px` },
+            }} >
                 <Toolbar>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
                         edge="start"
-                        sx={{ mr: 2, ...(open && { display: "none" }) }}
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { sm: 'none' } }}
                     >
                         <Menu />
                     </IconButton>
@@ -144,54 +162,45 @@ export default function DrawerComponent() {
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    "& .MuiDrawer-paper": {
-                        width: drawerWidth,
-                        boxSizing: "border-box",
-                    },
-                }}
-                variant="persistent"
-                anchor="left"
-                open={open}
+            <Box
+                component="nav"
+                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                aria-label="mailbox folders"
             >
-                <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === "ltr" ? (
-                            <ChevronLeft />
-                        ) : (
-                            <ChevronRight />
-                        )}
-                    </IconButton>
-                </DrawerHeader>
-                <Divider />
-                <List>
-                    {[
-                        { name: "Dashboard Home", icon: 'dashboard', url: DASHBOARD_URL },
-                        { name: "Manage Role Assignment", icon: 'group-add', url: ROLES_URL },
-                        { name: "Manage Project Users", icon: 'group', url: USERS_URL },
-                        { name: "My Projects", icon: 'handy-man', url: PROJECTS_URL },
-                        { name: "My Tickets", icon: 'list', url: TICKETS_URL },
-                        { name: "User Profile", icon: 'person', url: PROFILE_URL },
-                    ].map(({ name, icon, url }, i) => (
-                        <ListItem key={name} disablePadding >
-                            <ListItemButton
-                                selected={drawerIndex === i} onClick={(event) => handleListItemClick(event, i, url)}>
-                                <ListItemIcon>
-                                    {handleIconSwitch(icon)}
-                                </ListItemIcon>
-                                <ListItemText primary={name} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-            </Drawer>
-            <Main open={open}>
-                <DrawerHeader />
-            </Main>
+                <Drawer
+                    variant="temporary"
+                    open={open}
+                    onClose={handleDrawerToggle}
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
+                    }}
+                    sx={{
+                        display: { xs: 'block', sm: 'none' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                    }}
+                >
+                    {drawer}
+                </Drawer>
+                <Drawer
+                    variant="permanent"
+                    sx={{
+                        display: { xs: 'none', sm: 'block' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                    }}
+                    open
+                >
+                    {drawer}
+                </Drawer>
+            </Box>
+            <Box
+                component="main"
+                sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, marginTop: "64px", }}
+            >
+                {children}
+            </Box>
         </Box>
     );
 }
+
+
+export default DrawerController;
