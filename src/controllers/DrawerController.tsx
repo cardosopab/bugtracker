@@ -141,8 +141,8 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
             <AppBar position="fixed" sx={{
-                width: { sm: `calc(100% - ${drawerWidth}px)` },
-                ml: { sm: `${drawerWidth}px` },
+                width: { lg: `calc(100% - ${drawerWidth}px)` },
+                ml: { lg: `${drawerWidth}px` },
             }} >
                 <Toolbar>
                     <IconButton
@@ -150,7 +150,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
+                        sx={{ mr: 2, display: { lg: 'none' } }}
                     >
                         <Menu />
                     </IconButton>
@@ -164,7 +164,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
             </AppBar>
             <Box
                 component="nav"
-                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                sx={{ width: { lg: drawerWidth }, flexShrink: { lg: 0 } }}
                 aria-label="mailbox folders"
             >
                 <Drawer
@@ -175,7 +175,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: 'block', sm: 'none' },
+                        display: { xs: 'block', lg: 'none' },
                         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                     }}
                 >
@@ -184,7 +184,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
                 <Drawer
                     variant="permanent"
                     sx={{
-                        display: { xs: 'none', sm: 'block' },
+                        display: { xs: 'none', lg: 'block' },
                         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                     }}
                     open
@@ -194,7 +194,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
             </Box>
             <Box
                 component="main"
-                sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, marginTop: "64px", }}
+                sx={{ flexGrow: 1, width: { lg: `calc(100% - ${drawerWidth}px)` }, marginTop: "64px", }}
             >
                 {children}
             </Box>

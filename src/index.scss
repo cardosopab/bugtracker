@@ -10,15 +10,28 @@ $Max-Width: 600px;
     transform: translate(-50%, -50%);
   }
 
-  .chart-container {
-    width: 45vw;
-    height: 40vh;
-  }
+  .MuiPaper-root {
 
-  @media (max-width:$Max-Width) {
+    .MuiChartsSurface-root {
+      width: 100%;
+      height: auto;
+    }
+
+    .MuiCardHeader-root {
+      background-color: $Mui-blue;
+      color: white;
+    }
+
     .chart-container {
-      width: 100vw;
-      height: 50vh;
+      width: min(50vw, 50vh);
+      height: min(50vw, 50vh);
+    }
+
+    @media (max-width:$Small-Viewport) {
+      .chart-container {
+        width: min(80vw, 80vh);
+        height: min(80vw, 80vh);
+      }
     }
   }
 
@@ -27,10 +40,10 @@ $Max-Width: 600px;
     justify-content: space-evenly;
   }
 
-  @media (max-width:$Max-Width) {
+  @media (max-width:$Small-Viewport) {
     .row {
-      display: flex;
       flex-direction: column;
+      display: flex;
       align-items: center;
     }
   }
@@ -41,19 +54,24 @@ $Max-Width: 600px;
     justify-content: space-evenly;
   }
 
-  @media (max-width:$Max-Width) {
+  @media (max-width:$Small-Viewport) {
     .column {
       margin: 1em;
     }
   }
 
   .MuiChartsAxis-tickLabel {
-    transform: rotate(10deg);
+    transform: rotate(20deg);
     transform-origin: top left;
   }
 
   .MuiCard-root {
     background-color: #eee;
+
+    .MuiChartsSurface-root {
+      width: 100%;
+      height: auto;
+    }
   }
 
   .MuiTableRow-head {
