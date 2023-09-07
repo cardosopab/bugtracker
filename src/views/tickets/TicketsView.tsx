@@ -1,5 +1,5 @@
 import { Box, Button, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import DrawerComponent from "../DrawerComponent"
+import DrawerController from "../../controllers/DrawerController"
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import Project from "../../models/Project";
@@ -29,64 +29,65 @@ function Tickets(props: TicketsProps) {
   };
   return (
     <>
-      <DrawerComponent />
-      <TableContainer component={Paper}>
-        <CardHeader title="Tickets" subheader="You are a part of:" />
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell colSpan={2}>Title</TableCell>
-              <TableCell>Project Name</TableCell>
-              <TableCell>Submitter</TableCell>
-              <TableCell>Developer</TableCell>
-              <TableCell>Priority</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Created</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tickets.map((ticket, index) => {
+      <DrawerController>
+        <TableContainer component={Paper}>
+          <CardHeader title="Tickets" subheader="You are a part of:" />
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell colSpan={2}>Title</TableCell>
+                <TableCell>Project Name</TableCell>
+                <TableCell>Submitter</TableCell>
+                <TableCell>Developer</TableCell>
+                <TableCell>Priority</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Created</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tickets.map((ticket, index) => {
 
-              const isModalOpen = openTickets[index] ?? false;
-              const { id, title, projectId, submitterId, personnelId, priority, status, type, createdAt } = ticket
-              const submitter = users.find(user => user.id === submitterId);
-              const personnel = users.find(user => user.id === personnelId);
-              const project = projects.find(project => project.id === projectId);
-              return (
-                <TableRow key={id}>
-                  <TableCell colSpan={2}>{title}</TableCell>
-                  <TableCell>{project?.name}</TableCell>
-                  <TableCell>{submitter?.name}</TableCell>
-                  <TableCell>{personnel?.name}</TableCell>
-                  <TableCell>{priority}</TableCell>
-                  <TableCell>{status}</TableCell>
-                  <TableCell>{type}</TableCell>
-                  <TableCell>{createdAt}</TableCell>
-                  <TableCell>
-                    <div className="column">
-                      <Button onClick={() => handleModal(index)}>Edit</Button>
-                      <Modal
-                        open={isModalOpen}
-                        onClose={() => handleModal(index)}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style}>
-                          <p>{title}</p>
-                          <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
-                        </Box>
-                      </Modal>
-                      <Button>Details</Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                const isModalOpen = openTickets[index] ?? false;
+                const { id, title, projectId, submitterId, personnelId, priority, status, type, createdAt } = ticket
+                const submitter = users.find(user => user.id === submitterId);
+                const personnel = users.find(user => user.id === personnelId);
+                const project = projects.find(project => project.id === projectId);
+                return (
+                  <TableRow key={id}>
+                    <TableCell colSpan={2}>{title}</TableCell>
+                    <TableCell>{project?.name}</TableCell>
+                    <TableCell>{submitter?.name}</TableCell>
+                    <TableCell>{personnel?.name}</TableCell>
+                    <TableCell>{priority}</TableCell>
+                    <TableCell>{status}</TableCell>
+                    <TableCell>{type}</TableCell>
+                    <TableCell>{createdAt}</TableCell>
+                    <TableCell>
+                      <div className="column">
+                        <Button onClick={() => handleModal(index)}>Edit</Button>
+                        <Modal
+                          open={isModalOpen}
+                          onClose={() => handleModal(index)}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style}>
+                            <p>{title}</p>
+                            <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
+                          </Box>
+                        </Modal>
+                        <Button>Details</Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </DrawerController>
     </>
   )
 }

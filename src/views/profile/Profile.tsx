@@ -1,10 +1,11 @@
-import DrawerComponent from "../DrawerComponent"
+import DrawerController from "../../controllers/DrawerController"
 
 function Profile() {
   return (
     <>
-      <DrawerComponent />
-      <div>Profile</div>
+      <DrawerController>
+        <div>Profile</div>
+      </DrawerController>
     </>
   )
 }

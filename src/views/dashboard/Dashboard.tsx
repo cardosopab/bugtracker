@@ -1,4 +1,4 @@
-import DrawerComponent from "../DrawerComponent"
+import DrawerController from "../../controllers/DrawerController"
 import { BarChart } from '@mui/x-charts/BarChart';
 import { PieChart } from "@mui/x-charts/PieChart";
 import { useSelector } from "react-redux";
@@ -57,99 +57,100 @@ function Dashboard() {
     const topPersonnelCount = personnelCount.slice(0, 4);
     return (
         <>
-            <DrawerComponent />
-            <div className="column">
-                <div className="row">
-                    <Card sx={{ margin: 2 }}>
-                        <div className="chart-container">
+            <DrawerController>
+                <div className="column">
+                    <div className="row">
+                        <Card sx={{ margin: 2 }}>
+                            <div className="chart-container">
 
-                            <BarChart
-                                title="Ticket Priority"
-                                xAxis={[
-                                    {
-                                        id: 'priority',
-                                        data: priorityOptions,
-                                        scaleType: 'band',
-                                    },
-                                ]}
-                                series={[
-                                    {
-                                        data: priorityCount,
-                                    },
-                                ]}
-                            />
-                        </div>
-                        <CardHeader title="Ticket Priority" />
-                    </Card>
-                    <Card sx={{ margin: 2 }}>
-                        <div className="chart-container">
-                            <PieChart
-                                series={[
-                                    {
-                                        data: topTypeCount,
-                                        innerRadius: 40,
-                                        outerRadius: 100,
-                                        paddingAngle: 1,
-                                        cornerRadius: 5,
-                                        startAngle: -180,
-                                        endAngle: 180,
+                                <BarChart
+                                    title="Ticket Priority"
+                                    xAxis={[
+                                        {
+                                            id: 'priority',
+                                            data: priorityOptions,
+                                            scaleType: 'band',
+                                        },
+                                    ]}
+                                    series={[
+                                        {
+                                            data: priorityCount,
+                                        },
+                                    ]}
+                                />
+                            </div>
+                            <CardHeader title="Ticket Priority" />
+                        </Card>
+                        <Card sx={{ margin: 2 }}>
+                            <div className="chart-container">
+                                <PieChart
+                                    series={[
+                                        {
+                                            data: topTypeCount,
+                                            innerRadius: 40,
+                                            outerRadius: 100,
+                                            paddingAngle: 1,
+                                            cornerRadius: 5,
+                                            startAngle: -180,
+                                            endAngle: 180,
 
-                                    },
-                                ]}
-                                legend={{
-                                    direction: 'column',
-                                    offset: { x: 150, y: 150 }
-                                }}
-                            />
-                        </div>
-                        <CardHeader title="Ticket Type" />
-                    </Card>
-                </div>
-                <div className="row">
-                    <Card sx={{ margin: 2 }}>
-                        <div className="chart-container">
-                            <BarChart
-                                title="Ticket Status"
-                                xAxis={[
-                                    {
-                                        id: 'status',
-                                        data: statusOptions,
-                                        scaleType: 'band',
-                                    },
-                                ]}
-                                series={[
-                                    {
-                                        data: statusCount,
-                                    },
-                                ]}
-                            />
-                        </div>
-                        <CardHeader title="Ticket Status" />
-                    </Card>
-                    <Card sx={{ margin: 2 }}>
-                        <div className="chart-container">
-                            <PieChart
-                                series={[
-                                    {
-                                        data: topPersonnelCount,
-                                        innerRadius: 40,
-                                        outerRadius: 100,
-                                        paddingAngle: 1,
-                                        cornerRadius: 5,
-                                        startAngle: -180,
-                                        endAngle: 180,
-                                    },
-                                ]}
-                                legend={{
-                                    direction: 'column',
-                                    offset: { x: 150, y: 150 }
-                                }}
-                            />
-                        </div>
-                        <CardHeader title="Active Personnel" />
-                    </Card>
-                </div>
-            </div >
+                                        },
+                                    ]}
+                                    legend={{
+                                        direction: 'column',
+                                        offset: { x: 150, y: 150 }
+                                    }}
+                                />
+                            </div>
+                            <CardHeader title="Ticket Type" />
+                        </Card>
+                    </div>
+                    <div className="row">
+                        <Card sx={{ margin: 2 }}>
+                            <div className="chart-container">
+                                <BarChart
+                                    title="Ticket Status"
+                                    xAxis={[
+                                        {
+                                            id: 'status',
+                                            data: statusOptions,
+                                            scaleType: 'band',
+                                        },
+                                    ]}
+                                    series={[
+                                        {
+                                            data: statusCount,
+                                        },
+                                    ]}
+                                />
+                            </div>
+                            <CardHeader title="Ticket Status" />
+                        </Card>
+                        <Card sx={{ margin: 2 }}>
+                            <div className="chart-container">
+                                <PieChart
+                                    series={[
+                                        {
+                                            data: topPersonnelCount,
+                                            innerRadius: 40,
+                                            outerRadius: 100,
+                                            paddingAngle: 1,
+                                            cornerRadius: 5,
+                                            startAngle: -180,
+                                            endAngle: 180,
+                                        },
+                                    ]}
+                                    legend={{
+                                        direction: 'column',
+                                        offset: { x: 150, y: 150 }
+                                    }}
+                                />
+                            </div>
+                            <CardHeader title="Active Personnel" />
+                        </Card>
+                    </div>
+                </div >
+            </DrawerController>
         </>
     )
 }

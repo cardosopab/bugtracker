@@ -1,5 +1,5 @@
 import { RootState } from "../models/redux/store";
-import DrawerComponent from "../views/DrawerComponent"
+import DrawerController from "./DrawerController"
 import ProjectDetailsView from "../views/project_details/ProjectDetailsView"
 import { useSelector } from "react-redux/es/hooks/useSelector"
 import { removeTicket } from "../models/database/database";
@@ -20,16 +20,18 @@ const ProjectDetailsController = () => {
     if (details.id === undefined) {
         return (
             <>
-                <DrawerComponent />
-                <div className='center'>No project was selected.</div>
+                <DrawerController >
+                    <div className='center'>No project was selected.</div>
+                </DrawerController>
             </>
         );
     }
     tickets = tickets.filter(ticket => ticket.projectId === details.id);
     return (
         <>
-            <DrawerComponent />
-            <ProjectDetailsView details={details} users={users} tickets={tickets} handleTicketRemoval={handleTicketRemoval} handleModal={handleModal} open={open} />
+            <DrawerController>
+                <ProjectDetailsView details={details} users={users} tickets={tickets} handleTicketRemoval={handleTicketRemoval} handleModal={handleModal} open={open} />
+            </DrawerController>
         </>
     )
 }
