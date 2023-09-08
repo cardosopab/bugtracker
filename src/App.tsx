@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { auth, database } from './models/database/firebase-init';
 import ProtectedRoutes from './views/ProtectedRoutes';
 import Dashboard from './views/dashboard/Dashboard';
-import { DASHBOARD_URL, PROJECT_DETAILS_URL, PROFILE_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL } from './views/viewsUrls';
+import { DASHBOARD_URL, PROJECT_DETAILS_URL, PROFILE_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL, KANBAN_URL } from './views/viewsUrls';
 import TicketsController from './controllers/TicketsController';
 import Profile from './views/profile/Profile';
 import ProjectsController from './controllers/ProjectsController';
@@ -23,6 +23,7 @@ import UsersController from './controllers/UsersController';
 import ProjectDetailsController from './controllers/ProjectDetailsController';
 import { setAuthStatus, setCurrentUser } from './models/redux/authSlice';
 import { RootState } from './models/redux/store';
+import KanbanController from './controllers/KanbanController';
 
 function App() {
     const [authInitialized, setAuthInitialized] = useState(false);
@@ -139,6 +140,7 @@ function App() {
                     <Route element={<ProtectedRoutes />}>
                         <Route path='/' element={<AuthController />} />
                         <Route path={DASHBOARD_URL} element={<Dashboard />} />
+                        <Route path={KANBAN_URL} element={<KanbanController />} />
                         <Route path={ROLES_URL} element={<RolesController />} />
                         <Route path={USERS_URL} element={<UsersController />} />
                         <Route path={PROJECTS_URL} element={<ProjectsController />} />
