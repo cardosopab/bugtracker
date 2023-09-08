@@ -13,14 +13,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListIcon from "@mui/icons-material/List";
-import { Dashboard, Group, GroupAdd, Handyman, Logout, Person, Menu } from "@mui/icons-material";
+import { Logout, Menu } from "@mui/icons-material";
 import { auth } from "../models/database/firebase-init";
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD_URL, PROJECTS_URL, ROLES_URL, TICKETS_URL, USERS_URL } from "../views/viewsUrls";
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawerIndex } from '../models/redux/drawerSlice'
 import { RootState } from '../models/redux/store'
+import { handleIconSwitch, navOptions } from "../constants/drawerConstants";
 
 const drawerWidth = 240;
 
@@ -59,7 +58,6 @@ interface DrawerControllerProps {
 }
 const DrawerController = ({ children }: DrawerControllerProps) => {
     const navigateTo = useNavigate();
-    // const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
     const drawerIndex = useSelector((state: RootState) => state.drawer.index);
@@ -79,24 +77,6 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
         });
     };
 
-    const handleIconSwitch = (icon: string) => {
-        switch (icon) {
-            case 'dashboard':
-                return <Dashboard />
-            case 'group-add':
-                return <GroupAdd />
-            case 'group':
-                return <Group />
-            case 'handy-man':
-                return <Handyman />
-            case 'list':
-                return <ListIcon />
-            case 'person':
-                return <Person />
-            default:
-                return <Dashboard />
-        }
-    }
     const handleListItemClick = (
         _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
         index: number,
@@ -115,14 +95,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
             </DrawerHeader>
             <Divider />
             <List>
-                {[
-                    { name: "Dashboard Home", icon: 'dashboard', url: DASHBOARD_URL },
-                    { name: "Manage Role Assignment", icon: 'group-add', url: ROLES_URL },
-                    { name: "Manage Project Users", icon: 'group', url: USERS_URL },
-                    { name: "My Projects", icon: 'handy-man', url: PROJECTS_URL },
-                    { name: "My Tickets", icon: 'list', url: TICKETS_URL },
-                    // { name: "User Profile", icon: 'person', url: PROFILE_URL },
-                ].map(({ name, icon, url }, i) => (
+                {navOptions.map(({ name, icon, url }, i) => (
                     <ListItem key={name} disablePadding >
                         <ListItemButton
                             selected={drawerIndex === i} onClick={(event) => handleListItemClick(event, i, url)}>
