@@ -74,7 +74,6 @@ function Tickets(props: TicketsProps) {
                           aria-describedby="modal-modal-description"
                         >
                           <Box sx={style}>
-                            <p>{title}</p>
                             <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
                           </Box>
                         </Modal>
