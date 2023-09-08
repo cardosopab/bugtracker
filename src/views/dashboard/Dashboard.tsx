@@ -4,14 +4,12 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { useSelector } from "react-redux";
 import { RootState } from "../../models/redux/store";
 import { Card, CardHeader } from "@mui/material";
+import { priorityOptions, statusOptions, typeOptions } from "../../constants/ticketConstants";
 
 function Dashboard() {
     const tickets = useSelector((state: RootState) => state.tickets.value);
     const users = useSelector((state: RootState) => state.users.value);
 
-    const priorityOptions: string[] = ['Low', 'Medium', 'High',];
-    const typeOptions: string[] = ['Bug/Errors', 'Feature', 'Task', 'Documentation', 'Testing/QA', 'Feedback', 'Duplicate/Invalid'];
-    const statusOptions: string[] = ["Unassigned", "In Progress", "Needs Attention", "Ready for Review", "Resolved"]
     const priorityCount: number[] = new Array(priorityOptions.length).fill(0);
     const statusCount: number[] = new Array(statusOptions.length).fill(0);
     const typeCount: { id: number, value: number; label: string }[] = [];

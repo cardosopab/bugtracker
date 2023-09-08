@@ -4,6 +4,7 @@ import { RootState } from "../models/redux/store";
 import { useState } from "react";
 import Ticket from "../models/Ticket";
 import { updateTicket } from "../models/database/database";
+import { priorityOptions, statusOptions, typeOptions } from "../constants/ticketConstants";
 
 interface EditTicketProps {
   ticket: Ticket
@@ -67,9 +68,9 @@ const EditTicketController = (props: EditTicketProps) => {
                   onChange={(event) => setSelectedPriority(event.target.value)} // Update state on change
 
                 >
-                  <MenuItem value="Low">Low</MenuItem>
-                  <MenuItem value="Medium">Medium</MenuItem>
-                  <MenuItem value="High">High</MenuItem>
+                  {priorityOptions.map(option =>
+                    <MenuItem value={option}>{option}</MenuItem>
+                  )}
                 </Select>
               </FormControl>
               <FormControl fullWidth={true} margin={"normal"}>
@@ -82,8 +83,9 @@ const EditTicketController = (props: EditTicketProps) => {
                   onChange={(event) => setSelectedType(event.target.value)} // Update state on change
 
                 >
-                  <MenuItem value="Bug/Errors">Bug/Errors</MenuItem>
-                  <MenuItem value="Feature">Feature</MenuItem>
+                  {typeOptions.map(option =>
+                    <MenuItem value={option}>{option}</MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </TableCell>
@@ -122,11 +124,9 @@ const EditTicketController = (props: EditTicketProps) => {
                   onChange={(event) => setSelectedStatus(event.target.value)} // Update state on change
 
                 >
-                  <MenuItem value="Unassigned">Unassigned</MenuItem>
-                  <MenuItem value="In Progress">In Progress</MenuItem>
-                  <MenuItem value="Needs Attention">Needs Attention</MenuItem>
-                  <MenuItem value="Ready for Review">Ready for Review</MenuItem>
-                  <MenuItem value="Resolved">Resolved</MenuItem>
+                  {statusOptions.map(option =>
+                    <MenuItem value={option}>{option}</MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </TableCell>

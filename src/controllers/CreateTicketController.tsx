@@ -4,6 +4,7 @@ import { RootState } from "../models/redux/store";
 import { useState } from "react";
 import Project from "../models/Project";
 import { createTicket } from "../models/database/database";
+import { priorityOptions, statusOptions, typeOptions } from "../constants/ticketConstants";
 
 interface CreateTicketProps {
     project: Project | null;
@@ -79,9 +80,9 @@ const CreateTicketController = (props: CreateTicketProps) => {
                                     onChange={(event) => setSelectedPriority(event.target.value)} // Update state on change
 
                                 >
-                                    <MenuItem value="Low">Low</MenuItem>
-                                    <MenuItem value="Medium">Medium</MenuItem>
-                                    <MenuItem value="High">High</MenuItem>
+                                    {priorityOptions.map(option =>
+                                        <MenuItem value={option}>{option}</MenuItem>
+                                    )}
                                 </Select>
                             </FormControl>
                             <FormControl fullWidth={true} margin={"normal"}>
@@ -94,8 +95,9 @@ const CreateTicketController = (props: CreateTicketProps) => {
                                     onChange={(event) => setSelectedType(event.target.value)} // Update state on change
 
                                 >
-                                    <MenuItem value="Bug/Errors">Bug/Errors</MenuItem>
-                                    <MenuItem value="Feature">Feature</MenuItem>
+                                    {typeOptions.map(option =>
+                                        <MenuItem value={option}>{option}</MenuItem>
+                                    )}
                                 </Select>
                             </FormControl>
                         </TableCell>
@@ -111,7 +113,7 @@ const CreateTicketController = (props: CreateTicketProps) => {
                             </FormControl>
                             <FormControl fullWidth={true} margin={"normal"}>
                                 <InputLabel id="developer-dropdown-label">
-                                    Developer
+                                    Personnel
                                 </InputLabel>
                                 <Select
                                     labelId="developer-dropdown-label"
@@ -139,11 +141,9 @@ const CreateTicketController = (props: CreateTicketProps) => {
                                     onChange={(event) => setSelectedStatus(event.target.value)} // Update state on change
 
                                 >
-                                    <MenuItem value="Unassigned">Unassigned</MenuItem>
-                                    <MenuItem value="In Progress">In Progress</MenuItem>
-                                    <MenuItem value="Needs Attention">Needs Attention</MenuItem>
-                                    <MenuItem value="Ready for Review">Ready for Review</MenuItem>
-                                    <MenuItem value="Finished">Finished</MenuItem>
+                                    {statusOptions.map(option =>
+                                        <MenuItem value={option}>{option}</MenuItem>
+                                    )}
                                 </Select>
                             </FormControl>
                         </TableCell>
