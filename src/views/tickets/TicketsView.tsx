@@ -1,5 +1,5 @@
-import { Box, Button, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import DrawerController from "../../controllers/DrawerController"
+import { Box, Button, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid } from "@mui/material";
+import DrawerController from "../../controllers/DrawerController";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import Project from "../../models/Project";
@@ -12,6 +12,7 @@ interface TicketsProps {
   handleModal: any;
   openTickets: boolean[];
 }
+
 function Tickets(props: TicketsProps) {
   const { tickets, users, projects, handleModal, openTickets } = props;
 
@@ -27,67 +28,79 @@ function Tickets(props: TicketsProps) {
     boxShadow: 24,
     p: 4,
   };
-  return (
-    <>
-      <DrawerController>
-        <TableContainer component={Paper}>
-          <CardHeader title="Tickets" subheader="You are a part of:" />
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={2}>Title</TableCell>
-                <TableCell>Project Name</TableCell>
-                <TableCell>Submitter</TableCell>
-                <TableCell>Developer</TableCell>
-                <TableCell>Priority</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Created</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tickets.map((ticket, index) => {
 
-                const isModalOpen = openTickets[index] ?? false;
-                const { id, title, projectId, submitterId, personnelId, priority, status, type, createdAt } = ticket
-                const submitter = users.find(user => user.id === submitterId);
-                const personnel = users.find(user => user.id === personnelId);
-                const project = projects.find(project => project.id === projectId);
-                return (
-                  <TableRow key={id}>
-                    <TableCell colSpan={2}>{title}</TableCell>
-                    <TableCell>{project?.name}</TableCell>
-                    <TableCell>{submitter?.name}</TableCell>
-                    <TableCell>{personnel?.name}</TableCell>
-                    <TableCell>{priority}</TableCell>
-                    <TableCell>{status}</TableCell>
-                    <TableCell>{type}</TableCell>
-                    <TableCell>{createdAt}</TableCell>
-                    <TableCell>
-                      <div className="column">
-                        <Button onClick={() => handleModal(index)}>Edit</Button>
-                        <Modal
-                          open={isModalOpen}
-                          onClose={() => handleModal(index)}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
-                        >
-                          <Box sx={style}>
-                            <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
-                          </Box>
-                        </Modal>
-                        <Button>Details</Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </DrawerController>
-    </>
-  )
+  return (
+    <DrawerController>
+      <Grid container spacing={2} padding={2}>
+        {/* Title/Header */}
+        <Grid item xs={12}>
+          <h1>My Tickets</h1>
+        </Grid>
+
+        {/* Table */}
+        <Grid item xs={12}>
+          <TableContainer component={Paper}>
+            <CardHeader title="Tickets" subheader="You are a part of:" />
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell colSpan={2}>Title</TableCell>
+                  <TableCell>Project Name</TableCell>
+                  <TableCell>Submitter</TableCell>
+                  <TableCell>Developer</TableCell>
+                  <TableCell>Priority</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Type</TableCell>
+                  <TableCell>Created</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tickets.map((ticket, index) => {
+
+                  const isModalOpen = openTickets[index] ?? false;
+                  const { id, title, projectId, submitterId, personnelId, priority, status, type, createdAt } = ticket;
+                  const submitter = users.find(user => user.id === submitterId);
+                  const personnel = users.find(user => user.id === personnelId);
+                  const project = projects.find(project => project.id === projectId);
+
+                  return (
+                    <TableRow key={id}>
+                      <TableCell colSpan={2}>{title}</TableCell>
+                      <TableCell>{project?.name}</TableCell>
+                      <TableCell>{submitter?.name}</TableCell>
+                      <TableCell>{personnel?.name}</TableCell>
+                      <TableCell>{priority}</TableCell>
+                      <TableCell>{status}</TableCell>
+                      <TableCell>{type}</TableCell>
+                      <TableCell>{createdAt}</TableCell>
+                      <TableCell>
+                        <div className="column">
+                          <Button onClick={() => handleModal(index)}>Edit</Button>
+                          <Modal
+                            open={isModalOpen}
+                            onClose={() => handleModal(index)}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
+                            </Box>
+                          </Modal>
+                          <Button>Details</Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
+    </DrawerController>
+  );
 }
-export default Tickets
+
+export default Tickets;
+
