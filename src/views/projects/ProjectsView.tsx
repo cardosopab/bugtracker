@@ -1,5 +1,5 @@
-import { Button, Card, CardHeader, Input, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import DrawerController from "../../controllers/DrawerController"
+import { Button, Card, CardHeader, Input, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, Divider } from "@mui/material";
+import DrawerController from "../../controllers/DrawerController";
 import { RegisterOptions } from "react-hook-form";
 import Project from "../../models/Project";
 
@@ -15,29 +15,43 @@ interface ProjectsViewProps {
 
 function ProjectsView(props: ProjectsViewProps) {
   const { handleSubmit, navigateToUsers, navigateToDetails, onSubmit, register, errors, projects } = props;
+
   return (
-    <>
-      <DrawerController>
-        <div className="row">
+    <DrawerController>
+      <Grid container spacing={2} padding={2}>
+        {/* Title/Header */}
+        <Grid item xs={12}>
+          <h1>Manage Projects</h1>
+        </Grid>
+
+        {/* First Column */}
+        <Grid item xs={12} sm={4}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Input placeholder="Project Name" type="text" {...register('name', { required: "Required" })} />
+            <Input sx={{ marginTop: 2, marginBottom: 2 }} placeholder="Project Name" type="text" {...register('name', { required: "Required" })} />
             {errors.name && <p>{errors.name.message}</p>}
-            <Input placeholder="Description" type="text" {...register('description', { required: "Required" })} style={{ margin: '0 1em' }} />
+            <Input sx={{ marginTop: 2, marginBottom: 2 }} margin={2} placeholder="Description" type="text" {...register('description', { required: "Required" })} />
             {errors.description && <p>{errors.description.message}</p>}
-            <Button variant={'contained'} type="submit" >Create Project</Button>
+            <Button variant={'contained'} type="submit" fullWidth>Create Project</Button>
           </form>
-        </div>
-        <Card style={{ margin: '1em' }}>
-          <CardHeader title='Projects' subheader='You are a part of:' style={{ backgroundColor: '#1976d2', color: 'white', }} subheaderTypographyProps={{ color: 'white' }} />
-          {
-            projects.length !== 0 ?
+        </Grid>
+
+        {/* Second Column */}
+        <Grid item xs={12} sm={8}>
+          <Card>
+            <CardHeader
+              title='Projects'
+              subheader='You are a part of:'
+              style={{ backgroundColor: '#1976d2', color: 'white' }}
+              subheaderTypographyProps={{ color: 'white' }}
+            />
+            {projects.length !== 0 ? (
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
                     <TableRow>
                       <TableCell>Project Name</TableCell>
                       <TableCell>Description</TableCell>
-                      <TableCell></TableCell>
+                      <TableCell>Actions</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -62,13 +76,14 @@ function ProjectsView(props: ProjectsViewProps) {
                   </TableBody>
                 </Table>
               </TableContainer>
-              :
+            ) : (
               <p>No Projects found</p>
-          }
-        </Card>
-      </DrawerController>
-    </>
-  )
+            )}
+          </Card>
+        </Grid>
+      </Grid>
+    </DrawerController>
+  );
 }
 
 export default ProjectsView;
