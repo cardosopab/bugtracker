@@ -28,7 +28,7 @@ const navOptions = [
     { name: "Dashboard Home", icon: 'dashboard', url: DASHBOARD_URL },
     { name: "My Kanban", icon: 'table-chart', url: KANBAN_URL },
     { name: "Manage Role Assignment", icon: 'group-add', url: ROLES_URL },
-    { name: "Manage Project Users", icon: 'group', url: USERS_URL },
+    { name: "Manage Personnel", icon: 'group', url: USERS_URL },
     { name: "My Projects", icon: 'handy-man', url: PROJECTS_URL },
     { name: "My Tickets", icon: 'list', url: TICKETS_URL },
     // { name: "User Profile", icon: 'person', url: PROFILE_URL },
