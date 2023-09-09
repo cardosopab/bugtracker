@@ -34,7 +34,7 @@ function Tickets(props: TicketsProps) {
       <Grid container spacing={2} padding={2}>
         {/* Title/Header */}
         <Grid item xs={12}>
-          <h1>My Tickets</h1>
+          <h1>Tickets Overview</h1>
         </Grid>
 
         {/* Table */}

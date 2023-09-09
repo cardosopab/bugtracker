@@ -21,7 +21,7 @@ function ProjectsView(props: ProjectsViewProps) {
       <Grid container spacing={2} padding={2}>
         {/* Title/Header */}
         <Grid item xs={12}>
-          <h1>Manage Projects</h1>
+          <h1>Projects Overview</h1>
         </Grid>
 
         {/* First Column */}

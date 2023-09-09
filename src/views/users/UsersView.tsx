@@ -23,7 +23,7 @@ function UsersView(props: UsersViewProps) {
       <Grid container spacing={2} padding={2}>
         {/* Title/Header */}
         <Grid item xs={12}>
-          <h1>Manage Project Personnel</h1>
+          <h1>Personnel Assignment</h1>
         </Grid>
 
         {/* First Column */}

@@ -25,12 +25,12 @@ const handleIconSwitch = (icon: string) => {
 
 
 const navOptions = [
-    { name: "Dashboard Home", icon: 'dashboard', url: DASHBOARD_URL },
-    { name: "My Kanban", icon: 'table-chart', url: KANBAN_URL },
-    { name: "Manage Role Assignment", icon: 'group-add', url: ROLES_URL },
-    { name: "Manage Personnel", icon: 'group', url: USERS_URL },
-    { name: "My Projects", icon: 'handy-man', url: PROJECTS_URL },
-    { name: "My Tickets", icon: 'list', url: TICKETS_URL },
+    { name: "Dashboard", icon: 'dashboard', url: DASHBOARD_URL },
+    { name: "Kanban Board", icon: 'table-chart', url: KANBAN_URL },
+    { name: "Projects Overview", icon: 'handy-man', url: PROJECTS_URL },
+    { name: "Tickets Overview", icon: 'list', url: TICKETS_URL },
+    { name: "Role Assignment", icon: 'group-add', url: ROLES_URL },
+    { name: "Personnel Assignment", icon: 'group', url: USERS_URL },
     // { name: "User Profile", icon: 'person', url: PROFILE_URL },
 ]
 

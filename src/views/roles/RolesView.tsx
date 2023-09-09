@@ -21,7 +21,7 @@ function RolesView(props: RolesViewProps) {
             <Grid container spacing={2} padding={2}>
                 {/* Title/Header */}
                 <Grid item xs={12}>
-                    <h1>Manage Role Assignment</h1>
+                    <h1>Role Assignment</h1>
                 </Grid>
 
                 {/* First Column */}
