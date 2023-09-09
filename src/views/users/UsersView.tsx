@@ -1,5 +1,5 @@
-import { Button, Card, CardHeader, FormControl, InputLabel, List, ListItem, ListItemText, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import DrawerController from "../../controllers/DrawerController"
+import { Button, Card, CardHeader, FormControl, InputLabel, List, ListItem, ListItemText, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, Paper, Divider } from "@mui/material";
+import DrawerController from "../../controllers/DrawerController";
 import User from "../../models/User";
 import Project from "../../models/Project";
 
@@ -17,50 +17,66 @@ interface UsersViewProps {
 
 function UsersView(props: UsersViewProps) {
   const { users, projects, selectedUser, selectedProject, handleUserDropdown, handleProjectDropdown, handleAddUser, handleRemoveUser, isRemoveButtonDisabled } = props;
+
   return (
-    <>
-      <DrawerController>
-        <div className="row">
-          <FormControl>
-            <InputLabel id="dropdown-label">Select an option</InputLabel>
+    <DrawerController>
+      <Grid container spacing={2} padding={2}>
+        {/* Title/Header */}
+        <Grid item xs={12}>
+          <h1>Manage Project Personnel</h1>
+        </Grid>
+
+        {/* First Column */}
+        <Grid item xs={12} sm={4}>
+          <FormControl margin={'normal'} fullWidth>
+            <InputLabel id="user-dropdown-label">Select a User</InputLabel>
             <Select
-              labelId="dropdown-label"
+              labelId="user-dropdown-label"
               value={selectedUser.name}
               name={selectedUser.name}
-              label="Select an option"
+              label="Select a User"
               onChange={handleUserDropdown}
             >
               {users.map(option => (
-                <MenuItem key={option.id} value={option.name} >
+                <MenuItem key={option.id} value={option.name}>
                   {option.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          <FormControl>
-            <InputLabel id="dropdown-label">Select an option</InputLabel>
+          <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
+          <FormControl margin={'normal'} fullWidth>
+            <InputLabel id="project-dropdown-label">Select a Project</InputLabel>
             <Select
-              labelId="dropdown-label"
+              labelId="project-dropdown-label"
               value={selectedProject.name}
               name={selectedProject.name}
-              label="Select an option"
+              label="Select a Project"
               onChange={handleProjectDropdown}
             >
               {projects.map(option => (
-                <MenuItem key={option.id} value={option.name} >
+                <MenuItem key={option.id} value={option.name}>
                   {option.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
+          <Button onClick={handleAddUser} variant="contained" disabled={!isRemoveButtonDisabled} fullWidth>
+            Add Personnel
+          </Button>
+          <Button onClick={handleRemoveUser} variant="contained" color="error" disabled={isRemoveButtonDisabled} fullWidth>
+            Remove Personnel
+          </Button>
+        </Grid>
 
-          <Button onClick={handleAddUser} variant="contained" disabled={!isRemoveButtonDisabled}>Add Personnel</Button>
-          <Button onClick={handleRemoveUser} variant="contained" color="error" disabled={isRemoveButtonDisabled}>Remove Personnel</Button>
-        </div>
-        <Card style={{ margin: '1em' }}>
-          <CardHeader title='Projects' subheader='You are a part of:' style={{ backgroundColor: '#1976d2', color: 'white', }} subheaderTypographyProps={{ color: 'white' }} />
-          {
-            projects.length !== 0 ?
+        {/* Second Column */}
+        <Grid item xs={12} sm={8}>
+          <Card>
+            <CardHeader
+              title='Projects'
+              subheader='You are a part of:'
+            />
+            {projects.length !== 0 ? (
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
@@ -77,7 +93,6 @@ function UsersView(props: UsersViewProps) {
                           <div className="column">
                             <List>
                               {personnel.map(id => {
-
                                 const user = users.find(user => user.id === id);
                                 return (
                                   <ListItem key={id}>
@@ -93,12 +108,14 @@ function UsersView(props: UsersViewProps) {
                   </TableBody>
                 </Table>
               </TableContainer>
-              :
+            ) : (
               <p>No Projects found</p>
-          }
-        </Card>
-      </DrawerController>
-    </>
-  )
+            )}
+          </Card>
+        </Grid>
+      </Grid>
+    </DrawerController>
+  );
 }
+
 export default UsersView;
