@@ -1,4 +1,4 @@
-import { Box, Button, CardHeader, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { statusOptions } from "../constants/ticketConstants"
 import DrawerController from "./DrawerController"
 import { useSelector } from "react-redux";
@@ -10,13 +10,12 @@ import EditTicketController from "./EditTicketController";
 const KanbanController = () => {
     const tickets = useSelector((state: RootState) => state.tickets.value);
     const [openTickets, setOpenTickets] = useState<Array<boolean>>([]);
-    // Group tasks by status
-    const tasksByStatus: any = {};
+    const ticketsByStatus: any = {};
     tickets.forEach((ticket: Ticket) => {
-        if (!tasksByStatus[ticket.status]) {
-            tasksByStatus[ticket.status] = [];
+        if (!ticketsByStatus[ticket.status]) {
+            ticketsByStatus[ticket.status] = [];
         }
-        tasksByStatus[ticket.status].push(ticket);
+        ticketsByStatus[ticket.status].push(ticket);
     });
     const handleModal = (index: number) => {
         const updatedOpenTickets = [...openTickets];
@@ -42,31 +41,31 @@ const KanbanController = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {statusOptions.map(status => <TableCell>{status}</TableCell>)}
+                                {statusOptions.map(status => <TableCell key={status}>{status}</TableCell>)}
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                {statusOptions.map((status, index) => (
-                                    <TableCell key={status}>
-                                        {tasksByStatus[status]?.map((ticket: Ticket, index: number) => {
+                                {statusOptions.map((status: string, index: number) => (
+                                    <TableCell sx={{ borderRight: '1px solid #ccc' }} key={`cell-${status}-${index}`}>
+                                        {ticketsByStatus[status]?.map((ticket: Ticket, index: number) => {
 
                                             const isModalOpen = openTickets[index] ?? false;
                                             return (
-                                                <>
+                                                <div key={`ticket-${ticket.id}-${index}`}>
                                                     <Modal
+                                                        key={`modal-${ticket.id}-${index}`}
                                                         open={isModalOpen}
                                                         onClose={() => handleModal(index)}
                                                         aria-labelledby="modal-modal-title"
                                                         aria-describedby="modal-modal-description"
                                                     >
                                                         <Box sx={style}>
-                                                            {/* <p>{title}</p> */}
-                                                            <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
+                                                            <EditTicketController key={`edit-${ticket.id}-${index}`} ticket={ticket} handleModal={handleModal} index={index} />
                                                         </Box>
                                                     </Modal>
-                                                    <Button key={ticket.id} onClick={() => handleModal(index)}>{ticket.title}</Button>
-                                                </>
+                                                    <Button key={`button-${ticket.id}-${index}`} onClick={() => handleModal(index)}>{ticket.title}</Button>
+                                                </div>
                                             )
                                         })}
                                     </TableCell>
