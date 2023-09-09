@@ -21,7 +21,7 @@ function RolesView(props: RolesViewProps) {
             <Grid container spacing={2} padding={2}>
                 {/* Title/Header */}
                 <Grid item xs={12}>
-                    <h1>Manage User Roles</h1>
+                    <h1>Manage Personnel Roles</h1>
                 </Grid>
 
                 {/* First Column */}
@@ -49,6 +49,7 @@ function RolesView(props: RolesViewProps) {
                             <Select
                                 labelId="role-dropdown-label"
                                 value={selectedRole}
+                                name={selectedRole}
                                 label="Select a Role"
                                 onChange={handleRoleDropdown}
                             >
@@ -68,7 +69,7 @@ function RolesView(props: RolesViewProps) {
                 {/* Second Column */}
                 <Grid item xs={12} sm={8}>
                     <Card>
-                        <CardHeader title="Personnel" />
+                        <CardHeader title="Personnel" subheader="Within the database:"/>
                         {users.length !== 0 ? (
                             <TableContainer component={Paper}>
                                 <Table>
