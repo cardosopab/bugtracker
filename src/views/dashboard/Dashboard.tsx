@@ -106,6 +106,7 @@ function Dashboard() {
                     <div className="row">
                         <Card sx={{ margin: 2 }}>
                             <div className="chart-container">
+                                <CardHeader title="Ticket Status" />
                                 <BarChart
                                     title="Ticket Status"
                                     xAxis={[
@@ -122,10 +123,10 @@ function Dashboard() {
                                     ]}
                                 />
                             </div>
-                            <CardHeader title="Ticket Status" />
                         </Card>
                         <Card sx={{ margin: 2 }}>
                             <div className="chart-container">
+                                <CardHeader title="Active Personnel" />
                                 <PieChart
                                     series={[
                                         {
@@ -144,7 +145,6 @@ function Dashboard() {
                                     }}
                                 />
                             </div>
-                            <CardHeader title="Active Personnel" />
                         </Card>
                     </div>
                 </div >
