@@ -1,5 +1,7 @@
 $Mui-blue: #1976d2;
 $Small-Viewport: 600px;
+$Medium-Viewport: 800px;
+$Secondary-Header: #eee;
 
 :root {
 
@@ -12,25 +14,22 @@ $Small-Viewport: 600px;
 
   .MuiPaper-root {
 
-    .MuiChartsSurface-root {
-      width: 100%;
-      height: auto;
-    }
-
-    .MuiCardHeader-root {
-      background-color: $Mui-blue;
-      color: white;
-    }
-
     .chart-container {
-      width: min(50vw, 50vh);
-      height: min(50vw, 50vh);
+      width: min(80vw, 80vh);
+      height: min(80vw, 80vh);
     }
 
-    @media (max-width:$Small-Viewport) {
+    @media (min-width:$Small-Viewport) {
       .chart-container {
-        width: min(80vw, 80vh);
-        height: min(80vw, 80vh);
+        width: min(50vw, 50vh);
+        height: min(50vw, 50vh);
+      }
+    }
+
+    @media (min-width:$Medium-Viewport) {
+      .chart-container {
+        width: min(60vw, 60vh);
+        height: min(60vw, 60vh);
       }
     }
   }
@@ -54,28 +53,12 @@ $Small-Viewport: 600px;
     justify-content: space-evenly;
   }
 
-  @media (max-width:$Small-Viewport) {
-    .column {
-      margin: 1em;
-    }
-  }
-
-  .MuiChartsAxis-tickLabel {
-    transform: rotate(20deg);
-    transform-origin: top left;
-  }
-
   .MuiCard-root {
-    background-color: #eee;
-
-    .MuiChartsSurface-root {
-      width: 100%;
-      height: auto;
-    }
+    background-color: $Secondary-Header;
   }
 
   .MuiTableRow-head {
-    background-color: #eee;
+    background-color: $Secondary-Header;
   }
 
   .MuiCardHeader-root {
