@@ -53,6 +53,9 @@ function Dashboard() {
     // Slice the arrays to keep only the top 4 objects
     const topTypeCount = typeCount.slice(0, 4);
     const topPersonnelCount = personnelCount.slice(0, 4);
+    const barChartParams = {
+        margin: { bottom: 100, left: 40, right: 20 },
+    };
     return (
         <>
             <DrawerController>
@@ -60,8 +63,8 @@ function Dashboard() {
                     <div className="row">
                         <Card sx={{ margin: 2 }}>
                             <div className="chart-container">
-
                                 <BarChart
+                                    {...barChartParams}
                                     title="Ticket Priority"
                                     xAxis={[
                                         {
@@ -105,9 +108,10 @@ function Dashboard() {
                     </div>
                     <div className="row">
                         <Card sx={{ margin: 2 }}>
+                            <CardHeader title="Ticket Status" />
                             <div className="chart-container">
-                                <CardHeader title="Ticket Status" />
                                 <BarChart
+                                    {...barChartParams}
                                     title="Ticket Status"
                                     xAxis={[
                                         {
@@ -125,8 +129,8 @@ function Dashboard() {
                             </div>
                         </Card>
                         <Card sx={{ margin: 2 }}>
+                            <CardHeader title="Active Personnel" />
                             <div className="chart-container">
-                                <CardHeader title="Active Personnel" />
                                 <PieChart
                                     series={[
                                         {
