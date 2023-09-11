@@ -10,7 +10,7 @@ interface TicketsProps {
   users: User[];
   projects: Project[];
   handleModal: any;
-  openTickets: boolean[];
+  openTickets: { [id: string]: boolean };
 }
 
 function Tickets(props: TicketsProps) {
@@ -84,10 +84,9 @@ function Tickets(props: TicketsProps) {
                             aria-describedby="modal-modal-description"
                           >
                             <Box sx={style}>
-                              <EditTicketController ticket={ticket} handleModal={handleModal} index={index} />
+                              <EditTicketController ticket={ticket} handleModal={handleModal} />
                             </Box>
                           </Modal>
-                          <Button>Details</Button>
                         </div>
                       </TableCell>
                     </TableRow>

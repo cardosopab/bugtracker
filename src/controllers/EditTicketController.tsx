@@ -9,10 +9,9 @@ import { priorityOptions, statusOptions, typeOptions } from "../constants/ticket
 interface EditTicketProps {
   ticket: Ticket
   handleModal: any;
-  index: number;
 }
 const EditTicketController = (props: EditTicketProps) => {
-  const { ticket, handleModal, index } = props
+  const { ticket, handleModal } = props
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
   const [titleValue, setTitleValue] = useState(ticket.title)
@@ -24,7 +23,7 @@ const EditTicketController = (props: EditTicketProps) => {
   const [selectedStatus, setSelectedStatus] = useState(ticket.status);
 
   const handleUpdate = (tickeId: string, ticket: Ticket) => {
-    handleModal(index);
+    handleModal(ticket.id);
     updateTicket(tickeId, ticket)
   }
 
@@ -47,7 +46,6 @@ const EditTicketController = (props: EditTicketProps) => {
                   id="project-dropdown"
                   value={selectedProject} // Connect to state
                   onChange={(event) => setSelectedProject(event.target.value)} // Update state on change
-
                 >
                   {projects.map((project) => (
                     <MenuItem key={project.id} value={project.name}>
@@ -66,7 +64,6 @@ const EditTicketController = (props: EditTicketProps) => {
                   id="priority-dropdown"
                   value={selectedPriority} // Connect to state
                   onChange={(event) => setSelectedPriority(event.target.value)} // Update state on change
-
                 >
                   {priorityOptions.map(option =>
                     <MenuItem value={option}>{option}</MenuItem>
@@ -81,7 +78,6 @@ const EditTicketController = (props: EditTicketProps) => {
                   id="type-dropdown"
                   value={selectedType} // Connect to state
                   onChange={(event) => setSelectedType(event.target.value)} // Update state on change
-
                 >
                   {typeOptions.map(option =>
                     <MenuItem value={option}>{option}</MenuItem>
@@ -104,7 +100,6 @@ const EditTicketController = (props: EditTicketProps) => {
                   id="developer-dropdown"
                   value={selectedPersonnel} // Connect to state
                   onChange={(event) => setSelectedPersonnel(event.target.value)} // Update state on change
-
                 >
                   {users.map((user) => (
                     <MenuItem key={user.id} value={user.name}>
@@ -122,7 +117,6 @@ const EditTicketController = (props: EditTicketProps) => {
                   id="status-dropdown"
                   value={selectedStatus} // Connect to state
                   onChange={(event) => setSelectedStatus(event.target.value)} // Update state on change
-
                 >
                   {statusOptions.map(option =>
                     <MenuItem value={option}>{option}</MenuItem>

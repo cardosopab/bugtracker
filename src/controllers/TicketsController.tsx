@@ -7,12 +7,13 @@ const TicketsController = () => {
     const tickets = useSelector((state: RootState) => state.tickets.value);
     const users = useSelector((state: RootState) => state.users.value);
     const projects = useSelector((state: RootState) => state.projects.value);
-    const [openTickets, setOpenTickets] = useState<Array<boolean>>([]);
+    const [openTickets, setOpenTickets] = useState<{ [id: string]: boolean }>({});
 
-    const handleModal = (index: number) => {
-        const updatedOpenTickets = [...openTickets];
-        updatedOpenTickets[index] = !updatedOpenTickets[index];
-        setOpenTickets(updatedOpenTickets);
+    const handleModal = (ticketId: string) => {
+        setOpenTickets((prevOpenTickets) => ({
+            ...prevOpenTickets,
+            [ticketId]: !prevOpenTickets[ticketId],
+        }));
     };
 
     return (
