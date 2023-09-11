@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, Typography } from "@mui/material";
+import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, CardHeader } from "@mui/material";
 import { statusOptions } from "../constants/ticketConstants"
 import DrawerController from "./DrawerController"
 import { useSelector } from "react-redux";
@@ -40,12 +40,13 @@ const KanbanController = () => {
             <Grid container spacing={2} padding={2}>
                 {/* Title/Header */}
                 <Grid item xs={12}>
-                    <Typography variant="h4">Kanban Board</Typography>
+                    <h1>Kanban Board</h1>
                 </Grid>
 
                 {/* Kanban Board */}
                 <Grid item xs={12}>
                     <TableContainer component={Paper}>
+                        <CardHeader title="Project: " subheader="Kanban board:" />
                         <Table>
                             <TableHead>
                                 <TableRow>
