@@ -1,9 +1,10 @@
 import { arrayRemove, arrayUnion, collection, deleteDoc, doc, setDoc, updateDoc, } from "firebase/firestore";
 import { database } from "./firebase-init";
 import Project from "../Project";
-import { PROJECTS_COLLECTION, USERS_COLLECTION, TICKETS_COLLECTION } from "./collections";
+import { PROJECTS_COLLECTION, USERS_COLLECTION, TICKETS_COLLECTION, COMPANY_COLLECTION } from "./collections";
 import User from "../User";
 import Ticket from "../Ticket";
+import Company from "../Company";
 
 const createProject = async (name: string, description: string) => {
     try {
@@ -53,27 +54,35 @@ const addUserToProject = async (uid: string, projectId: string) => {
     }
 };
 
-const createUser = async (name: string, email: string) => {
+const createUser = async (uid: string, name: string, email: string) => {
     try {
-        const docRef = doc(collection(database, USERS_COLLECTION));
+        const docRef = doc(collection(database, USERS_COLLECTION), uid); // Use data.uid as the document ID
+        const companyRef = doc(collection(database, COMPANY_COLLECTION));
 
-        // Create the User object with the generated ID
+        // Create the User object with the provided uid
+        const date = Date.now();
         const newUser: User = {
-            id: docRef.id,
-            createdAt: Date.now(),
+            id: uid, // Use the provided uid
+            createdAt: date,
             name: name,
             email: email,
-            role: "",
-        }
+            role: 'Unassigned',
+            companyId: companyRef.id,
+        };
+        const newCompany: Company = {
+            id: companyRef.id,
+            createdAt: date,
+            name: 'Unassigned',
+            personnel: [uid],
+        };
         await setDoc(docRef, newUser);
+        await setDoc(companyRef, newCompany);
         console.log("Document written with ID: ", docRef.id);
-
     } catch (e) {
         console.error("Error adding document: ", e);
         return null;
     }
-
-}
+};
 
 const updateUserRole = async (uid: string, role: string) => {
     const user = doc(database, USERS_COLLECTION, uid);
