@@ -25,6 +25,15 @@ const AuthView = (props: AuthViewProps) => {
                         <Button variant='outlined' onClick={() => handleButtonToggle()} disabled={!isSignIn}>Sign Up</Button>
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)}>
+                        {!isSignIn ? <Input
+                            type="name"
+                            style={{ display: 'block', margin: '1em 0' }}
+                            {...register("name", {
+                                required: "Required",
+                            })}
+                            placeholder="Full Name"
+                        /> : null}
+
                         <Input
                             type="email"
                             style={{ display: 'block', margin: '1em 0' }}
