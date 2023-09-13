@@ -22,7 +22,7 @@ const AuthController = () => {
             });
         } else {
             createUserWithEmailAndPassword(auth, values.email, values.password).then(data => {
-                // TODO: createUser()
+                createUser(values.name, values.email)
                 console.log('authData', data)
                 navigateTo(DASHBOARD_URL)
             }).catch(err => {
