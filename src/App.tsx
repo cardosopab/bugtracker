@@ -28,7 +28,10 @@ import KanbanController from './controllers/KanbanController';
 function App() {
     const [authInitialized, setAuthInitialized] = useState(false);
     const authStatus = useSelector((state: RootState) => state.auth.authStatus);
+    const currentUserID = useSelector((state: RootState) => state.auth.currentUser);
+    const users = useSelector((state: RootState) => state.users.value);
     const dispatch = useDispatch();
+    const currentUser = users.find(user => user.id === currentUserID)
 
     useEffect(() => {
         const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
@@ -48,6 +51,38 @@ function App() {
 
     useEffect(() => {
         if (authInitialized && authStatus) {
+            const unsubscribeUsers =
+                onSnapshot(
+                    query(collection(database, USERS_COLLECTION), orderBy("createdAt", "desc")),
+                    (querySnapshot) => {
+                        const arr: User[] = [];
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            console.log('data', data)
+                            const user: User = {
+                                id: data.id,
+                                name: data.name,
+                                createdAt: data.createdAt,
+                                email: data.email,
+                                role: data.role,
+                                companyId: data.companyId,
+                            };
+                            arr.push(user)
+                        });
+                        batch(() => {
+                            console.log('subscribedUsers')
+                            dispatch(setUsers(arr));
+                        });
+                    });
+            return () => {
+                console.log('unsubscribe Users')
+                unsubscribeUsers();
+            }
+        }
+    }, [authInitialized, authStatus]);
+
+    useEffect(() => {
+        if (currentUser != undefined) {
             const unsubscribeProjects =
                 onSnapshot(
                     query(collection(database, PROJECTS_COLLECTION), orderBy("createdAt", "desc")),
@@ -68,28 +103,6 @@ function App() {
                         batch(() => {
                             console.log('subscribedProjects')
                             dispatch(setProjects(arr));
-                        });
-                    });
-            const unsubscribeUsers =
-                onSnapshot(
-                    query(collection(database, USERS_COLLECTION), orderBy("createdAt", "desc")),
-                    (querySnapshot) => {
-                        const arr: User[] = [];
-                        querySnapshot.forEach((doc) => {
-                            const data = doc.data();
-                            console.log('data', data)
-                            const user: User = {
-                                id: data.id,
-                                name: data.name,
-                                createdAt: data.createdAt,
-                                email: data.email,
-                                role: data.role,
-                            };
-                            arr.push(user)
-                        });
-                        batch(() => {
-                            console.log('subscribedUsers')
-                            dispatch(setUsers(arr));
                         });
                     });
             const unsubscribeTickets =
@@ -122,13 +135,13 @@ function App() {
                     });
 
             return () => {
-                console.log('unsubscribe')
+                console.log('unsubscribe Projects & Tickets')
                 unsubscribeProjects();
-                unsubscribeUsers();
                 unsubscribeTickets();
             }
         }
-    }, [authInitialized, authStatus]);
+
+    }, [currentUser]);
 
     if (!authInitialized) {
         return <div className='center'>Loading...</div>;
