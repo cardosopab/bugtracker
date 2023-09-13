@@ -1,4 +1,3 @@
-import User from "./User";
 // Define the Project model using an interface
 interface Project {
     id: string;
