@@ -29,7 +29,7 @@ function ProjectsView(props: ProjectsViewProps) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input sx={{ marginTop: 2, marginBottom: 2 }} placeholder="Project Name" type="text" {...register('name', { required: "Required" })} />
             {errors.name && <p>{errors.name.message}</p>}
-            <Input sx={{ marginTop: 2, marginBottom: 2 }} margin={2} placeholder="Description" type="text" {...register('description', { required: "Required" })} />
+            <Input sx={{ marginTop: 2, marginBottom: 2 }} placeholder="Description" type="text" {...register('description', { required: "Required" })} />
             {errors.description && <p>{errors.description.message}</p>}
             <Button variant={'contained'} type="submit" fullWidth>Create Project</Button>
           </form>
