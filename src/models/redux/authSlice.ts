@@ -30,13 +30,5 @@ const authSlice = createSlice({
 });
 
 export const { setAuthInitialized, setAuthStatus, setCurrentUserId } = authSlice.actions;
-
-// export const initAuth = () => (dispatch: any) => {
-//     // Watch for auth state changes
-//     auth.onAuthStateChanged((user) => {
-//         dispatch(setAuthInitialized(true));
-//         dispatch(setCurrentUserId(user?.uid ?? ''));
-//     });
-// };
-
 export default authSlice.reducer;
+
