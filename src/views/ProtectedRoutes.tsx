@@ -11,12 +11,13 @@ function ProtectedRoutes() {
     const location = useLocation();
 
     useEffect(() => {
-        if (!authStatus) {
+        if (!authStatus && location.pathname !== '/') {
             navigateTo('/');
         } else if (authStatus && location.pathname === '/') {
             navigateTo('/dashboard');
         }
     }, [authStatus, navigateTo, location]);
+
 
     return authStatus ? <Outlet /> : <AuthController />;
 }
