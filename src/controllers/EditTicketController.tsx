@@ -133,9 +133,10 @@ const EditTicketController = (props: EditTicketProps) => {
                 color="primary"
                 onClick={() => handleUpdate(ticket.id, {
                   id: ticket.id,
+                  projectId: projects.find(project => project.name === selectedProject)!.id,
+                  companyId: ticket.companyId,
                   title: titleValue,
                   description: descriptionValue,
-                  projectId: projects.find(project => project.name === selectedProject)!.id,
                   submitterId: ticket.submitterId,
                   personnelId: users.find(user => user.name === selectedPersonnel)!.id,
                   priority: selectedPriority,

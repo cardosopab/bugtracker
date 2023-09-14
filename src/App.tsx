@@ -115,9 +115,10 @@ function App() {
                             console.log('data', data)
                             const ticket: Ticket = {
                                 id: data.id,
+                                projectId: data.projectId,
+                                companyId: data.companyId,
                                 title: data.title,
                                 description: data.description,
-                                projectId: data.projectId,
                                 submitterId: data.submitterId,
                                 personnelId: data.personnelId,
                                 priority: data.priority,
