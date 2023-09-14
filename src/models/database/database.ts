@@ -142,11 +142,13 @@ const removeTicket = async (ticketId: string) => {
     }
 };
 
-const setCompanyIdForTicket = async (ticketId: string, ticket: Ticket, companyId: string) => {
+const updateCompanyIdForTickets = async (ticketId: string, companyId: string) => {
     try {
         const docRef = doc(database, TICKETS_COLLECTION, ticketId);
-        ticket.companyId = companyId;
-        await setDoc(docRef, ticket);
+        const updatedTicket = {
+            companyId: companyId, // Set the companyId field to the new value
+        };
+        await setDoc(docRef, updatedTicket, { merge: true });
         console.log("Updated document with ID: ", docRef.id);
     } catch (e) {
         console.log("Error adding document: ", e);
@@ -154,4 +156,5 @@ const setCompanyIdForTicket = async (ticketId: string, ticket: Ticket, companyId
     }
 };
 
-export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, updateTicket, removeTicket, setCompanyIdForTicket };
+
+export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, updateTicket, removeTicket, updateCompanyIdForTickets };
