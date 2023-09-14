@@ -89,7 +89,7 @@ const updateUserRole = async (uid: string, role: string) => {
     setDoc(user, { role: role }, { merge: true });
 }
 
-const createTicket = async (projectId: string, submitterId: string, personnelId: string, title: string, description: string, priority: string, status: string, type: string) => {
+const createTicket = async (projectId: string, companyId: string, submitterId: string, personnelId: string, title: string, description: string, priority: string, status: string, type: string) => {
     try {
         const docRef = doc(collection(database, TICKETS_COLLECTION));
 
@@ -97,6 +97,7 @@ const createTicket = async (projectId: string, submitterId: string, personnelId:
         const newTicket: Ticket = {
             id: docRef.id,
             projectId: projectId,
+            companyId: companyId,
             submitterId: submitterId,
             title: title,
             description: description,
@@ -141,4 +142,16 @@ const removeTicket = async (ticketId: string) => {
     }
 };
 
-export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, updateTicket, removeTicket };
+const setCompanyIdForTicket = async (ticketId: string, ticket: Ticket, companyId: string) => {
+    try {
+        const docRef = doc(database, TICKETS_COLLECTION, ticketId);
+        ticket.companyId = companyId;
+        await setDoc(docRef, ticket);
+        console.log("Updated document with ID: ", docRef.id);
+    } catch (e) {
+        console.log("Error adding document: ", e);
+        return null;
+    }
+};
+
+export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, updateTicket, removeTicket, setCompanyIdForTicket };
