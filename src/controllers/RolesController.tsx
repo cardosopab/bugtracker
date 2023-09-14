@@ -3,11 +3,11 @@ import { RootState } from "../models/redux/store";
 import { updateUserRole } from "../models/database/database";
 import RolesView from "../views/roles/RolesView";
 import { SetStateAction, useState } from "react";
+import { roles } from "../constants/userConstants";
 
 function RolesController() {
     // const dispatch = useDispatch();
     const users = useSelector((state: RootState) => state.users.value);
-    const roles = ['Admin', 'Manager', 'Developer', 'Submitter',];
     const [selectedUserName, setSelectedUserName] = useState(users.length > 0 ? users[0].name : '');
     const [selectedUserId, setSelectedUserId] = useState(users.length > 0 ? users[0].id : '');
     const [selectedRole, setSelectedRole] = useState(users.length > 0 ? users[0].role : '');
