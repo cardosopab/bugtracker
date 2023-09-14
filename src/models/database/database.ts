@@ -62,7 +62,7 @@ const createUser = async (uid: string, name: string, email: string) => {
         // Create the User object with the provided uid
         const date = Date.now();
         const newUser: User = {
-            id: uid, // Use the provided uid
+            id: uid,
             createdAt: date,
             name: name,
             email: email,
@@ -146,7 +146,7 @@ const updateCompanyIdForTickets = async (ticketId: string, companyId: string) =>
     try {
         const docRef = doc(database, TICKETS_COLLECTION, ticketId);
         const updatedTicket = {
-            companyId: companyId, // Set the companyId field to the new value
+            companyId: companyId,
         };
         await setDoc(docRef, updatedTicket, { merge: true });
         console.log("Updated document with ID: ", docRef.id);
@@ -155,6 +155,5 @@ const updateCompanyIdForTickets = async (ticketId: string, companyId: string) =>
         return null;
     }
 };
-
 
 export { createProject, addUserToProject, removeUserFromProject, createUser, updateUserRole, createTicket, updateTicket, removeTicket, updateCompanyIdForTickets };
