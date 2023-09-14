@@ -4,13 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface AuthState {
     authInitialized: boolean;
     authStatus: boolean;
-    currentUser: string;
+    currentUserId: string;
 }
 
 const initialState: AuthState = {
     authInitialized: false,
     authStatus: false,
-    currentUser: '',
+    currentUserId: '',
 };
 
 const authSlice = createSlice({
@@ -23,19 +23,19 @@ const authSlice = createSlice({
         setAuthStatus: (state, action: PayloadAction<boolean>) => {
             state.authStatus = action.payload;
         },
-        setCurrentUser: (state, action: PayloadAction<string>) => {
-            state.currentUser = action.payload;
+        setCurrentUserId: (state, action: PayloadAction<string>) => {
+            state.currentUserId = action.payload;
         },
     },
 });
 
-export const { setAuthInitialized, setAuthStatus, setCurrentUser } = authSlice.actions;
+export const { setAuthInitialized, setAuthStatus, setCurrentUserId } = authSlice.actions;
 
 // export const initAuth = () => (dispatch: any) => {
 //     // Watch for auth state changes
 //     auth.onAuthStateChanged((user) => {
 //         dispatch(setAuthInitialized(true));
-//         dispatch(setCurrentUser(user?.uid ?? ''));
+//         dispatch(setCurrentUserId(user?.uid ?? ''));
 //     });
 // };
 

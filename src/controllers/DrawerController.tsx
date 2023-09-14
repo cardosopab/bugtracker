@@ -61,7 +61,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
     const drawerIndex = useSelector((state: RootState) => state.drawer.index);
-    const currentUserId = useSelector((state: RootState) => state.auth.currentUser);
+    const currentUserId = useSelector((state: RootState) => state.auth.currentUserId);
     const users = useSelector((state: RootState) => state.users.value);
     const currentUser = users.find(user => currentUserId === user.id);
 

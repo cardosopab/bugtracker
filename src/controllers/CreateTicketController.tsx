@@ -14,7 +14,7 @@ const CreateTicketController = (props: CreateTicketProps) => {
     const { project, handleModal } = props
     const projects = useSelector((state: RootState) => state.projects.value);
     const users = useSelector((state: RootState) => state.users.value);
-    const currentUserId = useSelector((state: RootState) => state.auth.currentUser);
+    const currentUserId = useSelector((state: RootState) => state.auth.currentUserId);
     const currentUser = users.find(user => user.id === currentUserId)
     const [selectedProject, setSelectedProject] = useState('');
     const [selectedPriority, setSelectedPriority] = useState('');
