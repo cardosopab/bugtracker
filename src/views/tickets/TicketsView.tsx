@@ -4,6 +4,8 @@ import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import Project from "../../models/Project";
 import EditTicketController from "../../controllers/EditTicketController";
+import { useState } from "react";
+import CreateTicketController from "../../controllers/CreateTicketController";
 
 interface TicketsProps {
   tickets: Ticket[];
@@ -16,6 +18,7 @@ interface TicketsProps {
 function Tickets(props: TicketsProps) {
   const { tickets, users, projects, handleModal, openTickets } = props;
 
+  const [openCreateModal, setCreateModal] = useState(false);
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -28,6 +31,9 @@ function Tickets(props: TicketsProps) {
     boxShadow: 24,
     p: 4,
   };
+  const handleCreateModalToggle = () => {
+    setCreateModal(prev => !prev);
+  }
 
   return (
     <DrawerController>
@@ -40,7 +46,25 @@ function Tickets(props: TicketsProps) {
         {/* Table */}
         <Grid item xs={12}>
           <TableContainer component={Paper}>
-            <CardHeader title="Tickets" subheader="You are a part of:" />
+            <CardHeader
+              title="Tickets"
+              subheader="You are a part of:"
+              action={
+                <div>
+                  <Button onClick={() => handleCreateModalToggle()} sx={{ color: 'white' }}>Create a Ticket</Button>
+                  <Modal
+                    open={openCreateModal}
+                    onClose={() => handleCreateModalToggle()}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <CreateTicketController handleModal={handleCreateModalToggle} project={null} />
+                    </Box>
+                  </Modal>
+                </div>
+              }
+            />
             <Table>
               <TableHead>
                 <TableRow>
