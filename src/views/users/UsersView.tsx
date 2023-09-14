@@ -20,63 +20,63 @@ function UsersView(props: UsersViewProps) {
 
   return (
     <DrawerController>
-      <Grid container spacing={2} padding={2}>
-        {/* Title/Header */}
-        <Grid item xs={12}>
-          <h1>Personnel Assignment</h1>
-        </Grid>
+      {projects.length !== 0 ? (
+        <Grid container spacing={2} padding={2}>
+          {/* Title/Header */}
+          <Grid item xs={12}>
+            <h1>Personnel Assignment</h1>
+          </Grid>
 
-        {/* First Column */}
-        <Grid item xs={12} sm={4}>
-          <FormControl margin={'normal'} fullWidth>
-            <InputLabel id="user-dropdown-label">Select a User</InputLabel>
-            <Select
-              labelId="user-dropdown-label"
-              value={selectedUser.name}
-              name={selectedUser.name}
-              label="Select a User"
-              onChange={handleUserDropdown}
-            >
-              {users.map(option => (
-                <MenuItem key={option.id} value={option.name}>
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-          <FormControl margin={'normal'} fullWidth>
-            <InputLabel id="project-dropdown-label">Select a Project</InputLabel>
-            <Select
-              labelId="project-dropdown-label"
-              value={selectedProject.name}
-              name={selectedProject.name}
-              label="Select a Project"
-              onChange={handleProjectDropdown}
-            >
-              {projects.map(option => (
-                <MenuItem key={option.id} value={option.name}>
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Button onClick={handleAddUser} variant="contained" disabled={!isRemoveButtonDisabled} fullWidth>
-            Add Personnel
-          </Button>
-          <Button onClick={handleRemoveUser} variant="contained" color="error" disabled={isRemoveButtonDisabled} fullWidth>
-            Remove Personnel
-          </Button>
-        </Grid>
+          {/* First Column */}
+          <Grid item xs={12} sm={4}>
+            <FormControl margin={'normal'} fullWidth>
+              <InputLabel id="user-dropdown-label">Select a User</InputLabel>
+              <Select
+                labelId="user-dropdown-label"
+                value={selectedUser.name}
+                name={selectedUser.name}
+                label="Select a User"
+                onChange={handleUserDropdown}
+              >
+                {users.map(option => (
+                  <MenuItem key={option.id} value={option.name}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
+            <FormControl margin={'normal'} fullWidth>
+              <InputLabel id="project-dropdown-label">Select a Project</InputLabel>
+              <Select
+                labelId="project-dropdown-label"
+                value={selectedProject.name}
+                name={selectedProject.name}
+                label="Select a Project"
+                onChange={handleProjectDropdown}
+              >
+                {projects.map(option => (
+                  <MenuItem key={option.id} value={option.name}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button onClick={handleAddUser} variant="contained" disabled={!isRemoveButtonDisabled} fullWidth>
+              Add Personnel
+            </Button>
+            <Button onClick={handleRemoveUser} variant="contained" color="error" disabled={isRemoveButtonDisabled} fullWidth>
+              Remove Personnel
+            </Button>
+          </Grid>
 
-        {/* Second Column */}
-        <Grid item xs={12} sm={8}>
-          <Card>
-            <CardHeader
-              title='Projects'
-              subheader='You are a part of:'
-            />
-            {projects.length !== 0 ? (
+          {/* Second Column */}
+          <Grid item xs={12} sm={8}>
+            <Card>
+              <CardHeader
+                title='Projects'
+                subheader='You are a part of:'
+              />
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
@@ -108,12 +108,15 @@ function UsersView(props: UsersViewProps) {
                   </TableBody>
                 </Table>
               </TableContainer>
-            ) : (
-              <p>No Projects found</p>
-            )}
-          </Card>
-        </Grid>
-      </Grid>
+
+            </Card>
+          </Grid>
+        </Grid>) : (
+        <Card className="center" >
+          <CardHeader title="No Projects have been created yet!" />
+          {/* <p className="center" style={{ textAlign: "center", fontSize: '30px' }}>Please, Create a Project first!</p> */}
+        </Card>
+      )}
     </DrawerController>
   );
 }
