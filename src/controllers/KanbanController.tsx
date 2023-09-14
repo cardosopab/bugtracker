@@ -53,21 +53,25 @@ const KanbanController = () => {
                 {/* Kanban Board */}
                 <Grid item xs={12}>
                     <TableContainer component={Paper}>
-                        <CardHeader title="Project: " subheader="Kanban board:" action={
-                            <div>
-                                <Button onClick={() => handleCreateModalToggle()} sx={{ color: 'white' }}>Create Ticket</Button>
-                                <Modal
-                                    open={openCreateModal}
-                                    onClose={() => handleCreateModalToggle()}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                >
-                                    <Box sx={style}>
-                                        <CreateTicketController handleModal={handleCreateModalToggle} project={null} />
-                                    </Box>
-                                </Modal>
-                            </div>
-                        } />
+                        <CardHeader
+                            title="Project"
+                            subheader="Kanban board:"
+                            action={
+                                <div>
+                                    <Button onClick={() => handleCreateModalToggle()} sx={{ color: 'white' }}>Create a Ticket</Button>
+                                    <Modal
+                                        open={openCreateModal}
+                                        onClose={() => handleCreateModalToggle()}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style}>
+                                            <CreateTicketController handleModal={handleCreateModalToggle} project={null} />
+                                        </Box>
+                                    </Modal>
+                                </div>
+                            }
+                        />
                         <Table>
                             <TableHead>
                                 <TableRow>
