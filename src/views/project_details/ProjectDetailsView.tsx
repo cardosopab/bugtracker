@@ -38,7 +38,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                         <Card>
                             <CardHeader title={"Personnel"} />
                             <TableContainer component={Paper}>
-                                <Table>
+                                <Table style={{ tableLayout: "fixed" }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>User Name</TableCell>
@@ -79,7 +79,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                         <Card>
                             <CardHeader title={`Tickets for ${name}`} />
                             <TableContainer component={Paper}>
-                                <Table>
+                                <Table style={{ tableLayout: "fixed" }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Title</TableCell>

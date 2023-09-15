@@ -30,7 +30,7 @@ const EditTicketController = (props: EditTicketProps) => {
   return (
     <Card>
       <CardHeader title={`Edit Ticket: ${ticket.title}`} />
-      <Table>
+      <Table style={{ tableLayout: "fixed" }}>
         <TableBody>
           <TableRow>
             <TableCell style={{ width: '50%', verticalAlign: 'top' }}>

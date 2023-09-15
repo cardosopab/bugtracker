@@ -78,7 +78,7 @@ function UsersView(props: UsersViewProps) {
                 subheader='You are a part of:'
               />
               <TableContainer component={Paper}>
-                <Table>
+                <Table style={{ tableLayout: "fixed" }}>
                   <TableHead>
                     <TableRow>
                       <TableCell>Project Name</TableCell>

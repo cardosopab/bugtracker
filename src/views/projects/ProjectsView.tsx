@@ -46,7 +46,7 @@ function ProjectsView(props: ProjectsViewProps) {
             />
             {projects.length !== 0 ? (
               <TableContainer component={Paper}>
-                <Table>
+                <Table style={{ tableLayout: "fixed" }}>
                   <TableHead>
                     <TableRow>
                       <TableCell>Project Name</TableCell>

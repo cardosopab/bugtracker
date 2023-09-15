@@ -93,7 +93,7 @@ const KanbanController = () => {
                 </div>
               }
             />
-            <Table>
+            <Table style={{ tableLayout: "fixed" }}>
               <TableHead>
                 <TableRow>
                   {statusOptions.map((status) => (
@@ -105,8 +105,8 @@ const KanbanController = () => {
                 <TableRow>
                   {statusOptions.map((status: string, columnIndex: number) => (
                     <TableCell
-                      sx={{ borderRight: "1px solid #ccc" }}
                       key={`cell-${status}-${columnIndex}`}
+                      style={{ border: "1px solid #ccc" }}
                     >
                       {ticketsByStatus[status]?.map((ticket: Ticket) => {
                         const isModalOpen = openTickets[ticket.id] ?? false;

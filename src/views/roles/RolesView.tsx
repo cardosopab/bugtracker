@@ -72,7 +72,7 @@ function RolesView(props: RolesViewProps) {
                         <CardHeader title="Personnel" subheader="Within the database:"/>
                         {users.length !== 0 ? (
                             <TableContainer component={Paper}>
-                                <Table>
+                                <Table style={{ tableLayout: "fixed" }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>User Name</TableCell>

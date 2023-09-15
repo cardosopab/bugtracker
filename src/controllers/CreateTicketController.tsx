@@ -40,7 +40,7 @@ const CreateTicketController = (props: CreateTicketProps) => {
     return (
         <Card>
             <CardHeader title={`Create Ticket${project == null ? '' : ` for ${project?.name}`}`} />
-            <Table>
+            <Table style={{ tableLayout: "fixed" }}>
                 <TableBody>
                     <TableRow>
                         <TableCell style={{ width: '50%', verticalAlign: 'top' }}>
