@@ -96,12 +96,15 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
       <Divider />
       <List>
         {navOptions.map(({ name, icon, url }, i) => {
-          if (
-            (navOptions[4].name === name || navOptions[5].name === name) &&
-            (currentUser?.role === roles[3] || currentUser?.role === roles[4])
-          ) {
-            return null; // Hide the navigation option for specific roles
+          const isNavOptionVisible =
+            (i !== 4 && i !== 5) || // Display all options except navOptions[4] and navOptions[5]
+            currentUser?.role === roles[3] ||
+            currentUser?.role === roles[4]; // Display navOptions[4] and navOptions[5] for roles[3] and roles[4]
+
+          if (!isNavOptionVisible) {
+            return null; // Hide the navigation option for other roles
           }
+
           return (
             <ListItem key={name} disablePadding>
               <ListItemButton
@@ -115,7 +118,6 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
           );
         })}
       </List>
-
       <Divider />
     </>
   );
