@@ -1,6 +1,19 @@
-import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, CardHeader } from "@mui/material";
-import { statusOptions } from "../constants/ticketConstants"
-import DrawerController from "./DrawerController"
+import {
+  Box,
+  Button,
+  Modal,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Grid,
+  CardHeader,
+} from "@mui/material";
+import { statusOptions } from "../constants/ticketConstants";
+import DrawerController from "./DrawerController";
 import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 import Ticket from "../models/Ticket";
@@ -9,114 +22,130 @@ import EditTicketController from "./EditTicketController";
 import CreateTicketController from "./CreateTicketController";
 
 const KanbanController = () => {
-    const tickets = useSelector((state: RootState) => state.tickets.value);
-    const [openTickets, setOpenTickets] = useState<{ [id: string]: boolean }>({});
+  const tickets = useSelector((state: RootState) => state.tickets.value);
+  const [openTickets, setOpenTickets] = useState<{ [id: string]: boolean }>({});
 
-    const [openCreateModal, setCreateModal] = useState(false);
-    const ticketsByStatus: any = {};
-    tickets.forEach((ticket: Ticket) => {
-        if (!ticketsByStatus[ticket.status]) {
-            ticketsByStatus[ticket.status] = [];
-        }
-        ticketsByStatus[ticket.status].push(ticket);
-    });
-    const handleTicketModalToggle = (ticketId: string) => {
-        setOpenTickets((prevOpenTickets) => ({
-            ...prevOpenTickets,
-            [ticketId]: !prevOpenTickets[ticketId],
-        }));
-    };
-
-    const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: 400,
-        bgcolor: 'background.paper',
-        border: '3px solid #1976d2',
-        borderRadius: '1em',
-        boxShadow: 24,
-        p: 4,
-    };
-    const handleCreateModalToggle = () => {
-        setCreateModal(prev => !prev);
+  const [openCreateModal, setCreateModal] = useState(false);
+  const ticketsByStatus: any = {};
+  tickets.forEach((ticket: Ticket) => {
+    if (!ticketsByStatus[ticket.status]) {
+      ticketsByStatus[ticket.status] = [];
     }
-    return (
-        <DrawerController>
-            <Grid container spacing={2} padding={2}>
-                {/* Title/Header */}
-                <Grid item xs={12}>
-                    <h1>Kanban Board</h1>
-                </Grid>
+    ticketsByStatus[ticket.status].push(ticket);
+  });
+  const handleTicketModalToggle = (ticketId: string) => {
+    setOpenTickets((prevOpenTickets) => ({
+      ...prevOpenTickets,
+      [ticketId]: !prevOpenTickets[ticketId],
+    }));
+  };
 
-                {/* Kanban Board */}
-                <Grid item xs={12}>
-                    <TableContainer component={Paper}>
-                        <CardHeader
-                            title="Project"
-                            subheader="Kanban board:"
-                            action={
-                                <div>
-                                    <Button onClick={() => handleCreateModalToggle()} sx={{ color: 'white' }}>Create a Ticket</Button>
-                                    <Modal
-                                        open={openCreateModal}
-                                        onClose={() => handleCreateModalToggle()}
-                                        aria-labelledby="modal-modal-title"
-                                        aria-describedby="modal-modal-description"
-                                    >
-                                        <Box sx={style}>
-                                            <CreateTicketController handleModal={handleCreateModalToggle} project={null} />
-                                        </Box>
-                                    </Modal>
-                                </div>
-                            }
-                        />
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    {statusOptions.map(status => <TableCell key={status}>{status}</TableCell>)}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    {statusOptions.map((status: string, columnIndex: number) => (
-                                        <TableCell sx={{ borderRight: '1px solid #ccc' }} key={`cell-${status}-${columnIndex}`}>
-                                            {ticketsByStatus[status]?.map((ticket: Ticket) => {
-                                                const isModalOpen = openTickets[ticket.id] ?? false;
-                                                return (
-                                                    <div key={`ticket-${ticket.id}`}>
-                                                        <Modal
-                                                            key={`modal-${ticket.id}`}
-                                                            open={isModalOpen}
-                                                            onClose={() => handleTicketModalToggle(ticket.id)}
-                                                            aria-labelledby="modal-modal-title"
-                                                            aria-describedby="modal-modal-description"
-                                                        >
-                                                            <Box sx={style}>
-                                                                <EditTicketController
-                                                                    key={`edit-${ticket.id}`}
-                                                                    ticket={ticket}
-                                                                    handleModal={handleTicketModalToggle}
-                                                                />
-                                                            </Box>
-                                                        </Modal>
-                                                        <Button key={`button-${ticket.id}`} onClick={() => handleTicketModalToggle(ticket.id)}>
-                                                            {ticket.title}
-                                                        </Button>
-                                                    </div>
-                                                );
-                                            })}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-            </Grid>
-        </DrawerController>
-    )
-}
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    minWidth: 400,
+    bgcolor: "background.paper",
+    border: "3px solid #1976d2",
+    borderRadius: "1em",
+    boxShadow: 24,
+    p: 4,
+  };
+  const handleCreateModalToggle = () => {
+    setCreateModal((prev) => !prev);
+  };
+  return (
+    <DrawerController>
+      <Grid container spacing={2} padding={2}>
+        {/* Title/Header */}
+        <Grid item xs={12}>
+          <h1>Kanban Board</h1>
+        </Grid>
+
+        {/* Kanban Board */}
+        <Grid item xs={12}>
+          <TableContainer component={Paper}>
+            <CardHeader
+              title="Project"
+              subheader="Kanban board:"
+              action={
+                <div>
+                  <Button
+                    onClick={() => handleCreateModalToggle()}
+                    sx={{ color: "white" }}
+                  >
+                    Create a Ticket
+                  </Button>
+                  <Modal
+                    open={openCreateModal}
+                    onClose={() => handleCreateModalToggle()}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <CreateTicketController
+                        handleModal={handleCreateModalToggle}
+                        project={null}
+                      />
+                    </Box>
+                  </Modal>
+                </div>
+              }
+            />
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {statusOptions.map((status) => (
+                    <TableCell key={status}>{status}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  {statusOptions.map((status: string, columnIndex: number) => (
+                    <TableCell
+                      sx={{ borderRight: "1px solid #ccc" }}
+                      key={`cell-${status}-${columnIndex}`}
+                    >
+                      {ticketsByStatus[status]?.map((ticket: Ticket) => {
+                        const isModalOpen = openTickets[ticket.id] ?? false;
+                        return (
+                          <div key={`ticket-${ticket.id}`}>
+                            <Modal
+                              key={`modal-${ticket.id}`}
+                              open={isModalOpen}
+                              onClose={() => handleTicketModalToggle(ticket.id)}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style}>
+                                <EditTicketController
+                                  key={`edit-${ticket.id}`}
+                                  ticket={ticket}
+                                  handleModal={handleTicketModalToggle}
+                                />
+                              </Box>
+                            </Modal>
+                            <Button
+                              key={`button-${ticket.id}`}
+                              onClick={() => handleTicketModalToggle(ticket.id)}
+                            >
+                              {ticket.title}
+                            </Button>
+                          </div>
+                        );
+                      })}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
+    </DrawerController>
+  );
+};
 
 export default KanbanController;
