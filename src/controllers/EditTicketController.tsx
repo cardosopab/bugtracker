@@ -1,42 +1,69 @@
-import { Button, Card, CardHeader, FormControl, InputLabel, Input, MenuItem, Select, Table, TableBody, TableCell, TableRow, } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardHeader,
+  FormControl,
+  InputLabel,
+  Input,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 import { useState } from "react";
 import Ticket from "../models/Ticket";
-import { updateTicket } from "../models/database/database";
-import { priorityOptions, statusOptions, typeOptions } from "../constants/ticketConstants";
+import { removeTicket, updateTicket } from "../models/database/database";
+import {
+  priorityOptions,
+  statusOptions,
+  typeOptions,
+} from "../constants/ticketConstants";
 
 interface EditTicketProps {
-  ticket: Ticket
+  ticket: Ticket;
   handleModal: any;
 }
 const EditTicketController = (props: EditTicketProps) => {
-  const { ticket, handleModal } = props
+  const { ticket, handleModal } = props;
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
-  const [titleValue, setTitleValue] = useState(ticket.title)
-  const [descriptionValue, setDescriptionValue] = useState(ticket.description)
-  const [selectedProject, setSelectedProject] = useState(projects.find(project => project.id === ticket.projectId)?.name);
+  const [titleValue, setTitleValue] = useState(ticket.title);
+  const [descriptionValue, setDescriptionValue] = useState(ticket.description);
+  const [selectedProject, setSelectedProject] = useState(
+    projects.find((project) => project.id === ticket.projectId)?.name
+  );
   const [selectedPriority, setSelectedPriority] = useState(ticket.priority);
   const [selectedType, setSelectedType] = useState(ticket.type);
-  const [selectedPersonnel, setSelectedPersonnel] = useState(users.find(user => user.id === ticket.personnelId)?.name);
+  const [selectedPersonnel, setSelectedPersonnel] = useState(
+    users.find((user) => user.id === ticket.personnelId)?.name
+  );
   const [selectedStatus, setSelectedStatus] = useState(ticket.status);
 
   const handleUpdate = (tickeId: string, ticket: Ticket) => {
     handleModal(ticket.id);
-    updateTicket(tickeId, ticket)
-  }
-
+    updateTicket(tickeId, ticket);
+  };
+  const handleTicketRemoval = (ticketId: string) => {
+    removeTicket(ticketId);
+  };
   return (
     <Card>
       <CardHeader title={`Edit Ticket: ${ticket.title}`} />
       <Table style={{ tableLayout: "fixed" }}>
         <TableBody>
           <TableRow>
-            <TableCell style={{ width: '50%', verticalAlign: 'top' }}>
+            <TableCell style={{ width: "50%", verticalAlign: "top" }}>
               <FormControl fullWidth={true} margin={"normal"}>
                 <InputLabel htmlFor="title-input">Title</InputLabel>
-                <Input id="title-input" value={titleValue} onChange={(event) => setTitleValue(event.target.value)} />
+                <Input
+                  id="title-input"
+                  value={titleValue}
+                  onChange={(event) => setTitleValue(event.target.value)}
+                />
               </FormControl>
               <FormControl fullWidth={true} margin={"normal"} color="success">
                 <InputLabel id="project-dropdown-label">Project</InputLabel>
@@ -65,9 +92,11 @@ const EditTicketController = (props: EditTicketProps) => {
                   value={selectedPriority} // Connect to state
                   onChange={(event) => setSelectedPriority(event.target.value)} // Update state on change
                 >
-                  {priorityOptions.map(option =>
-                    <MenuItem value={option}>{option}</MenuItem>
-                  )}
+                  {priorityOptions.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <FormControl fullWidth={true} margin={"normal"}>
@@ -79,21 +108,27 @@ const EditTicketController = (props: EditTicketProps) => {
                   value={selectedType} // Connect to state
                   onChange={(event) => setSelectedType(event.target.value)} // Update state on change
                 >
-                  {typeOptions.map(option =>
-                    <MenuItem value={option}>{option}</MenuItem>
-                  )}
+                  {typeOptions.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </TableCell>
-            <TableCell style={{ width: '50%', verticalAlign: 'top' }}>
+            <TableCell style={{ width: "50%", verticalAlign: "top" }}>
               <FormControl fullWidth={true} margin={"normal"}>
                 <InputLabel htmlFor="description-input">Description</InputLabel>
-                <Input id="description-input" value={descriptionValue} onChange={(event) => setDescriptionValue(event.target.value)} multiline rows={4} />
+                <Input
+                  id="description-input"
+                  value={descriptionValue}
+                  onChange={(event) => setDescriptionValue(event.target.value)}
+                  multiline
+                  rows={4}
+                />
               </FormControl>
               <FormControl fullWidth={true} margin={"normal"}>
-                <InputLabel id="developer-dropdown-label">
-                  Personnel
-                </InputLabel>
+                <InputLabel id="developer-dropdown-label">Personnel</InputLabel>
                 <Select
                   labelId="developer-dropdown-label"
                   label="Personnel"
@@ -118,36 +153,52 @@ const EditTicketController = (props: EditTicketProps) => {
                   value={selectedStatus} // Connect to state
                   onChange={(event) => setSelectedStatus(event.target.value)} // Update state on change
                 >
-                  {statusOptions.map(option =>
-                    <MenuItem value={option}>{option}</MenuItem>
-                  )}
+                  {statusOptions.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={2} align="center">
-              <Button>Back to List</Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => handleUpdate(ticket.id, {
-                  id: ticket.id,
-                  projectId: projects.find(project => project.name === selectedProject)!.id,
-                  companyId: ticket.companyId,
-                  title: titleValue,
-                  description: descriptionValue,
-                  submitterId: ticket.submitterId,
-                  personnelId: users.find(user => user.name === selectedPersonnel)!.id,
-                  priority: selectedPriority,
-                  status: selectedStatus,
-                  type: selectedType,
-                  createdAt: ticket.createdAt,
-                  comments: ticket.comments
-                })}
-              >
-                Update Ticket
-              </Button>
+            <TableCell colSpan={2}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => handleTicketRemoval(ticket.id)}
+                >
+                  Delete Ticket
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    handleUpdate(ticket.id, {
+                      id: ticket.id,
+                      projectId: projects.find(
+                        (project) => project.name === selectedProject
+                      )!.id,
+                      companyId: ticket.companyId,
+                      title: titleValue,
+                      description: descriptionValue,
+                      submitterId: ticket.submitterId,
+                      personnelId: users.find(
+                        (user) => user.name === selectedPersonnel
+                      )!.id,
+                      priority: selectedPriority,
+                      status: selectedStatus,
+                      type: selectedType,
+                      createdAt: ticket.createdAt,
+                      comments: ticket.comments,
+                    })
+                  }
+                >
+                  Update Ticket
+                </Button>
+              </div>
             </TableCell>
           </TableRow>
         </TableBody>
