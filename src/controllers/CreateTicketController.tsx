@@ -16,18 +16,19 @@ import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 import { useState } from "react";
 import Project from "../models/Project";
-import { createTicket } from "../models/database/database";
 import {
   priorityOptions,
   statusOptions,
   typeOptions,
 } from "../constants/ticketConstants";
+import { useTicketActions } from "../models/database/hooks/useTicketActions";
 
 interface CreateTicketProps {
   project: Project | null;
   handleModal: any;
 }
 const CreateTicketController = (props: CreateTicketProps) => {
+  const createTicket = useTicketActions().createTicket;
   const { project, handleModal } = props;
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);

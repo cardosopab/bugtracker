@@ -16,18 +16,20 @@ import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 import { useState } from "react";
 import Ticket from "../models/Ticket";
-import { removeTicket, updateTicket } from "../models/database/database";
 import {
   priorityOptions,
   statusOptions,
   typeOptions,
 } from "../constants/ticketConstants";
+import { useTicketActions } from "../models/database/hooks/useTicketActions";
 
 interface EditTicketProps {
   ticket: Ticket;
   handleModal: any;
 }
 const EditTicketController = (props: EditTicketProps) => {
+  const deleteTicket = useTicketActions().deleteTicket;
+  const updateTicket = useTicketActions().updateTicket;
   const { ticket, handleModal } = props;
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
@@ -48,7 +50,7 @@ const EditTicketController = (props: EditTicketProps) => {
     updateTicket(tickeId, ticket);
   };
   const handleTicketRemoval = (ticketId: string) => {
-    removeTicket(ticketId);
+    deleteTicket(ticketId);
   };
   return (
     <Card>
