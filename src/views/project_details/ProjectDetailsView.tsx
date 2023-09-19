@@ -22,14 +22,22 @@ interface DetailsProps {
   details: Project;
   users: User[];
   tickets: Ticket[];
-  handleTicketRemoval: any;
-  handleModal: any;
+  handleTicketRemoval: (ticketId: string) => void;
+  handleProjectRemoval: (projectId: string) => void;
+  handleModalToggle: () => void;
   open: boolean;
 }
 
 const ProjectDetailsView = (props: DetailsProps) => {
-  const { details, users, tickets, handleTicketRemoval, handleModal, open } =
-    props;
+  const {
+    details,
+    users,
+    tickets,
+    handleTicketRemoval,
+    handleProjectRemoval,
+    handleModalToggle,
+    open,
+  } = props;
   const name = details.name;
   const personnel = details.personnel;
 
@@ -51,12 +59,22 @@ const ProjectDetailsView = (props: DetailsProps) => {
       <Grid item xs={12}>
         {/* Top Row */}
         <Card>
-          <CardHeader title={`Details for ${name}`} />
+          <CardHeader
+            title={`Details for ${name}`}
+            action={
+              <div>
+                <Button
+                  onClick={() => handleProjectRemoval(details.id)}
+                  sx={{ color: "white" }}
+                >
+                  Delete Ticket
+                </Button>
+              </div>
+            }
+          />
           <Box p={2}>
-            {/* Extra Details */}
             <div>
-              <h2>Extra Details</h2>
-              {/* Add your extra details content here */}
+              <h2>{details.description}</h2>
             </div>
           </Box>
         </Card>
@@ -101,19 +119,19 @@ const ProjectDetailsView = (props: DetailsProps) => {
             title={`Tickets for ${name}`}
             action={
               <div>
-                <Button onClick={handleModal} sx={{ color: "white" }}>
+                <Button onClick={handleModalToggle} sx={{ color: "white" }}>
                   Create Ticket
                 </Button>
                 <Modal
                   open={open}
-                  onClose={handleModal}
+                  onClose={handleModalToggle}
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={style}>
                     <CreateTicketController
                       project={details}
-                      handleModal={handleModal}
+                      handleModal={handleModalToggle}
                     />
                   </Box>
                 </Modal>

@@ -13,13 +13,18 @@ import {
   Grid,
 } from "@mui/material";
 import DrawerController from "../../controllers/DrawerController";
-import { RegisterOptions } from "react-hook-form";
+import {
+  FieldValues,
+  RegisterOptions,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 import Project from "../../models/Project";
 
 interface ProjectsViewProps {
-  handleSubmit: any;
+  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
+  handleProjectDelete: (projectId: string) => void;
   navigateToDetails: (project: Project) => void;
-  onSubmit: any;
+  onSubmit: (values: any) => void;
   register: (name: string, options?: RegisterOptions) => any;
   projects: Project[];
   errors: any;
@@ -28,6 +33,7 @@ interface ProjectsViewProps {
 function ProjectsView(props: ProjectsViewProps) {
   const {
     handleSubmit,
+    handleProjectDelete,
     navigateToDetails,
     onSubmit,
     register,
@@ -107,20 +113,25 @@ function ProjectsView(props: ProjectsViewProps) {
                           <TableCell>{name}</TableCell>
                           <TableCell>{description}</TableCell>
                           <TableCell>
-                            <Button
-                              onClick={() =>
-                                navigateToDetails({
-                                  id: id,
-                                  companyId: companyId,
-                                  name: name,
-                                  description: description,
-                                  createdAt: createdAt,
-                                  personnel: personnel,
-                                })
-                              }
-                            >
-                              Details
-                            </Button>
+                            <div className="column">
+                              <Button
+                                onClick={() =>
+                                  navigateToDetails({
+                                    id: id,
+                                    companyId: companyId,
+                                    name: name,
+                                    description: description,
+                                    createdAt: createdAt,
+                                    personnel: personnel,
+                                  })
+                                }
+                              >
+                                Details
+                              </Button>
+                              <Button onClick={() => handleProjectDelete(id)}>
+                                Delete
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       )

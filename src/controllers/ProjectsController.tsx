@@ -10,6 +10,7 @@ import { PROJECT_DETAILS_URL } from "../views/viewsUrls";
 import { useProjectActions } from "../models/database/hooks/useProjectActions";
 
 function ProjectsController() {
+  const deleteProject = useProjectActions().deleteProject;
   const createProject = useProjectActions().createProject;
   const navigateTo = useNavigate();
   const {
@@ -27,6 +28,10 @@ function ProjectsController() {
     values.description = "";
   };
 
+  const handleProjectDelete = (projectId: string) => {
+    deleteProject(projectId);
+  };
+
   function navigateToDetails(details: Project) {
     navigateTo(PROJECT_DETAILS_URL);
     dispatch(setDrawerIndex(90));
@@ -36,6 +41,7 @@ function ProjectsController() {
     <>
       <ProjectsView
         handleSubmit={handleSubmit}
+        handleProjectDelete={handleProjectDelete}
         onSubmit={onSubmit}
         register={register}
         projects={projects}

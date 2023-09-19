@@ -1,9 +1,10 @@
-import { doc, collection, setDoc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
+import { doc, collection, setDoc, updateDoc, arrayRemove, arrayUnion, deleteDoc } from "firebase/firestore";
 import { database } from "../firebase-init";
 import { PROJECTS_COLLECTION } from "../collections";
 import Project from "../../Project";
 
 export const useProjectActions = () => {
+
   const createProject = async (name: string, description: string, companyId: string) => {
     try {
       const docRef = doc(collection(database, PROJECTS_COLLECTION));
@@ -24,6 +25,32 @@ export const useProjectActions = () => {
       return null;
     }
   };
+
+  const deleteProject = async (projectId: string) => {
+    try {
+      const docRef = doc(database, PROJECTS_COLLECTION, projectId);
+      await deleteDoc(docRef);
+      console.log("Document removed with ID: ", docRef.id);
+
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      return null;
+    }
+
+  }
+
+  const addUserToProject = async (uid: string, projectId: string) => {
+    try {
+      const docRef = doc(database, PROJECTS_COLLECTION, projectId);
+      await setDoc(docRef, { personnel: arrayUnion(uid) }, { merge: true });
+      console.log("Document written with ID: ", docRef.id);
+
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      return null;
+    }
+  };
+
   const deleteUserFromProject = async (uid: string, projectId: string) => {
     try {
       const docRef = doc(database, PROJECTS_COLLECTION, projectId);
@@ -38,16 +65,5 @@ export const useProjectActions = () => {
     }
   };
 
-  const addUserToProject = async (uid: string, projectId: string) => {
-    try {
-      const docRef = doc(database, PROJECTS_COLLECTION, projectId);
-      await setDoc(docRef, { personnel: arrayUnion(uid) }, { merge: true });
-      console.log("Document written with ID: ", docRef.id);
-
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      return null;
-    }
-  };
-  return { createProject, deleteUserFromProject, addUserToProject };
+  return { createProject, deleteProject, addUserToProject, deleteUserFromProject };
 };
