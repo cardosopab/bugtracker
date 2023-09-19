@@ -95,7 +95,14 @@ function ProjectsView(props: ProjectsViewProps) {
                   </TableHead>
                   <TableBody>
                     {projects.map(
-                      ({ id, name, description, createdAt, personnel }) => (
+                      ({
+                        id,
+                        companyId,
+                        name,
+                        description,
+                        createdAt,
+                        personnel,
+                      }) => (
                         <TableRow key={id}>
                           <TableCell>{name}</TableCell>
                           <TableCell>{description}</TableCell>
@@ -104,6 +111,7 @@ function ProjectsView(props: ProjectsViewProps) {
                               onClick={() =>
                                 navigateToDetails({
                                   id: id,
+                                  companyId: companyId,
                                   name: name,
                                   description: description,
                                   createdAt: createdAt,
