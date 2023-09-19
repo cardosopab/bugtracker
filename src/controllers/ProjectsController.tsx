@@ -17,6 +17,7 @@ function ProjectsController() {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm();
   const dispatch = useDispatch();
   const projects = useSelector((state: RootState) => state.projects.value);
@@ -24,8 +25,7 @@ function ProjectsController() {
   const onSubmit = (values: any) => {
     console.log("createProject", values.name, values.description, companyId);
     createProject(values.name, values.description, companyId);
-    values.name = "";
-    values.description = "";
+    reset();
   };
 
   const handleProjectDelete = (projectId: string) => {
