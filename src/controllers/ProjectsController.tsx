@@ -1,15 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { RootState } from "../models/redux/store";
-import { createProject } from "../models/database/database";
 import Project from "../models/Project";
 import ProjectsView from "../views/projects/ProjectsView";
 import { useNavigate } from "react-router-dom";
 import { setDrawerIndex } from "../models/redux/drawerSlice";
 import { setProjectDetails } from "../models/redux/projectDetailsSlice";
 import { PROJECT_DETAILS_URL } from "../views/viewsUrls";
+import { useProjectActions } from "../models/database/hooks/useProjectActions";
 
 function ProjectsController() {
+  const createProject = useProjectActions().createProject;
   const navigateTo = useNavigate();
   const {
     handleSubmit,
@@ -18,10 +19,10 @@ function ProjectsController() {
   } = useForm();
   const dispatch = useDispatch();
   const projects = useSelector((state: RootState) => state.projects.value);
-
+  const companyId = useSelector((state: RootState) => state.auth.companyId);
   const onSubmit = (values: any) => {
-    console.log(values.name, values.description);
-    createProject(values.name, values.description);
+    console.log("createProject", values.name, values.description, companyId);
+    createProject(values.name, values.description, companyId);
     values.name = "";
     values.description = "";
   };
