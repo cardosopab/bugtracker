@@ -3,12 +3,10 @@ This repository contains a bug tracking application built using the MVC architec
 
 ## Software Requirements
 - [ ] Demo User Accounts
-- [ ] Inputs
 - [ ] Screens
   - [ ] Admin
-    - [ ] Dashboard
-      - [ ] Tickets by Priority Bar Graph
-      - [ ] Tickets by Type sun(circle) graph
+    - [x] Dashboard
+      - [x] Data driven graphs
     - [x] Manage Role Assignment
       - [x] Select Users
       - [x] Assign Role
@@ -20,17 +18,14 @@ This repository contains a bug tracking application built using the MVC architec
     - [x] My Projects
       - [x] Projects List
         - [x] Project Name, Description, Manage Users
-    - [ ] Project Details
-      - [ ] Name, Description
-      - [ ] Assigned Personnel
-        - [ ] Username, Email, Role
-    - [ ] Tickets
-      - [ ] Title, Submitter, Developer, Status, Created, More Details
-    - [ ] My Tickets
+    - [x] Project Details
+      - [x] Name, Description
+      - [x] Assigned Personnel
+        - [x] Username, Email, Role
+    - [x] Tickets
+      - [x] Ticket Details
     - [ ] Ticket
       - [ ] Details
-        - [ ] Title, Description, Assigned Dev, Submitter, Project
-          - [ ] Priority, Status, Type(Bugs/Errors-Feature Requests), Created, Updated
       - [ ] Comments
         - [ ] Commenter, Message, Created
       - [ ] Ticket History
