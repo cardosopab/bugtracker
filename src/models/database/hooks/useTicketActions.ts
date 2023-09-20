@@ -2,8 +2,12 @@ import { doc, collection, setDoc, deleteDoc, updateDoc } from "firebase/firestor
 import { database } from "./../firebase-init";
 import { TICKETS_COLLECTION } from "./../collections";
 import Ticket from "./../../Ticket";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export const useTicketActions = () => {
+    const currentUser = useSelector((state: RootState) => state.auth.currentUser);
+
     const createTicket = async (
         projectId: string,
         companyId: string,
@@ -15,6 +19,10 @@ export const useTicketActions = () => {
         status: string,
         type: string
     ) => {
+        if (currentUser.role === "Demo") {
+            return;
+        }
+
         try {
             const docRef = doc(collection(database, TICKETS_COLLECTION));
 
@@ -41,6 +49,10 @@ export const useTicketActions = () => {
     };
 
     const updateTicket = async (ticketId: string, ticket: Ticket) => {
+        if (currentUser.role === "Demo") {
+            return;
+        }
+
         try {
             const docRef = doc(database, TICKETS_COLLECTION, ticketId);
             await setDoc(docRef, ticket);
@@ -52,6 +64,10 @@ export const useTicketActions = () => {
     };
 
     const deleteTicket = async (ticketId: string) => {
+        if (currentUser.role === "Demo") {
+            return;
+        }
+
         try {
             const docRef = doc(database, TICKETS_COLLECTION, ticketId);
             await deleteDoc(docRef);

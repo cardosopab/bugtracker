@@ -3,8 +3,12 @@ import { database } from "./../firebase-init";
 import { USERS_COLLECTION, COMPANY_COLLECTION } from "./../collections";
 import User from "./../../User";
 import Company from "./../../Company";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export const useUserActions = () => {
+    const currentUser = useSelector((state: RootState) => state.auth.currentUser);
+
     const createUser = async (uid: string, name: string, email: string) => {
         try {
             const docRef = doc(collection(database, USERS_COLLECTION), uid);
@@ -35,6 +39,10 @@ export const useUserActions = () => {
     };
 
     const updateUserRole = async (uid: string, role: string) => {
+        if (currentUser.role === "Demo") {
+            return;
+        }
+
         const user = doc(database, USERS_COLLECTION, uid);
         setDoc(user, { role: role }, { merge: true });
     };
