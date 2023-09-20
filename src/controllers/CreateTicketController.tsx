@@ -32,10 +32,7 @@ const CreateTicketController = (props: CreateTicketProps) => {
   const { project, handleModal } = props;
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
-  const currentUserId = useSelector(
-    (state: RootState) => state.auth.currentUserId
-  );
-  const currentUser = users.find((user) => user.id === currentUserId);
+  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const [selectedProject, setSelectedProject] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -59,7 +56,7 @@ const CreateTicketController = (props: CreateTicketProps) => {
       project?.id ??
         projects.find((project) => project.name == selectedProject)!.id,
       currentUser?.companyId ?? "0",
-      currentUserId,
+      currentUser.id,
       personnelId!,
       titleValue,
       descriptionValue,

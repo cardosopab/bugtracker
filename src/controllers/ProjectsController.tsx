@@ -21,10 +21,9 @@ function ProjectsController() {
   } = useForm();
   const dispatch = useDispatch();
   const projects = useSelector((state: RootState) => state.projects.value);
-  const companyId = useSelector((state: RootState) => state.auth.companyId);
+  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const onSubmit = (values: any) => {
-    console.log("createProject", values.name, values.description, companyId);
-    createProject(values.name, values.description, companyId);
+    createProject(values.name, values.description, currentUser.companyId);
     reset();
   };
 
