@@ -64,7 +64,7 @@ function App() {
           if (userDocSnapshot.exists()) {
             const data = userDocSnapshot.data();
 
-            // Set the currentUserId variable with the user data
+            // Set the currentUser variable with the user data
             dispatch(
               setCurrentUser({
                 id: data.id,
@@ -140,15 +140,17 @@ function App() {
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           console.log("data", data);
-          const user: User = {
-            id: data.id,
-            name: data.name,
-            createdAt: data.createdAt,
-            email: data.email,
-            role: data.role,
-            companyId: data.companyId,
-          };
-          arr.push(user);
+          if (data.role !== "Demo") {
+            const user: User = {
+              id: data.id,
+              name: data.name,
+              createdAt: data.createdAt,
+              email: data.email,
+              role: data.role,
+              companyId: data.companyId,
+            };
+            arr.push(user);
+          }
         });
         batch(() => {
           console.log("subscribedUsers");

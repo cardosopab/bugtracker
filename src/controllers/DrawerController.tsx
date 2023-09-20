@@ -62,11 +62,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const drawerIndex = useSelector((state: RootState) => state.drawer.index);
-  const currentUserId = useSelector(
-    (state: RootState) => state.auth.currentUserId
-  );
-  const users = useSelector((state: RootState) => state.users.value);
-  const currentUser = users.find((user) => currentUserId === user.id);
+  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -99,7 +95,8 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
           const isNavOptionVisible =
             (i !== 4 && i !== 5) || // Display all options except navOptions[4] and navOptions[5]
             currentUser?.role === roles[3] ||
-            currentUser?.role === roles[4]; // Display navOptions[4] and navOptions[5] for roles[3] and roles[4]
+            currentUser?.role === roles[4] ||
+            currentUser?.role === "Demo"; // Display navOptions[4] and navOptions[5] for roles[3] and roles[4]
 
           if (!isNavOptionVisible) {
             return null; // Hide the navigation option for other roles
