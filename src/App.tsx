@@ -101,7 +101,8 @@ function App() {
   useEffect(() => {
     if (authInitialized && authStatus) {
       // Determine if the currentUser is an admin
-      const isAdmin = currentUser.role === "Admin";
+      const isAdmin =
+        currentUser.role === "Admin" || currentUser.role === "Demo";
 
       // Create references to collections
       const usersCollection = collection(database, USERS_COLLECTION);
