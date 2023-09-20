@@ -42,30 +42,18 @@ import AuthController from "./controllers/AuthController";
 import RolesController from "./controllers/RolesController";
 import UsersController from "./controllers/UsersController";
 import ProjectDetailsController from "./controllers/ProjectDetailsController";
-import {
-  setAuthStatus,
-  setCompanyId,
-  setCurrentUserId,
-} from "./models/redux/authSlice";
+import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
 import { RootState } from "./models/redux/store";
 import KanbanController from "./controllers/KanbanController";
 
 function App() {
   const [authInitialized, setAuthInitialized] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
   const authStatus = useSelector((state: RootState) => state.auth.authStatus);
+  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
-      setAuthInitialized(true);
-      console.log("onAuthStateChanged", user);
-      console.log("auth: ", auth);
-      const isAuth = user?.uid != undefined;
-      console.log("isAuth", isAuth);
-      dispatch(setAuthStatus(isAuth));
-      dispatch(setCurrentUserId(user?.uid ?? ""));
-
       // Initialize currentUser
       if (user) {
         // Assuming you have a reference to the users collection
@@ -77,18 +65,16 @@ function App() {
             const data = userDocSnapshot.data();
 
             // Set the currentUserId variable with the user data
-            dispatch(setCurrentUserId(user?.uid ?? ""));
-            const userObj: User = {
-              id: data.id,
-              name: data.name,
-              createdAt: data.createdAt,
-              email: data.email,
-              role: data.role,
-              companyId: data.companyId,
-            };
-            setCurrentUser(userObj); // Add a setCurrentUser action to set the user data in the state
-            console.log("userObj.companyId", userObj.companyId);
-            dispatch(setCompanyId(userObj.companyId));
+            dispatch(
+              setCurrentUser({
+                id: data.id,
+                name: data.name,
+                createdAt: data.createdAt,
+                email: data.email,
+                role: data.role,
+                companyId: data.companyId,
+              })
+            );
           } else {
             console.log("User document not found in Firestore.");
           }
@@ -98,6 +84,12 @@ function App() {
       } else {
         // User is not authenticated, handle it as needed
       }
+      console.log("onAuthStateChanged", user);
+      console.log("auth: ", auth);
+      const isAuth = user?.uid != undefined;
+      console.log("isAuth", isAuth);
+      setAuthInitialized(true);
+      dispatch(setAuthStatus(isAuth));
     });
 
     return () => {
@@ -107,7 +99,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (authInitialized && authStatus && currentUser != undefined) {
+    if (authInitialized && authStatus) {
       // Determine if the currentUser is an admin
       const isAdmin = currentUser.role === "Admin";
 
@@ -221,7 +213,7 @@ function App() {
         unsubscribeTickets();
       };
     }
-  }, [authInitialized, authStatus, currentUser]);
+  }, [authInitialized, authStatus]);
 
   if (!authInitialized) {
     return <div className="center">Loading...</div>;

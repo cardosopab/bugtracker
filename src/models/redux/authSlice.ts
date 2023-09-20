@@ -1,18 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import User from '../User';
 
 
 interface AuthState {
     authInitialized: boolean;
     authStatus: boolean;
-    currentUserId: string;
-    companyId: string;
+    currentUser: User;
 }
 
 const initialState: AuthState = {
     authInitialized: false,
     authStatus: false,
-    currentUserId: '',
-    companyId: '',
+    currentUser: {} as User,
 };
 
 const authSlice = createSlice({
@@ -25,15 +24,12 @@ const authSlice = createSlice({
         setAuthStatus: (state, action: PayloadAction<boolean>) => {
             state.authStatus = action.payload;
         },
-        setCurrentUserId: (state, action: PayloadAction<string>) => {
-            state.currentUserId = action.payload;
-        },
-        setCompanyId: (state, action: PayloadAction<string>) => {
-            state.companyId = action.payload;
-        },
+        setCurrentUser: (state, action: PayloadAction<User>) => {
+            state.currentUser = action.payload;
+        }
     },
 });
 
-export const { setAuthInitialized, setAuthStatus, setCurrentUserId, setCompanyId } = authSlice.actions;
+export const { setAuthInitialized, setAuthStatus, setCurrentUser } = authSlice.actions;
 export default authSlice.reducer;
 
