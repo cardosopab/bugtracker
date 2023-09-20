@@ -67,7 +67,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                   onClick={() => handleProjectRemoval(details.id)}
                   sx={{ color: "white" }}
                 >
-                  Delete Ticket
+                  Delete Project
                 </Button>
               </div>
             }
