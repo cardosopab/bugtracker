@@ -36,13 +36,18 @@ const KanbanController = () => {
     projects.length > 0 ? projects[0] : ({} as Project)
   );
   const [openCreateModal, setCreateModal] = useState(false);
-  const ticketsByStatus: any = {};
+  const ticketsByStatus: { [status: string]: Ticket[] } = {};
+
+  // Filter tickets by the selected project
   tickets.forEach((ticket: Ticket) => {
-    if (!ticketsByStatus[ticket.status]) {
-      ticketsByStatus[ticket.status] = [];
+    if (ticket.projectId === selectedProject.id) {
+      if (!ticketsByStatus[ticket.status]) {
+        ticketsByStatus[ticket.status] = [];
+      }
+      ticketsByStatus[ticket.status].push(ticket);
     }
-    ticketsByStatus[ticket.status].push(ticket);
   });
+
   const handleTicketModalToggle = (ticketId: string) => {
     setOpenTickets((prevOpenTickets) => ({
       ...prevOpenTickets,
