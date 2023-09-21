@@ -74,7 +74,12 @@ function ProjectsView(props: ProjectsViewProps) {
               {...register("description", { required: "Required" })}
             />
             {errors.description && <p>{errors.description.message}</p>}
-            <Button variant={"contained"} type="submit" fullWidth>
+            <Button
+              variant={"contained"}
+              type="submit"
+              fullWidth
+              sx={{ marginTop: 2 }}
+            >
               Create Project
             </Button>
           </form>
