@@ -113,7 +113,14 @@ function RolesView(props: RolesViewProps) {
                     {users.map(({ id, name, email, role }) => (
                       <TableRow key={id}>
                         <TableCell>{name}</TableCell>
-                        <TableCell>{email}</TableCell>
+                        <TableCell
+                          style={{
+                            whiteSpace: "normal",
+                            wordWrap: "break-word",
+                          }}
+                        >
+                          {email}
+                        </TableCell>
                         <TableCell>{role}</TableCell>
                       </TableRow>
                     ))}

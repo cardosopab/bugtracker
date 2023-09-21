@@ -12,6 +12,8 @@ import {
   TableRow,
   Grid,
   Card,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import DrawerController from "../../controllers/DrawerController";
 import Ticket from "../../models/Ticket";
@@ -29,10 +31,13 @@ interface TicketsProps {
   openTickets: { [id: string]: boolean };
 }
 
-function Tickets(props: TicketsProps) {
+function TicketsView(props: TicketsProps) {
   const { tickets, users, projects, handleModal, openTickets } = props;
 
   const [openCreateModal, setCreateModal] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
+
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -45,6 +50,7 @@ function Tickets(props: TicketsProps) {
     boxShadow: 24,
     p: 4,
   };
+
   const handleCreateModalToggle = () => {
     setCreateModal((prev) => !prev);
   };
@@ -91,15 +97,26 @@ function Tickets(props: TicketsProps) {
               <Table style={{ tableLayout: "fixed" }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Project Name</TableCell>
-                    <TableCell>Submitter</TableCell>
-                    <TableCell>Developer</TableCell>
-                    <TableCell>Priority</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Created</TableCell>
-                    <TableCell></TableCell>
+                    {!isMobile ? ( // Render all columns except for xs screens
+                      <>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Project Name</TableCell>
+                        <TableCell>Submitter</TableCell>
+                        <TableCell>Developer</TableCell>
+                        <TableCell>Priority</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Type</TableCell>
+                        <TableCell>Created</TableCell>
+                        <TableCell>Actions</TableCell>
+                      </>
+                    ) : (
+                      // Render only for xs screens
+                      <>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Actions</TableCell>
+                      </>
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -128,43 +145,73 @@ function Tickets(props: TicketsProps) {
 
                     return (
                       <TableRow key={id}>
-                        <TableCell>{title}</TableCell>
-                        <TableCell>{project?.name}</TableCell>
-                        <TableCell>{submitter?.name}</TableCell>
-                        <TableCell>{personnel?.name}</TableCell>
-                        <TableCell>{priority}</TableCell>
-                        <TableCell>{status}</TableCell>
-                        <TableCell>{type}</TableCell>
-                        <TableCell>
-                          {new Date(createdAt).toLocaleString(undefined, {
-                            month: "2-digit",
-                            day: "2-digit",
-                            year: "2-digit",
-                            hour: "numeric",
-                            minute: "numeric",
-                            hour12: true,
-                          })}
-                        </TableCell>
-                        <TableCell>
-                          <div className="column">
-                            <Button onClick={() => handleModal(index)}>
-                              Edit
-                            </Button>
-                            <Modal
-                              open={isModalOpen}
-                              onClose={() => handleModal(index)}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={style}>
-                                <EditTicketController
-                                  ticket={ticket}
-                                  handleModal={handleModal}
-                                />
-                              </Box>
-                            </Modal>
-                          </div>
-                        </TableCell>
+                        {!isMobile ? ( // Render all columns except for xs screens
+                          <>
+                            <TableCell>{title}</TableCell>
+                            <TableCell>{project?.name}</TableCell>
+                            <TableCell>{submitter?.name}</TableCell>
+                            <TableCell>{personnel?.name}</TableCell>
+                            <TableCell>{priority}</TableCell>
+                            <TableCell>{status}</TableCell>
+                            <TableCell>{type}</TableCell>
+                            <TableCell>
+                              {new Date(createdAt).toLocaleString(undefined, {
+                                month: "2-digit",
+                                day: "2-digit",
+                                year: "2-digit",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: true,
+                              })}
+                            </TableCell>
+                            <TableCell>
+                              <div className="column">
+                                <Button onClick={() => handleModal(index)}>
+                                  Edit
+                                </Button>
+                                <Modal
+                                  open={isModalOpen}
+                                  onClose={() => handleModal(index)}
+                                  aria-labelledby="modal-modal-title"
+                                  aria-describedby="modal-modal-description"
+                                >
+                                  <Box sx={style}>
+                                    <EditTicketController
+                                      ticket={ticket}
+                                      handleModal={handleModal}
+                                    />
+                                  </Box>
+                                </Modal>
+                              </div>
+                            </TableCell>
+                          </>
+                        ) : (
+                          // Render only for xs screens
+                          <>
+                            <TableCell>{title}</TableCell>
+                            <TableCell>{status}</TableCell>
+                            <TableCell>
+                              <div className="column">
+                                <Button onClick={() => handleModal(index)}>
+                                  Edit
+                                </Button>
+                                <Modal
+                                  open={isModalOpen}
+                                  onClose={() => handleModal(index)}
+                                  aria-labelledby="modal-modal-title"
+                                  aria-describedby="modal-modal-description"
+                                >
+                                  <Box sx={style}>
+                                    <EditTicketController
+                                      ticket={ticket}
+                                      handleModal={handleModal}
+                                    />
+                                  </Box>
+                                </Modal>
+                              </div>
+                            </TableCell>
+                          </>
+                        )}
                       </TableRow>
                     );
                   })}
@@ -182,4 +229,4 @@ function Tickets(props: TicketsProps) {
   );
 }
 
-export default Tickets;
+export default TicketsView;
