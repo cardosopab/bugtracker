@@ -97,13 +97,15 @@ const KanbanController = () => {
             <TableContainer component={Paper}>
               <CardHeader
                 title={
-                  <FormControl
-                    margin={"normal"}
-                    sx={{ color: "white", minWidth: 200 }}
-                  >
+                  <FormControl margin={"normal"} sx={{ minWidth: 200 }}>
                     <InputLabel
                       id="project-dropdown-label"
-                      sx={{ color: "white" }}
+                      sx={{
+                        color: "white",
+                        "&.Mui-focused": {
+                          color: "white",
+                        },
+                      }}
                     >
                       Select a Project
                     </InputLabel>
@@ -113,7 +115,21 @@ const KanbanController = () => {
                       name={selectedProject.name}
                       label="Select a Project"
                       onChange={handleProjectDropdown}
-                      sx={{ color: "white" }}
+                      sx={{
+                        color: "white",
+                        ".MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(228, 219, 233, 0.25)",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(228, 219, 233, 0.25)",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "rgba(228, 219, 233, 0.25)",
+                        },
+                        ".MuiSvgIcon-root ": {
+                          fill: "white !important",
+                        },
+                      }}
                     >
                       {projects.map((option) => (
                         <MenuItem key={option.id} value={option.name}>
