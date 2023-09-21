@@ -128,7 +128,10 @@ function ProjectsView(props: ProjectsViewProps) {
                               >
                                 Details
                               </Button>
-                              <Button onClick={() => handleProjectDelete(id)}>
+                              <Button
+                                color="error"
+                                onClick={() => handleProjectDelete(id)}
+                              >
                                 Delete
                               </Button>
                             </div>

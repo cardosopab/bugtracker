@@ -183,7 +183,10 @@ const ProjectDetailsView = (props: DetailsProps) => {
                           })}
                         </TableCell>
                         <TableCell>
-                          <Button onClick={() => handleTicketRemoval(id)}>
+                          <Button
+                            color="error"
+                            onClick={() => handleTicketRemoval(id)}
+                          >
                             Delete
                           </Button>
                         </TableCell>
