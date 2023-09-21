@@ -13,6 +13,9 @@ const ProjectDetailsController = () => {
   let tickets = useSelector((state: RootState) => state.tickets.value);
   const users = useSelector((state: RootState) => state.users.value);
   const [open, setOpen] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState<{ [id: string]: boolean }>(
+    {}
+  );
   const deleteTicket = useTicketActions().deleteTicket;
   const deleteProject = useProjectActions().deleteProject;
   const navigateTo = useNavigate();
@@ -28,6 +31,13 @@ const ProjectDetailsController = () => {
 
   const handleModalToggle = () => {
     setOpen(!open);
+  };
+
+  const handleEditToggle = (ticketId: string) => {
+    setOpenEditModal((prevOpenTickets) => ({
+      ...prevOpenTickets,
+      [ticketId]: !prevOpenTickets[ticketId],
+    }));
   };
   if (details.id === undefined) {
     return (
@@ -50,6 +60,8 @@ const ProjectDetailsController = () => {
           handleProjectRemoval={handleProjectRemoval}
           handleModalToggle={handleModalToggle}
           open={open}
+          handleEditToggle={handleEditToggle}
+          openEditModal={openEditModal}
         />
       </DrawerController>
     </>

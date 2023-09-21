@@ -12,11 +12,14 @@ import {
   TableHead,
   TableRow,
   Grid,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import Project from "../../models/Project";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import CreateTicketController from "../../controllers/CreateTicketController";
+import EditTicketController from "../../controllers/EditTicketController";
 
 interface DetailsProps {
   details: Project;
@@ -25,7 +28,9 @@ interface DetailsProps {
   handleTicketRemoval: (ticketId: string) => void;
   handleProjectRemoval: (projectId: string) => void;
   handleModalToggle: () => void;
+  handleEditToggle: (ticketId: string) => void;
   open: boolean;
+  openEditModal: { [id: string]: boolean };
 }
 
 const ProjectDetailsView = (props: DetailsProps) => {
@@ -36,10 +41,15 @@ const ProjectDetailsView = (props: DetailsProps) => {
     handleTicketRemoval,
     handleProjectRemoval,
     handleModalToggle,
+    handleEditToggle,
     open,
+    openEditModal,
   } = props;
   const name = details.name;
   const personnel = details.personnel;
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
 
   const style = {
     position: "absolute" as "absolute",
@@ -143,35 +153,37 @@ const ProjectDetailsView = (props: DetailsProps) => {
               <TableHead>
                 <TableRow>
                   <TableCell>Title</TableCell>
-                  <TableCell>Submitter</TableCell>
-                  <TableCell>Developer</TableCell>
+                  {!isMobile && <TableCell>Submitter</TableCell>}
+                  {!isMobile && <TableCell>Developer</TableCell>}
                   <TableCell>Status</TableCell>
-                  <TableCell>Created</TableCell>
-                  <TableCell></TableCell>
+                  {!isMobile && <TableCell>Created</TableCell>}
+                  <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {tickets.map(
-                  ({
+                {tickets.map((ticket) => {
+                  const {
                     id,
                     title,
                     submitterId,
                     personnelId,
                     status,
                     createdAt,
-                  }) => {
-                    const submitter = users.find(
-                      (user) => user.id === submitterId
-                    );
-                    const personnel = users.find(
-                      (user) => user.id === personnelId
-                    );
-                    return (
-                      <TableRow key={id}>
-                        <TableCell>{title}</TableCell>
-                        <TableCell>{submitter?.name}</TableCell>
-                        <TableCell>{personnel?.name}</TableCell>
-                        <TableCell>{status}</TableCell>
+                  } = ticket;
+                  const isEditOpen = openEditModal[id] ?? false;
+                  const submitter = users.find(
+                    (user) => user.id === submitterId
+                  );
+                  const personnel = users.find(
+                    (user) => user.id === personnelId
+                  );
+                  return (
+                    <TableRow key={id}>
+                      <TableCell>{title}</TableCell>
+                      {!isMobile && <TableCell>{submitter?.name}</TableCell>}
+                      {!isMobile && <TableCell>{personnel?.name}</TableCell>}
+                      <TableCell>{status}</TableCell>
+                      {!isMobile && (
                         <TableCell>
                           {new Date(createdAt).toLocaleString(undefined, {
                             month: "2-digit",
@@ -182,18 +194,36 @@ const ProjectDetailsView = (props: DetailsProps) => {
                             hour12: true,
                           })}
                         </TableCell>
-                        <TableCell>
+                      )}
+                      <TableCell>
+                        <div className="column">
+                          <Button onClick={() => handleEditToggle(id)}>
+                            Edit
+                          </Button>
+                          <Modal
+                            open={isEditOpen}
+                            onClose={() => handleEditToggle(id)}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <EditTicketController
+                                ticket={ticket}
+                                handleModal={handleEditToggle}
+                              />
+                            </Box>
+                          </Modal>
                           <Button
                             color="error"
                             onClick={() => handleTicketRemoval(id)}
                           >
                             Delete
                           </Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>
