@@ -12,6 +12,11 @@ import {
   Grid,
   CardHeader,
   Card,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import { statusOptions } from "../constants/ticketConstants";
 import DrawerController from "./DrawerController";
@@ -21,12 +26,15 @@ import Ticket from "../models/Ticket";
 import { useState } from "react";
 import EditTicketController from "./EditTicketController";
 import CreateTicketController from "./CreateTicketController";
+import Project from "../models/Project";
 
 const KanbanController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.value);
   const projects = useSelector((state: RootState) => state.projects.value);
   const [openTickets, setOpenTickets] = useState<{ [id: string]: boolean }>({});
-
+  const [selectedProject, setSelectedProject] = useState<Project>(
+    projects.length > 0 ? projects[0] : ({} as Project)
+  );
   const [openCreateModal, setCreateModal] = useState(false);
   const ticketsByStatus: any = {};
   tickets.forEach((ticket: Ticket) => {
@@ -42,6 +50,21 @@ const KanbanController = () => {
     }));
   };
 
+  const handleProjectDropdown = (event: SelectChangeEvent) => {
+    const selectedProjectName = event.target.value as string;
+    const selectedProjectObj = projects.find(
+      (project) => project.name === selectedProjectName
+    );
+
+    if (selectedProjectObj) {
+      setSelectedProject(selectedProjectObj);
+    }
+  };
+
+  const handleCreateModalToggle = () => {
+    setCreateModal((prev) => !prev);
+  };
+
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -54,9 +77,7 @@ const KanbanController = () => {
     boxShadow: 24,
     p: 4,
   };
-  const handleCreateModalToggle = () => {
-    setCreateModal((prev) => !prev);
-  };
+
   return (
     <DrawerController>
       {projects.length > 0 ? (
@@ -70,8 +91,33 @@ const KanbanController = () => {
           <Grid item xs={12}>
             <TableContainer component={Paper}>
               <CardHeader
-                title="Project"
-                subheader="Kanban board:"
+                title={
+                  <FormControl
+                    margin={"normal"}
+                    sx={{ color: "white", minWidth: 200 }}
+                  >
+                    <InputLabel
+                      id="project-dropdown-label"
+                      sx={{ color: "white" }}
+                    >
+                      Select a Project
+                    </InputLabel>
+                    <Select
+                      labelId="project-dropdown-label"
+                      value={selectedProject.name}
+                      name={selectedProject.name}
+                      label="Select a Project"
+                      onChange={handleProjectDropdown}
+                      sx={{ color: "white" }}
+                    >
+                      {projects.map((option) => (
+                        <MenuItem key={option.id} value={option.name}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                }
                 action={
                   <div>
                     <Button
