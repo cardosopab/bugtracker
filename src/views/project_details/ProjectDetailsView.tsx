@@ -55,7 +55,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} padding={2}>
       <Grid item xs={12}>
         {/* Top Row */}
         <Card>
