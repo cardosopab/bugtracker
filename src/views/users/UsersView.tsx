@@ -99,6 +99,7 @@ function UsersView(props: UsersViewProps) {
               variant="contained"
               disabled={!isRemoveButtonDisabled}
               fullWidth
+              sx={{ marginTop: 2, marginBottom: 2 }}
             >
               Add Personnel
             </Button>
