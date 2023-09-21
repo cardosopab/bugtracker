@@ -23,7 +23,7 @@ import DrawerController from "./DrawerController";
 import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 import Ticket from "../models/Ticket";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditTicketController from "./EditTicketController";
 import CreateTicketController from "./CreateTicketController";
 import Project from "../models/Project";
@@ -32,21 +32,36 @@ const KanbanController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.value);
   const projects = useSelector((state: RootState) => state.projects.value);
   const [openTickets, setOpenTickets] = useState<{ [id: string]: boolean }>({});
-  const [selectedProject, setSelectedProject] = useState<Project>(
-    projects.length > 0 ? projects[0] : ({} as Project)
+  const [selectedProject, setSelectedProject] = useState<Project | undefined>(
+    undefined
   );
   const [openCreateModal, setCreateModal] = useState(false);
-  const ticketsByStatus: { [status: string]: Ticket[] } = {};
+  const [ticketsByStatus, setTicketsByStatus] = useState<{
+    [status: string]: Ticket[];
+  }>({});
 
-  // Filter tickets by the selected project
-  tickets.forEach((ticket: Ticket) => {
-    if (ticket.projectId === selectedProject.id) {
-      if (!ticketsByStatus[ticket.status]) {
-        ticketsByStatus[ticket.status] = [];
-      }
-      ticketsByStatus[ticket.status].push(ticket);
+  useEffect(() => {
+    if (projects.length > 0) {
+      setSelectedProject(projects[0]);
     }
-  });
+  }, [projects]);
+
+  useEffect(() => {
+    if (selectedProject) {
+      const updatedTicketsByStatus: { [status: string]: Ticket[] } = {};
+
+      tickets.forEach((ticket: Ticket) => {
+        if (ticket.projectId === selectedProject.id) {
+          if (!updatedTicketsByStatus[ticket.status]) {
+            updatedTicketsByStatus[ticket.status] = [];
+          }
+          updatedTicketsByStatus[ticket.status].push(ticket);
+        }
+      });
+
+      setTicketsByStatus(updatedTicketsByStatus);
+    }
+  }, [selectedProject, tickets]);
 
   const handleTicketModalToggle = (ticketId: string) => {
     setOpenTickets((prevOpenTickets) => ({
@@ -85,7 +100,7 @@ const KanbanController = () => {
 
   return (
     <DrawerController>
-      {projects.length > 0 ? (
+      {projects.length > 0 && selectedProject !== undefined ? (
         <Grid container spacing={2} padding={2}>
           {/* Title/Header */}
           <Grid item xs={12}>
@@ -180,49 +195,60 @@ const KanbanController = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    {statusOptions.map(
-                      (status: string, columnIndex: number) => (
-                        <TableCell
-                          key={`cell-${status}-${columnIndex}`}
-                          style={{
-                            border: "1px solid #ccc",
-                            verticalAlign: "top",
-                          }}
-                        >
-                          {ticketsByStatus[status]?.map((ticket: Ticket) => {
-                            const isModalOpen = openTickets[ticket.id] ?? false;
-                            return (
-                              <div key={`ticket-${ticket.id}`}>
-                                <Modal
-                                  key={`modal-${ticket.id}`}
-                                  open={isModalOpen}
-                                  onClose={() =>
-                                    handleTicketModalToggle(ticket.id)
-                                  }
-                                  aria-labelledby="modal-modal-title"
-                                  aria-describedby="modal-modal-description"
-                                >
-                                  <Box sx={style}>
-                                    <EditTicketController
-                                      key={`edit-${ticket.id}`}
-                                      ticket={ticket}
-                                      handleModal={handleTicketModalToggle}
-                                    />
-                                  </Box>
-                                </Modal>
-                                <Button
-                                  key={`button-${ticket.id}`}
-                                  onClick={() =>
-                                    handleTicketModalToggle(ticket.id)
-                                  }
-                                >
-                                  {ticket.title}
-                                </Button>
-                              </div>
-                            );
-                          })}
-                        </TableCell>
+                    {Object.keys(ticketsByStatus).length > 0 ? (
+                      // Check if ticketsByStatus has data before rendering
+                      statusOptions.map(
+                        (status: string, columnIndex: number) => (
+                          <TableCell
+                            key={`cell-${status}-${columnIndex}`}
+                            style={{
+                              border: "1px solid #ccc",
+                              verticalAlign: "top",
+                            }}
+                          >
+                            {ticketsByStatus[status]?.map((ticket: Ticket) => {
+                              const isModalOpen =
+                                openTickets[ticket.id] ?? false;
+                              return (
+                                <div key={`ticket-${ticket.id}`}>
+                                  <Modal
+                                    key={`modal-${ticket.id}`}
+                                    open={isModalOpen}
+                                    onClose={() =>
+                                      handleTicketModalToggle(ticket.id)
+                                    }
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                  >
+                                    <Box sx={style}>
+                                      <EditTicketController
+                                        key={`edit-${ticket.id}`}
+                                        ticket={ticket}
+                                        handleModal={handleTicketModalToggle}
+                                      />
+                                    </Box>
+                                  </Modal>
+                                  <Button
+                                    key={`button-${ticket.id}`}
+                                    onClick={() =>
+                                      handleTicketModalToggle(ticket.id)
+                                    }
+                                  >
+                                    {ticket.title}
+                                  </Button>
+                                </div>
+                              );
+                            })}
+                          </TableCell>
+                        )
                       )
+                    ) : (
+                      <TableCell
+                        colSpan={statusOptions.length}
+                        sx={{ textAlign: "center" }}
+                      >
+                        No tickets available for the selected project.
+                      </TableCell>
                     )}
                   </TableRow>
                 </TableBody>
