@@ -23,17 +23,21 @@ function Dashboard() {
   const [statusCount, setStatusCount] = useState<number[]>(
     new Array(statusOptions.length).fill(0)
   );
-  const [topTypeCount, setTopTypeCount] = useState<
+  const [typeCount, setTypeCount] = useState<
     { id: number; value: number; label: string }[]
   >([]);
-  const [topPersonnelCount, setTopPersonnelCount] = useState<
+  const [personnelCount, setPersonnelCount] = useState<
     { id: number; value: number; label: string }[]
   >([]);
 
   useEffect(() => {
     const updatedPriorityCount = new Array(priorityOptions.length).fill(0);
     const updatedStatusCount = new Array(statusOptions.length).fill(0);
-    const updatedTypeCount: { id: number; value: number; label: string }[] = [];
+    const updatedTypeCount: {
+      id: number;
+      value: number;
+      label: string;
+    }[] = [];
     const updatedPersonnelCount: {
       id: number;
       value: number;
@@ -64,7 +68,11 @@ function Dashboard() {
       }
 
       const personnel = users.find((user) => user.id === ticket.personnelId);
-      if (personnel) {
+      if (
+        personnel &&
+        (ticket.status === statusOptions[1] ||
+          ticket.status === statusOptions[2])
+      ) {
         const personnelIdx = users.indexOf(personnel);
         if (personnelIdx !== -1) {
           if (!updatedPersonnelCount[personnelIdx]) {
@@ -79,18 +87,22 @@ function Dashboard() {
       }
     });
 
-    const updatedTopTypeCount = [...updatedTypeCount];
-    const updatedTopPersonnelCount = [...updatedPersonnelCount];
+    let updatedTopTypeCount = [...updatedTypeCount];
+    let updatedTopPersonnelCount = [...updatedPersonnelCount];
 
     // Sort the arrays to keep only the top 4 objects
-    updatedTopTypeCount.sort((a, b) => b.value - a.value);
-    updatedTopPersonnelCount.sort((a, b) => b.value - a.value);
+    updatedTopTypeCount = updatedTopTypeCount
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 4);
+    updatedTopPersonnelCount = updatedTopPersonnelCount
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 4);
 
     // Update the state variables
     setPriorityCount(updatedPriorityCount);
     setStatusCount(updatedStatusCount);
-    setTopTypeCount(updatedTopTypeCount);
-    setTopPersonnelCount(updatedTopPersonnelCount);
+    setTypeCount(updatedTopTypeCount);
+    setPersonnelCount(updatedTopPersonnelCount);
   }, [tickets, users]);
 
   return (
@@ -125,7 +137,7 @@ function Dashboard() {
                   <PieChart
                     series={[
                       {
-                        data: topTypeCount,
+                        data: typeCount,
                         innerRadius: 40,
                         outerRadius: 100,
                         paddingAngle: 1,
@@ -171,7 +183,7 @@ function Dashboard() {
                   <PieChart
                     series={[
                       {
-                        data: topPersonnelCount,
+                        data: personnelCount,
                         innerRadius: 40,
                         outerRadius: 100,
                         paddingAngle: 1,
