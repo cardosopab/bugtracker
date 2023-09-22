@@ -70,29 +70,7 @@ function TicketsView(props: TicketsProps) {
               <CardHeader
                 title="Tickets"
                 subheader="You are a part of:"
-                action={
-                  <div>
-                    <Button
-                      onClick={() => handleCreateModalToggle()}
-                      sx={{ color: "white" }}
-                    >
-                      Create a Ticket
-                    </Button>
-                    <Modal
-                      open={openCreateModal}
-                      onClose={() => handleCreateModalToggle()}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={style}>
-                        <CreateTicketController
-                          handleModal={handleCreateModalToggle}
-                          project={null}
-                        />
-                      </Box>
-                    </Modal>
-                  </div>
-                }
+                action={<CreateTicketController project={null} />}
               />
               <Table style={{ tableLayout: "fixed" }}>
                 <TableHead>
