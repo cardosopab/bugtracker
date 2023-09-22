@@ -19,10 +19,10 @@ import {
   UseFormHandleSubmit,
 } from "react-hook-form";
 import Project from "../../models/Project";
+import ProjectDeleteModalController from "../../controllers/ProjectDeleteModalController";
 
 interface ProjectsViewProps {
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
-  handleProjectDelete: (projectId: string) => void;
   navigateToDetails: (project: Project) => void;
   onSubmit: (values: any) => void;
   register: (name: string, options?: RegisterOptions) => any;
@@ -33,7 +33,6 @@ interface ProjectsViewProps {
 function ProjectsView(props: ProjectsViewProps) {
   const {
     handleSubmit,
-    handleProjectDelete,
     navigateToDetails,
     onSubmit,
     register,
@@ -105,15 +104,16 @@ function ProjectsView(props: ProjectsViewProps) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {projects.map(
-                      ({
+                    {projects.map((project) => {
+                      const {
                         id,
                         companyId,
                         name,
                         description,
                         createdAt,
                         personnel,
-                      }) => (
+                      } = project;
+                      return (
                         <TableRow key={id}>
                           <TableCell>{name}</TableCell>
                           <TableCell>{description}</TableCell>
@@ -133,17 +133,12 @@ function ProjectsView(props: ProjectsViewProps) {
                               >
                                 Details
                               </Button>
-                              <Button
-                                color="error"
-                                onClick={() => handleProjectDelete(id)}
-                              >
-                                Delete
-                              </Button>
+                              <ProjectDeleteModalController project={project} />
                             </div>
                           </TableCell>
                         </TableRow>
-                      )
-                    )}
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </TableContainer>
