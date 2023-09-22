@@ -20,49 +20,23 @@ import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import CreateTicketController from "../../controllers/CreateTicketController";
 import EditTicketController from "../../controllers/EditTicketController";
+import ProjectDeleteModalController from "../../controllers/ProjectDeleteModalController";
 
 interface DetailsProps {
-  details: Project;
+  project: Project;
   users: User[];
   tickets: Ticket[];
-  handleTicketRemoval: (ticketId: string) => void;
-  handleProjectRemoval: (projectId: string) => void;
-  handleModalToggle: () => void;
   handleEditToggle: (ticketId: string) => void;
-  open: boolean;
   openEditModal: { [id: string]: boolean };
 }
 
 const ProjectDetailsView = (props: DetailsProps) => {
-  const {
-    details,
-    users,
-    tickets,
-    handleTicketRemoval,
-    handleProjectRemoval,
-    handleModalToggle,
-    handleEditToggle,
-    open,
-    openEditModal,
-  } = props;
-  const name = details.name;
-  const personnel = details.personnel;
+  const { project, users, tickets, handleEditToggle, openEditModal } = props;
+  const name = project.name;
+  const personnel = project.personnel;
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
-
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: 400,
-    bgcolor: "background.paper",
-    border: "3px solid #1976d2",
-    borderRadius: "1em",
-    boxShadow: 24,
-    p: 4,
-  };
 
   return (
     <Grid container spacing={2} padding={2}>
@@ -72,19 +46,15 @@ const ProjectDetailsView = (props: DetailsProps) => {
           <CardHeader
             title={`Details for ${name}`}
             action={
-              <div>
-                <Button
-                  onClick={() => handleProjectRemoval(details.id)}
-                  sx={{ color: "white" }}
-                >
-                  Delete Project
-                </Button>
-              </div>
+              <ProjectDeleteModalController
+                project={project}
+                isPrimary={true}
+              />
             }
           />
           <Box p={2}>
             <div>
-              <h2>{details.description}</h2>
+              <h2>{project.description}</h2>
             </div>
           </Box>
         </Card>
@@ -127,26 +97,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
         <Card>
           <CardHeader
             title={`Tickets for ${name}`}
-            action={
-              <div>
-                <Button onClick={handleModalToggle} sx={{ color: "white" }}>
-                  Create Ticket
-                </Button>
-                <Modal
-                  open={open}
-                  onClose={handleModalToggle}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <CreateTicketController
-                      project={details}
-                      handleModal={handleModalToggle}
-                    />
-                  </Box>
-                </Modal>
-              </div>
-            }
+            action={<CreateTicketController project={project} />}
           />
           <TableContainer component={Paper}>
             <Table style={{ tableLayout: "fixed" }}>
@@ -196,30 +147,20 @@ const ProjectDetailsView = (props: DetailsProps) => {
                         </TableCell>
                       )}
                       <TableCell>
-                        <div className="column">
-                          <Button onClick={() => handleEditToggle(id)}>
-                            Edit
-                          </Button>
-                          <Modal
-                            open={isEditOpen}
-                            onClose={() => handleEditToggle(id)}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                          >
-                            <Box sx={style}>
-                              <EditTicketController
-                                ticket={ticket}
-                                handleModal={handleEditToggle}
-                              />
-                            </Box>
-                          </Modal>
-                          <Button
-                            color="error"
-                            onClick={() => handleTicketRemoval(id)}
-                          >
-                            Delete
-                          </Button>
-                        </div>
+                        <Button onClick={() => handleEditToggle(id)}>
+                          Edit
+                        </Button>
+                        <Modal
+                          open={isEditOpen}
+                          onClose={() => handleEditToggle(id)}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <EditTicketController
+                            ticket={ticket}
+                            handleModal={handleEditToggle}
+                          />
+                        </Modal>
                       </TableCell>
                     </TableRow>
                   );
