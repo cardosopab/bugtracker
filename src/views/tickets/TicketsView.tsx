@@ -1,8 +1,5 @@
 import {
-  Box,
-  Button,
   CardHeader,
-  Modal,
   Paper,
   Table,
   TableBody,
@@ -20,7 +17,6 @@ import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import Project from "../../models/Project";
 import EditTicketController from "../../controllers/EditTicketController";
-import { useState } from "react";
 import CreateTicketController from "../../controllers/CreateTicketController";
 
 interface TicketsProps {
@@ -31,29 +27,9 @@ interface TicketsProps {
   openTickets: { [id: string]: boolean };
 }
 
-function TicketsView(props: TicketsProps) {
-  const { tickets, users, projects, handleModal, openTickets } = props;
-
-  const [openCreateModal, setCreateModal] = useState(false);
+function TicketsView({ tickets, users, projects }: TicketsProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
-
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: 400,
-    bgcolor: "background.paper",
-    border: "3px solid #1976d2",
-    borderRadius: "1em",
-    boxShadow: 24,
-    p: 4,
-  };
-
-  const handleCreateModalToggle = () => {
-    setCreateModal((prev) => !prev);
-  };
 
   return (
     <DrawerController>
@@ -70,7 +46,7 @@ function TicketsView(props: TicketsProps) {
               <CardHeader
                 title="Tickets"
                 subheader="You are a part of:"
-                action={<CreateTicketController project={null} />}
+                action={<CreateTicketController />}
               />
               <Table style={{ tableLayout: "fixed" }}>
                 <TableHead>
@@ -98,8 +74,7 @@ function TicketsView(props: TicketsProps) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tickets.map((ticket, index) => {
-                    const isModalOpen = openTickets[index] ?? false;
+                  {tickets.map((ticket) => {
                     const {
                       id,
                       title,
@@ -143,24 +118,7 @@ function TicketsView(props: TicketsProps) {
                               })}
                             </TableCell>
                             <TableCell>
-                              <div className="column">
-                                <Button onClick={() => handleModal(index)}>
-                                  Edit
-                                </Button>
-                                <Modal
-                                  open={isModalOpen}
-                                  onClose={() => handleModal(index)}
-                                  aria-labelledby="modal-modal-title"
-                                  aria-describedby="modal-modal-description"
-                                >
-                                  <Box sx={style}>
-                                    <EditTicketController
-                                      ticket={ticket}
-                                      handleModal={handleModal}
-                                    />
-                                  </Box>
-                                </Modal>
-                              </div>
+                              <EditTicketController ticket={ticket} />
                             </TableCell>
                           </>
                         ) : (
@@ -169,24 +127,7 @@ function TicketsView(props: TicketsProps) {
                             <TableCell>{title}</TableCell>
                             <TableCell>{status}</TableCell>
                             <TableCell>
-                              <div className="column">
-                                <Button onClick={() => handleModal(index)}>
-                                  Edit
-                                </Button>
-                                <Modal
-                                  open={isModalOpen}
-                                  onClose={() => handleModal(index)}
-                                  aria-labelledby="modal-modal-title"
-                                  aria-describedby="modal-modal-description"
-                                >
-                                  <Box sx={style}>
-                                    <EditTicketController
-                                      ticket={ticket}
-                                      handleModal={handleModal}
-                                    />
-                                  </Box>
-                                </Modal>
-                              </div>
+                              <EditTicketController ticket={ticket} />
                             </TableCell>
                           </>
                         )}

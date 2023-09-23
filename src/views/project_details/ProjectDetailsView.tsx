@@ -1,9 +1,7 @@
 import {
   Box,
-  Button,
   Card,
   CardHeader,
-  Modal,
   Paper,
   Table,
   TableBody,
@@ -26,12 +24,9 @@ interface DetailsProps {
   project: Project;
   users: User[];
   tickets: Ticket[];
-  handleEditToggle: (ticketId: string) => void;
-  openEditModal: { [id: string]: boolean };
 }
 
-const ProjectDetailsView = (props: DetailsProps) => {
-  const { project, users, tickets, handleEditToggle, openEditModal } = props;
+const ProjectDetailsView = ({ project, users, tickets }: DetailsProps) => {
   const name = project.name;
   const personnel = project.personnel;
 
@@ -121,7 +116,6 @@ const ProjectDetailsView = (props: DetailsProps) => {
                     status,
                     createdAt,
                   } = ticket;
-                  const isEditOpen = openEditModal[id] ?? false;
                   const submitter = users.find(
                     (user) => user.id === submitterId
                   );
@@ -147,20 +141,7 @@ const ProjectDetailsView = (props: DetailsProps) => {
                         </TableCell>
                       )}
                       <TableCell>
-                        <Button onClick={() => handleEditToggle(id)}>
-                          Edit
-                        </Button>
-                        <Modal
-                          open={isEditOpen}
-                          onClose={() => handleEditToggle(id)}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
-                        >
-                          <EditTicketController
-                            ticket={ticket}
-                            handleModal={handleEditToggle}
-                          />
-                        </Modal>
+                        <EditTicketController ticket={ticket} />
                       </TableCell>
                     </TableRow>
                   );

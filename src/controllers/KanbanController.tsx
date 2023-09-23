@@ -1,7 +1,4 @@
 import {
-  Box,
-  Button,
-  Modal,
   Paper,
   Table,
   TableBody,
@@ -36,11 +33,9 @@ import Project from "../models/Project";
 const KanbanController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.value);
   const projects = useSelector((state: RootState) => state.projects.value);
-  const [openTickets, setOpenTickets] = useState<{ [id: string]: boolean }>({});
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
     undefined
   );
-  const [openCreateModal, setCreateModal] = useState(false);
   const [ticketsByStatus, setTicketsByStatus] = useState<{
     [status: string]: Ticket[];
   }>({});
@@ -71,13 +66,6 @@ const KanbanController = () => {
     }
   }, [selectedProject, tickets]);
 
-  const handleTicketModalToggle = (ticketId: string) => {
-    setOpenTickets((prevOpenTickets) => ({
-      ...prevOpenTickets,
-      [ticketId]: !prevOpenTickets[ticketId],
-    }));
-  };
-
   const handleProjectDropdown = (event: SelectChangeEvent) => {
     const selectedProjectName = event.target.value as string;
     const selectedProjectObj = projects.find(
@@ -87,23 +75,6 @@ const KanbanController = () => {
     if (selectedProjectObj) {
       setSelectedProject(selectedProjectObj);
     }
-  };
-
-  const handleCreateModalToggle = () => {
-    setCreateModal((prev) => !prev);
-  };
-
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: 400,
-    bgcolor: "background.paper",
-    border: "3px solid #1976d2",
-    borderRadius: "1em",
-    boxShadow: 24,
-    p: 4,
   };
 
   return (
@@ -118,43 +89,85 @@ const KanbanController = () => {
           {/* Kanban Board */}
           {isMobile ? ( // Use single-column layout on xs screens
             <Grid item xs={12}>
-              <ImageList cols={1}>
-                {statusOptions.map((status) => (
-                  <ImageListItem key={status} style={{ marginBottom: "16px" }}>
-                    <Typography variant="h6" sx={{ backgroundColor: "#eee" }}>
-                      {status}
-                    </Typography>
-                    {ticketsByStatus[status]?.map((ticket: Ticket) => {
-                      const isModalOpen = openTickets[ticket.id] ?? false;
-                      return (
-                        <div key={`ticket-${ticket.id}`}>
-                          <Modal
-                            key={`modal-${ticket.id}`}
-                            open={isModalOpen}
-                            onClose={() => handleTicketModalToggle(ticket.id)}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                          >
-                            <Box sx={style}>
-                              <EditTicketController
-                                key={`edit-${ticket.id}`}
-                                ticket={ticket}
-                                handleModal={handleTicketModalToggle}
-                              />
-                            </Box>
-                          </Modal>
-                          <Button
-                            key={`button-${ticket.id}`}
-                            onClick={() => handleTicketModalToggle(ticket.id)}
-                          >
-                            {ticket.title}
-                          </Button>
-                        </div>
-                      );
-                    })}
-                  </ImageListItem>
-                ))}
-              </ImageList>
+              <Card style={{ background: "white" }}>
+                <CardHeader
+                  title={
+                    <FormControl margin={"normal"} fullWidth>
+                      <InputLabel
+                        id="project-dropdown-label"
+                        sx={{
+                          color: "white",
+                          "&.Mui-focused": {
+                            color: "white",
+                          },
+                        }}
+                      >
+                        Select a Project
+                      </InputLabel>
+                      <Select
+                        labelId="project-dropdown-label"
+                        value={selectedProject.name}
+                        name={selectedProject.name}
+                        label="Select a Project"
+                        onChange={handleProjectDropdown}
+                        sx={{
+                          color: "white",
+                          ".MuiOutlinedInput-notchedOutline": {
+                            borderColor: "rgba(228, 219, 233, 0.25)",
+                          },
+                          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "rgba(228, 219, 233, 0.25)",
+                          },
+                          "&:hover .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "rgba(228, 219, 233, 0.25)",
+                          },
+                          ".MuiSvgIcon-root ": {
+                            fill: "white !important",
+                          },
+                        }}
+                      >
+                        {projects.map((option) => (
+                          <MenuItem key={option.id} value={option.name}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  }
+                  subheader={
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{ justifyContent: "end", textAlign: "end" }}
+                    >
+                      <CreateTicketController />
+                    </Grid>
+                  }
+                />
+                <ImageList cols={1}>
+                  {statusOptions.map((status) => (
+                    <ImageListItem
+                      key={status}
+                      style={{ marginBottom: "16px" }}
+                    >
+                      <Typography variant="h6" sx={{ backgroundColor: "#eee" }}>
+                        {status}
+                      </Typography>
+                      {ticketsByStatus[status]?.map((ticket: Ticket) => {
+                        return (
+                          <div key={`ticket-${ticket.id}`}>
+                            <EditTicketController
+                              key={`edit-${ticket.id}`}
+                              ticket={ticket}
+                              title={ticket.title}
+                            />
+                          </div>
+                        );
+                      })}
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </Card>
             </Grid>
           ) : (
             <Grid item xs={12}>
@@ -204,11 +217,7 @@ const KanbanController = () => {
                       </Select>
                     </FormControl>
                   }
-                  action={
-                    <CreateTicketController
-                      project={null}
-                    />
-                  }
+                  action={<CreateTicketController />}
                 />
                 <Table style={{ tableLayout: "fixed" }}>
                   <TableHead>
@@ -240,38 +249,12 @@ const KanbanController = () => {
                             >
                               {ticketsByStatus[status]?.map(
                                 (ticket: Ticket) => {
-                                  const isModalOpen =
-                                    openTickets[ticket.id] ?? false;
                                   return (
-                                    <div key={`ticket-${ticket.id}`}>
-                                      <Modal
-                                        key={`modal-${ticket.id}`}
-                                        open={isModalOpen}
-                                        onClose={() =>
-                                          handleTicketModalToggle(ticket.id)
-                                        }
-                                        aria-labelledby="modal-modal-title"
-                                        aria-describedby="modal-modal-description"
-                                      >
-                                        <Box sx={style}>
-                                          <EditTicketController
-                                            key={`edit-${ticket.id}`}
-                                            ticket={ticket}
-                                            handleModal={
-                                              handleTicketModalToggle
-                                            }
-                                          />
-                                        </Box>
-                                      </Modal>
-                                      <Button
-                                        key={`button-${ticket.id}`}
-                                        onClick={() =>
-                                          handleTicketModalToggle(ticket.id)
-                                        }
-                                      >
-                                        {ticket.title}
-                                      </Button>
-                                    </div>
+                                    <EditTicketController
+                                      key={`edit-${ticket.id}`}
+                                      ticket={ticket}
+                                      title={ticket.title}
+                                    />
                                   );
                                 }
                               )}
