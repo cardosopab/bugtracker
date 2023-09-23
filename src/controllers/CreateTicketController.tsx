@@ -25,11 +25,10 @@ import {
 import { useTicketActions } from "../models/database/hooks/useTicketActions";
 
 interface CreateTicketProps {
-  project: Project | null;
+  project?: Project;
 }
-const CreateTicketController = (props: CreateTicketProps) => {
+const CreateTicketController = ({ project }: CreateTicketProps) => {
   const createTicket = useTicketActions().createTicket;
-  const { project } = props;
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
@@ -92,12 +91,7 @@ const CreateTicketController = (props: CreateTicketProps) => {
       <Button onClick={handleModalToggle} sx={{ color: "white" }}>
         Create Ticket
       </Button>
-      <Modal
-        open={open}
-        onClose={handleModalToggle}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleModalToggle}>
         <Card style={style}>
           <CardHeader
             title={`Create Ticket${
