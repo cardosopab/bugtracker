@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth, database } from "./models/database/firebase-init";
-import ProtectedRoutes from "./views/ProtectedRoutes";
+import ProtectedRoutes from "./controllers/ProtectedRoutes";
 import Dashboard from "./views/dashboard/Dashboard";
 import {
   DASHBOARD_URL,
@@ -12,7 +12,7 @@ import {
   TICKETS_URL,
   USERS_URL,
   KANBAN_URL,
-} from "./views/viewsUrls";
+} from "./constants/viewsUrls";
 import TicketsController from "./controllers/TicketsController";
 import Profile from "./views/profile/Profile";
 import ProjectsController from "./controllers/ProjectsController";
@@ -97,7 +97,6 @@ function App() {
 
   useEffect(() => {
     if (authInitialized && authStatus) {
-      
       const isAdmin =
         currentUser.role === "Admin" || currentUser.role === "Demo";
 
