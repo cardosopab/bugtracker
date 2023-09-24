@@ -1,14 +1,4 @@
 import {
-  Dashboard,
-  Group,
-  GroupAdd,
-  Handyman,
-  List,
-  Person,
-  TableChart,
-} from "@mui/icons-material";
-
-import {
   DASHBOARD_URL,
   KANBAN_URL,
   PROJECTS_URL,
@@ -16,27 +6,6 @@ import {
   TICKETS_URL,
   USERS_URL,
 } from "./viewsUrls";
-
-const handleIconSwitch = (icon: string) => {
-  switch (icon) {
-    case "table-chart":
-      return <TableChart />;
-    case "dashboard":
-      return <Dashboard />;
-    case "group-add":
-      return <GroupAdd />;
-    case "group":
-      return <Group />;
-    case "handy-man":
-      return <Handyman />;
-    case "list":
-      return <List />;
-    case "person":
-      return <Person />;
-    default:
-      return <Dashboard />;
-  }
-};
 
 const navOptions = [
   { name: "Dashboard", icon: "dashboard", url: DASHBOARD_URL },
@@ -48,4 +17,4 @@ const navOptions = [
   // { name: "User Profile", icon: 'person', url: PROFILE_URL },
 ];
 
-export { handleIconSwitch, navOptions };
+export { navOptions };
