@@ -27,6 +27,7 @@ import { useTicketActions } from "../models/database/hooks/useTicketActions";
 interface CreateTicketProps {
   project?: Project;
 }
+
 const CreateTicketController = ({ project }: CreateTicketProps) => {
   const createTicket = useTicketActions().createTicket;
   const projects = useSelector((state: RootState) => state.projects.value);

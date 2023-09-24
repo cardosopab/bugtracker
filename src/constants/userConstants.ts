@@ -1,4 +1,3 @@
-
-const roles = ['Unassigned', 'Submitter', 'Developer', 'Manager', 'Admin',];
+const roles = ["Unassigned", "Submitter", "Developer", "Manager", "Admin"];
 
 export { roles };

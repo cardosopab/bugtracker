@@ -90,10 +90,7 @@ const EditTicketController = ({ ticket, title }: EditTicketProps) => {
                       onChange={(event) => setTitleValue(event.target.value)}
                     />
                   </FormControl>
-                  <FormControl
-                    fullWidth={true}
-                    margin={"normal"}
-                  >
+                  <FormControl fullWidth={true} margin={"normal"}>
                     <InputLabel id="project-dropdown-label">Project</InputLabel>
                     <Select
                       labelId="project-dropdown-label"

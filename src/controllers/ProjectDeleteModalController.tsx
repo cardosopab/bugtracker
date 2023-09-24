@@ -31,10 +31,7 @@ const ProjectDeleteModalController = (props: ConfirmDeleteProps) => {
 
   return (
     <>
-      <Modal
-        open={isModalOpen}
-        onClose={() => handleModalToggle()}
-      >
+      <Modal open={isModalOpen} onClose={() => handleModalToggle()}>
         <Card sx={style}>
           <CardHeader title="Confirm Project Delete" />
           <Box sx={{ margin: 2 }}>
