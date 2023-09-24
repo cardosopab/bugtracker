@@ -6,7 +6,7 @@ import ProjectsView from "../views/projects/ProjectsView";
 import { useNavigate } from "react-router-dom";
 import { setDrawerIndex } from "../models/redux/drawerSlice";
 import { setProjectDetails } from "../models/redux/projectDetailsSlice";
-import { PROJECT_DETAILS_URL } from "../views/viewsUrls";
+import { PROJECT_DETAILS_URL } from "../constants/viewsUrls";
 import { useProjectActions } from "../models/database/hooks/useProjectActions";
 
 function ProjectsController() {
