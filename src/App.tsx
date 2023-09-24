@@ -56,7 +56,6 @@ function App() {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       // Initialize currentUser
       if (user) {
-        // Assuming you have a reference to the users collection
         const userDocRef = doc(database, USERS_COLLECTION, user.uid);
 
         try {
@@ -81,8 +80,6 @@ function App() {
         } catch (error) {
           console.error("Error fetching user document:", error);
         }
-      } else {
-        // User is not authenticated, handle it as needed
       }
       console.log("onAuthStateChanged", user);
       console.log("auth: ", auth);
@@ -100,7 +97,7 @@ function App() {
 
   useEffect(() => {
     if (authInitialized && authStatus) {
-      // Determine if the currentUser is an admin
+      
       const isAdmin =
         currentUser.role === "Admin" || currentUser.role === "Demo";
 
@@ -109,7 +106,7 @@ function App() {
       const projectsCollection = collection(database, PROJECTS_COLLECTION);
       const ticketsCollection = collection(database, TICKETS_COLLECTION);
 
-      // Create queries for users, projects, and tickets
+      // Create queries based on role
       const usersQuery = isAdmin
         ? query(usersCollection, orderBy("createdAt", "desc"))
         : query(
