@@ -1,4 +1,12 @@
-import { doc, collection, setDoc, updateDoc, arrayRemove, arrayUnion, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  setDoc,
+  updateDoc,
+  arrayRemove,
+  arrayUnion,
+  deleteDoc,
+} from "firebase/firestore";
 import { database } from "../firebase-init";
 import { PROJECTS_COLLECTION } from "../collections";
 import Project from "../../Project";
@@ -8,7 +16,11 @@ import { RootState } from "../../redux/store";
 export const useProjectActions = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
-  const createProject = async (name: string, description: string, companyId: string) => {
+  const createProject = async (
+    name: string,
+    description: string,
+    companyId: string
+  ) => {
     if (currentUser.role === "Demo") {
       return;
     }
@@ -71,7 +83,7 @@ export const useProjectActions = () => {
     try {
       const docRef = doc(database, PROJECTS_COLLECTION, projectId);
       await updateDoc(docRef, {
-        personnel: arrayRemove(uid)
+        personnel: arrayRemove(uid),
       });
       console.log("Document removed with ID: ", docRef.id);
     } catch (e) {
@@ -80,5 +92,10 @@ export const useProjectActions = () => {
     }
   };
 
-  return { createProject, deleteProject, addUserToProject, deleteUserFromProject };
+  return {
+    createProject,
+    deleteProject,
+    addUserToProject,
+    deleteUserFromProject,
+  };
 };

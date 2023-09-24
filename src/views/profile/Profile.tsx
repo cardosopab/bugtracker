@@ -1,4 +1,4 @@
-import DrawerController from "../../controllers/DrawerController"
+import DrawerController from "../../controllers/DrawerController";
 
 function Profile() {
   return (
@@ -7,6 +7,6 @@ function Profile() {
         <div>Profile</div>
       </DrawerController>
     </>
-  )
+  );
 }
-export default Profile
+export default Profile;

@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Story from '../Story';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Story from "../Story";
 
 export const storiesSlice = createSlice({
-  name: 'stories',
+  name: "stories",
   initialState: {
     value: [] as Story[],
   },
