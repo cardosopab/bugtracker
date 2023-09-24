@@ -17,7 +17,7 @@ import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import Project from "../../models/Project";
 import EditTicketController from "../../controllers/EditTicketController";
-import CreateTicketController from "../../controllers/CreateTicketController";
+import CreateTicketModalController from "../../controllers/CreateTicketModalController";
 
 interface TicketsProps {
   tickets: Ticket[];
@@ -46,7 +46,7 @@ function TicketsView({ tickets, users, projects }: TicketsProps) {
               <CardHeader
                 title="Tickets"
                 subheader="You are a part of:"
-                action={<CreateTicketController />}
+                action={<CreateTicketModalController />}
               />
               <Table style={{ tableLayout: "fixed" }}>
                 <TableHead>

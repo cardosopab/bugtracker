@@ -16,7 +16,7 @@ import {
 import Project from "../../models/Project";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
-import CreateTicketController from "../../controllers/CreateTicketController";
+import CreateTicketModalController from "../../controllers/CreateTicketModalController";
 import EditTicketController from "../../controllers/EditTicketController";
 import ProjectDeleteModalController from "../../controllers/ProjectDeleteModalController";
 
@@ -92,7 +92,7 @@ const ProjectDetailsView = ({ project, users, tickets }: DetailsProps) => {
         <Card>
           <CardHeader
             title={`Tickets for ${name}`}
-            action={<CreateTicketController project={project} />}
+            action={<CreateTicketModalController project={project} />}
           />
           <TableContainer component={Paper}>
             <Table style={{ tableLayout: "fixed" }}>
