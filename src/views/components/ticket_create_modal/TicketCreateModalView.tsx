@@ -45,7 +45,7 @@ interface CreateTicketModalViewProps {
   handleTicketCreate: () => void;
 }
 
-const CreateTicketModalView = ({
+const TicketCreateModalView = ({
   project,
   projects,
   users,
@@ -243,4 +243,4 @@ const CreateTicketModalView = ({
     </>
   );
 };
-export default CreateTicketModalView;
+export default TicketCreateModalView;

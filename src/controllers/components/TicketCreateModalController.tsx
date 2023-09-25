@@ -3,7 +3,7 @@ import { RootState } from "../../models/redux/store";
 import { useState } from "react";
 import Project from "../../models/Project";
 import { useTicketActions } from "../../models/database/hooks/useTicketActions";
-import CreateTicketModalView from "../../views/components/create_ticket_modal/CreateTicketModalView";
+import TicketCreateModalView from "../../views/components/ticket_create_modal/TicketCreateModalView";
 
 interface CreateTicketProps {
   project?: Project;
@@ -61,7 +61,7 @@ const TicketCreateModalController = ({ project }: CreateTicketProps) => {
   };
 
   return (
-    <CreateTicketModalView
+    <TicketCreateModalView
       project={project}
       projects={projects}
       users={users}
