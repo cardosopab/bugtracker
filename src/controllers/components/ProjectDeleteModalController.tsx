@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardHeader, Grid, Modal } from "@mui/material";
 import { useState } from "react";
-import Project from "../models/Project";
-import { useProjectActions } from "../models/database/hooks/useProjectActions";
+import Project from "../../models/Project";
+import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
 interface ConfirmDeleteProps {
   project: Project;

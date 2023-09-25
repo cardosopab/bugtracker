@@ -16,9 +16,9 @@ import {
 import Project from "../../models/Project";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
-import CreateTicketModalController from "../../controllers/CreateTicketModalController";
-import EditTicketController from "../../controllers/EditTicketController";
-import ProjectDeleteModalController from "../../controllers/ProjectDeleteModalController";
+import CreateTicketModalController from "../../controllers/components/CreateTicketModalController";
+import EditTicketController from "../../controllers/components/EditTicketModalController";
+import ProjectDeleteModalController from "../../controllers/components/ProjectDeleteModalController";
 
 interface DetailsProps {
   project: Project;

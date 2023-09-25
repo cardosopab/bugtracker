@@ -12,12 +12,12 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import DrawerController from "../../controllers/DrawerController";
+import DrawerController from "../../controllers/components/DrawerController";
 import Ticket from "../../models/Ticket";
 import User from "../../models/User";
 import Project from "../../models/Project";
-import EditTicketController from "../../controllers/EditTicketController";
-import CreateTicketModalController from "../../controllers/CreateTicketModalController";
+import EditTicketController from "../../controllers/components/EditTicketModalController";
+import CreateTicketModalController from "../../controllers/components/CreateTicketModalController";
 
 interface TicketsProps {
   tickets: Ticket[];

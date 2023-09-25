@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../models/redux/store";
-import RolesView from "../views/roles/RolesView";
+import { RootState } from "../../models/redux/store";
+import RolesView from "../../views/roles/RolesView";
 import { SetStateAction, useState } from "react";
-import { roles } from "../constants/userConstants";
-import { useUserActions } from "../models/database/hooks/useUserActions";
+import { roles } from "../../constants/userConstants";
+import { useUserActions } from "../../models/database/hooks/useUserActions";
 
 function RolesController() {
   const updateUserRole = useUserActions().updateUserRole;

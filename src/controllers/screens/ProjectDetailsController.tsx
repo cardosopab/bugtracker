@@ -1,6 +1,6 @@
-import { RootState } from "../models/redux/store";
-import DrawerController from "./DrawerController";
-import ProjectDetailsView from "../views/project_details/ProjectDetailsView";
+import { RootState } from "../../models/redux/store";
+import DrawerController from "../components/DrawerController";
+import ProjectDetailsView from "../../views/project_details/ProjectDetailsView";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 const ProjectDetailsController = () => {

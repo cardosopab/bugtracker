@@ -5,10 +5,10 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { auth } from "../models/database/firebase-init";
-import { DASHBOARD_URL } from "../constants/viewsUrls";
-import AuthView from "../views/auth/AuthView";
-import { useUserActions } from "../models/database/hooks/useUserActions";
+import { auth } from "../../models/database/firebase-init";
+import { DASHBOARD_URL } from "../../constants/viewsUrls";
+import AuthView from "../../views/auth/AuthView";
+import { useUserActions } from "../../models/database/hooks/useUserActions";
 
 const AuthController = () => {
   const createUser = useUserActions().createUser;
@@ -19,7 +19,7 @@ const AuthController = () => {
     register,
     formState: { errors },
   } = useForm();
-  
+
   const onSubmit = (values: any) => {
     console.log(values);
     if (isSignIn) {
@@ -47,7 +47,7 @@ const AuthController = () => {
   const handleButtonToggle = () => {
     setIsSignIn(!isSignIn);
   };
-  
+
   return (
     <AuthView
       register={register}

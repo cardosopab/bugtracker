@@ -12,14 +12,14 @@ import {
   TableRow,
   Grid,
 } from "@mui/material";
-import DrawerController from "../../controllers/DrawerController";
+import DrawerController from "../../controllers/components/DrawerController";
 import {
   FieldValues,
   RegisterOptions,
   UseFormHandleSubmit,
 } from "react-hook-form";
 import Project from "../../models/Project";
-import ProjectDeleteModalController from "../../controllers/ProjectDeleteModalController";
+import ProjectDeleteModalController from "../../controllers/components/ProjectDeleteModalController";
 
 interface ProjectsViewProps {
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;

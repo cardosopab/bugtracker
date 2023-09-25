@@ -19,7 +19,7 @@ import {
   Paper,
   Divider,
 } from "@mui/material";
-import DrawerController from "../../controllers/DrawerController";
+import DrawerController from "../../controllers/components/DrawerController";
 import User from "../../models/User";
 import Project from "../../models/Project";
 

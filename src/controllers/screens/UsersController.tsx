@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import UsersView from "../views/users/UsersView";
-import { RootState } from "../models/redux/store";
+import UsersView from "../../views/users/UsersView";
+import { RootState } from "../../models/redux/store";
 import { useEffect, useState } from "react";
-import User from "../models/User";
-import Project from "../models/Project";
-import { useProjectActions } from "../models/database/hooks/useProjectActions";
+import User from "../../models/User";
+import Project from "../../models/Project";
+import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
 function UsersController() {
   const deleteUserFromProject = useProjectActions().deleteUserFromProject;

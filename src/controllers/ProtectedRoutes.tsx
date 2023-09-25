@@ -1,6 +1,6 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import AuthController from "./AuthController";
+import AuthController from "./screens/AuthController";
 import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 

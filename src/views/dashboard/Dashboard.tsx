@@ -1,4 +1,4 @@
-import DrawerController from "../../controllers/DrawerController";
+import DrawerController from "../../controllers/components/DrawerController";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { useSelector } from "react-redux";

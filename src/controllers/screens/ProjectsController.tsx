@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { RootState } from "../models/redux/store";
-import Project from "../models/Project";
-import ProjectsView from "../views/projects/ProjectsView";
+import { RootState } from "../../models/redux/store";
+import Project from "../../models/Project";
+import ProjectsView from "../../views/projects/ProjectsView";
 import { useNavigate } from "react-router-dom";
-import { setDrawerIndex } from "../models/redux/drawerSlice";
-import { setProjectDetails } from "../models/redux/projectDetailsSlice";
-import { PROJECT_DETAILS_URL } from "../constants/viewsUrls";
-import { useProjectActions } from "../models/database/hooks/useProjectActions";
+import { setDrawerIndex } from "../../models/redux/drawerSlice";
+import { setProjectDetails } from "../../models/redux/projectDetailsSlice";
+import { PROJECT_DETAILS_URL } from "../../constants/viewsUrls";
+import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
 function ProjectsController() {
   const createProject = useProjectActions().createProject;

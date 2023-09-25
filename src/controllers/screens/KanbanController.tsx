@@ -20,15 +20,15 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { statusOptions } from "../constants/ticketConstants";
-import DrawerController from "./DrawerController";
+import { statusOptions } from "../../constants/ticketConstants";
+import DrawerController from "../components/DrawerController";
 import { useSelector } from "react-redux";
-import { RootState } from "../models/redux/store";
-import Ticket from "../models/Ticket";
+import { RootState } from "../../models/redux/store";
+import Ticket from "../../models/Ticket";
 import { useEffect, useState } from "react";
-import EditTicketController from "./EditTicketController";
-import CreateTicketModalController from "./CreateTicketModalController";
-import Project from "../models/Project";
+import EditTicketController from "../components/EditTicketModalController";
+import CreateTicketModalController from "../components/CreateTicketModalController";
+import Project from "../../models/Project";
 
 const KanbanController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.value);

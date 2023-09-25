@@ -1,12 +1,12 @@
 import * as React from "react";
-import { auth } from "../models/database/firebase-init";
+import { auth } from "../../models/database/firebase-init";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setDrawerIndex } from "../models/redux/drawerSlice";
-import { RootState } from "../models/redux/store";
-import { navOptions } from "../constants/drawerConstants";
-import { roles } from "../constants/userConstants";
-import DrawerView from "../views/drawer/DrawerView";
+import { setDrawerIndex } from "../../models/redux/drawerSlice";
+import { RootState } from "../../models/redux/store";
+import { navOptions } from "../../constants/drawerConstants";
+import { roles } from "../../constants/userConstants";
+import DrawerView from "../../views/drawer/DrawerView";
 import {
   Dashboard,
   Group,

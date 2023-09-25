@@ -13,9 +13,9 @@ import {
   USERS_URL,
   KANBAN_URL,
 } from "./constants/viewsUrls";
-import TicketsController from "./controllers/TicketsController";
+import TicketsController from "./controllers/screens/TicketsController";
 import Profile from "./views/profile/Profile";
-import ProjectsController from "./controllers/ProjectsController";
+import ProjectsController from "./controllers/screens/ProjectsController";
 import {
   collection,
   doc,
@@ -38,13 +38,13 @@ import {
   USERS_COLLECTION,
 } from "./models/database/collections";
 import { onAuthStateChanged } from "firebase/auth";
-import AuthController from "./controllers/AuthController";
-import RolesController from "./controllers/RolesController";
-import UsersController from "./controllers/UsersController";
-import ProjectDetailsController from "./controllers/ProjectDetailsController";
+import AuthController from "./controllers/screens/AuthController";
+import RolesController from "./controllers/screens/RolesController";
+import UsersController from "./controllers/screens/UsersController";
+import ProjectDetailsController from "./controllers/screens/ProjectDetailsController";
 import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
 import { RootState } from "./models/redux/store";
-import KanbanController from "./controllers/KanbanController";
+import KanbanController from "./controllers/screens/KanbanController";
 
 function App() {
   const [authInitialized, setAuthInitialized] = useState(false);

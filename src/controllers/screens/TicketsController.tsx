@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import TicketsView from "../views/tickets/TicketsView";
-import { RootState } from "../models/redux/store";
+import TicketsView from "../../views/tickets/TicketsView";
+import { RootState } from "../../models/redux/store";
 import { useState } from "react";
 
 const TicketsController = () => {

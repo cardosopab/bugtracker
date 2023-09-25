@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../models/redux/store";
+import { RootState } from "../../models/redux/store";
 import { useState } from "react";
-import Project from "../models/Project";
-import { useTicketActions } from "../models/database/hooks/useTicketActions";
-import CreateTicketModalView from "../views/create_ticket_modal/CreateTicketModalView";
+import Project from "../../models/Project";
+import { useTicketActions } from "../../models/database/hooks/useTicketActions";
+import CreateTicketModalView from "../../views/create_ticket_modal/CreateTicketModalView";
 
 interface CreateTicketProps {
   project?: Project;

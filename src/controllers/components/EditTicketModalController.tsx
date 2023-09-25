@@ -14,15 +14,15 @@ import {
   Modal,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { RootState } from "../models/redux/store";
+import { RootState } from "../../models/redux/store";
 import { useState } from "react";
-import Ticket from "../models/Ticket";
+import Ticket from "../../models/Ticket";
 import {
   priorityOptions,
   statusOptions,
   typeOptions,
-} from "../constants/ticketConstants";
-import { useTicketActions } from "../models/database/hooks/useTicketActions";
+} from "../../constants/ticketConstants";
+import { useTicketActions } from "../../models/database/hooks/useTicketActions";
 
 interface EditTicketProps {
   ticket: Ticket;

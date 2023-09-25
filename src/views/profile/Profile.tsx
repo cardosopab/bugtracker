@@ -1,4 +1,4 @@
-import DrawerController from "../../controllers/DrawerController";
+import DrawerController from "../../controllers/components/DrawerController";
 
 function Profile() {
   return (
