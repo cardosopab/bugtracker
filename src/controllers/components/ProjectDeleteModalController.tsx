@@ -1,16 +1,18 @@
-import { Box, Button, Card, CardHeader, Grid, Modal } from "@mui/material";
 import { useState } from "react";
 import Project from "../../models/Project";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
+import ProjectDeleteModalView from "../../views/components/project_delete_modal/ProjectDeleteModalView";
 
 interface ConfirmDeleteProps {
   project: Project;
   isPrimary?: boolean;
 }
 
-const ProjectDeleteModalController = (props: ConfirmDeleteProps) => {
+const ProjectDeleteModalController = ({
+  project,
+  isPrimary,
+}: ConfirmDeleteProps) => {
   const deleteProject = useProjectActions().deleteProject;
-  const { project, isPrimary } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalToggle = () => {
@@ -21,36 +23,14 @@ const ProjectDeleteModalController = (props: ConfirmDeleteProps) => {
     deleteProject(projectId);
   };
 
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: 400,
-  };
-
   return (
-    <>
-      <Modal open={isModalOpen} onClose={() => handleModalToggle()}>
-        <Card sx={style}>
-          <CardHeader title="Confirm Project Delete" />
-          <Box sx={{ margin: 2 }}>
-            <p>Delete: {project.name}</p>
-            <Grid style={{ display: "flex", justifyContent: "end" }}>
-              <Button onClick={() => handleProjectDelete(project.id)}>
-                Delete
-              </Button>
-            </Grid>
-          </Box>
-        </Card>
-      </Modal>
-      <Button
-        onClick={() => handleModalToggle()}
-        sx={isPrimary ? { color: "white" } : { color: "red" }}
-      >
-        Delete
-      </Button>
-    </>
+    <ProjectDeleteModalView
+      project={project}
+      isPrimary={isPrimary}
+      isModalOpen={isModalOpen}
+      handleModalToggle={handleModalToggle}
+      handleProjectDelete={handleProjectDelete}
+    />
   );
 };
 export default ProjectDeleteModalController;
