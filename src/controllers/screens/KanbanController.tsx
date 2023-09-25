@@ -26,7 +26,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../models/redux/store";
 import Ticket from "../../models/Ticket";
 import { useEffect, useState } from "react";
-import EditTicketController from "../components/EditTicketModalController";
+import TicketEditModalController from "../components/TicketEditModalController";
 import TicketCreateModalController from "../components/TicketCreateModalController";
 import Project from "../../models/Project";
 
@@ -156,7 +156,7 @@ const KanbanController = () => {
                       {ticketsByStatus[status]?.map((ticket: Ticket) => {
                         return (
                           <div key={`ticket-${ticket.id}`}>
-                            <EditTicketController
+                            <TicketEditModalController
                               key={`edit-${ticket.id}`}
                               ticket={ticket}
                               title={ticket.title}
@@ -250,7 +250,7 @@ const KanbanController = () => {
                               {ticketsByStatus[status]?.map(
                                 (ticket: Ticket) => {
                                   return (
-                                    <EditTicketController
+                                    <TicketEditModalController
                                       key={`edit-${ticket.id}`}
                                       ticket={ticket}
                                       title={ticket.title}

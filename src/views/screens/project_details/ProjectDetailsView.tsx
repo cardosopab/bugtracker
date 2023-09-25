@@ -17,7 +17,7 @@ import Project from "../../../models/Project";
 import Ticket from "../../../models/Ticket";
 import User from "../../../models/User";
 import TicketCreateModalController from "../../../controllers/components/TicketCreateModalController";
-import EditTicketController from "../../../controllers/components/EditTicketModalController";
+import TicketEditModalController from "../../../controllers/components/TicketEditModalController";
 import ProjectDeleteModalController from "../../../controllers/components/ProjectDeleteModalController";
 
 interface DetailsProps {
@@ -141,7 +141,7 @@ const ProjectDetailsView = ({ project, users, tickets }: DetailsProps) => {
                         </TableCell>
                       )}
                       <TableCell>
-                        <EditTicketController ticket={ticket} />
+                        <TicketEditModalController ticket={ticket} />
                       </TableCell>
                     </TableRow>
                   );

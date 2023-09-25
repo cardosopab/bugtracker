@@ -16,7 +16,7 @@ import DrawerController from "../../../controllers/components/DrawerController";
 import Ticket from "../../../models/Ticket";
 import User from "../../../models/User";
 import Project from "../../../models/Project";
-import EditTicketController from "../../../controllers/components/EditTicketModalController";
+import TicketEditModalController from "../../../controllers/components/TicketEditModalController";
 import TicketCreateModalController from "../../../controllers/components/TicketCreateModalController";
 
 interface TicketsProps {
@@ -118,7 +118,7 @@ function TicketsView({ tickets, users, projects }: TicketsProps) {
                               })}
                             </TableCell>
                             <TableCell>
-                              <EditTicketController ticket={ticket} />
+                              <TicketEditModalController ticket={ticket} />
                             </TableCell>
                           </>
                         ) : (
@@ -127,7 +127,7 @@ function TicketsView({ tickets, users, projects }: TicketsProps) {
                             <TableCell>{title}</TableCell>
                             <TableCell>{status}</TableCell>
                             <TableCell>
-                              <EditTicketController ticket={ticket} />
+                              <TicketEditModalController ticket={ticket} />
                             </TableCell>
                           </>
                         )}

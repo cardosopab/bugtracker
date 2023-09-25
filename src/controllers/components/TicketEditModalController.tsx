@@ -28,7 +28,7 @@ interface EditTicketProps {
   ticket: Ticket;
   title?: string;
 }
-const EditTicketController = ({ ticket, title }: EditTicketProps) => {
+const TicketEditModalController = ({ ticket, title }: EditTicketProps) => {
   const deleteTicket = useTicketActions().deleteTicket;
   const updateTicket = useTicketActions().updateTicket;
   const projects = useSelector((state: RootState) => state.projects.value);
@@ -252,4 +252,4 @@ const EditTicketController = ({ ticket, title }: EditTicketProps) => {
   );
 };
 
-export default EditTicketController;
+export default TicketEditModalController;
