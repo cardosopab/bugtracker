@@ -27,7 +27,7 @@ import { RootState } from "../../models/redux/store";
 import Ticket from "../../models/Ticket";
 import { useEffect, useState } from "react";
 import EditTicketController from "../components/EditTicketModalController";
-import CreateTicketModalController from "../components/CreateTicketModalController";
+import TicketCreateModalController from "../components/TicketCreateModalController";
 import Project from "../../models/Project";
 
 const KanbanController = () => {
@@ -140,7 +140,7 @@ const KanbanController = () => {
                       xs={12}
                       sx={{ justifyContent: "end", textAlign: "end" }}
                     >
-                      <CreateTicketModalController />
+                      <TicketCreateModalController />
                     </Grid>
                   }
                 />
@@ -217,7 +217,7 @@ const KanbanController = () => {
                       </Select>
                     </FormControl>
                   }
-                  action={<CreateTicketModalController />}
+                  action={<TicketCreateModalController />}
                 />
                 <Table style={{ tableLayout: "fixed" }}>
                   <TableHead>

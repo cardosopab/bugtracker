@@ -9,7 +9,7 @@ interface CreateTicketProps {
   project?: Project;
 }
 
-const CreateTicketModalController = ({ project }: CreateTicketProps) => {
+const TicketCreateModalController = ({ project }: CreateTicketProps) => {
   const createTicket = useTicketActions().createTicket;
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
@@ -86,4 +86,4 @@ const CreateTicketModalController = ({ project }: CreateTicketProps) => {
   );
 };
 
-export default CreateTicketModalController;
+export default TicketCreateModalController;
