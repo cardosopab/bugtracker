@@ -18,9 +18,9 @@ import {
   priorityOptions,
   statusOptions,
   typeOptions,
-} from "../../constants/ticketConstants";
-import Project from "../../models/Project";
-import User from "../../models/User";
+} from "../../../constants/ticketConstants";
+import Project from "../../../models/Project";
+import User from "../../../models/User";
 
 interface CreateTicketModalViewProps {
   project?: Project;

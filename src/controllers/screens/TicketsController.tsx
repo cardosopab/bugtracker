@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import TicketsView from "../../views/tickets/TicketsView";
+import TicketsView from "../../views/screens/tickets/TicketsView";
 import { RootState } from "../../models/redux/store";
 import { useState } from "react";
 

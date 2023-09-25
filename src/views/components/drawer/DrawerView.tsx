@@ -16,7 +16,7 @@ import {
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { Logout, Menu } from "@mui/icons-material";
 import { Auth } from "firebase/auth";
-import User from "../../models/User";
+import User from "../../../models/User";
 
 interface DrawerViewProps {
   auth: Auth;

@@ -1,4 +1,4 @@
-import DrawerController from "../../controllers/components/DrawerController";
+import DrawerController from "../../../controllers/components/DrawerController";
 import {
   Button,
   Card,
@@ -17,7 +17,7 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
-import User from "../../models/User";
+import User from "../../../models/User";
 
 interface RolesViewProps {
   users: User[];

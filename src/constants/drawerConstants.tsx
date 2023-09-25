@@ -5,7 +5,7 @@ import {
   ROLES_URL,
   TICKETS_URL,
   USERS_URL,
-} from "./viewsUrls";
+} from "./screensUrls";
 
 const navOptions = [
   { name: "Dashboard", icon: "dashboard", url: DASHBOARD_URL },
@@ -14,7 +14,6 @@ const navOptions = [
   { name: "Tickets Overview", icon: "list", url: TICKETS_URL },
   { name: "Role Assignment", icon: "group-add", url: ROLES_URL },
   { name: "Personnel Assignment", icon: "group", url: USERS_URL },
-  // { name: "User Profile", icon: 'person', url: PROFILE_URL },
 ];
 
 export { navOptions };

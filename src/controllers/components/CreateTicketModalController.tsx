@@ -3,7 +3,7 @@ import { RootState } from "../../models/redux/store";
 import { useState } from "react";
 import Project from "../../models/Project";
 import { useTicketActions } from "../../models/database/hooks/useTicketActions";
-import CreateTicketModalView from "../../views/create_ticket_modal/CreateTicketModalView";
+import CreateTicketModalView from "../../views/components/create_ticket_modal/CreateTicketModalView";
 
 interface CreateTicketProps {
   project?: Project;

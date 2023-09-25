@@ -1,16 +1,16 @@
-import DrawerController from "../../controllers/components/DrawerController";
+import DrawerController from "../../../controllers/components/DrawerController";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { useSelector } from "react-redux";
-import { RootState } from "../../models/redux/store";
+import { RootState } from "../../../models/redux/store";
 import { Card, CardHeader } from "@mui/material";
 import {
   priorityOptions,
   statusOptions,
   typeOptions,
-} from "../../constants/ticketConstants";
+} from "../../../constants/ticketConstants";
 import { useEffect, useState } from "react";
-import Ticket from "../../models/Ticket";
+import Ticket from "../../../models/Ticket";
 
 function Dashboard() {
   const barChartParams = { margin: { bottom: 100, left: 40, right: 20 } };

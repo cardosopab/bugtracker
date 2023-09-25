@@ -13,12 +13,12 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import Project from "../../models/Project";
-import Ticket from "../../models/Ticket";
-import User from "../../models/User";
-import CreateTicketModalController from "../../controllers/components/CreateTicketModalController";
-import EditTicketController from "../../controllers/components/EditTicketModalController";
-import ProjectDeleteModalController from "../../controllers/components/ProjectDeleteModalController";
+import Project from "../../../models/Project";
+import Ticket from "../../../models/Ticket";
+import User from "../../../models/User";
+import CreateTicketModalController from "../../../controllers/components/CreateTicketModalController";
+import EditTicketController from "../../../controllers/components/EditTicketModalController";
+import ProjectDeleteModalController from "../../../controllers/components/ProjectDeleteModalController";
 
 interface DetailsProps {
   project: Project;

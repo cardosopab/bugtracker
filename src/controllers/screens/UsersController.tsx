@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import UsersView from "../../views/users/UsersView";
+import UsersView from "../../views/screens/users/UsersView";
 import { RootState } from "../../models/redux/store";
 import { useEffect, useState } from "react";
 import User from "../../models/User";

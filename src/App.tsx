@@ -2,19 +2,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth, database } from "./models/database/firebase-init";
 import ProtectedRoutes from "./controllers/ProtectedRoutes";
-import Dashboard from "./views/dashboard/Dashboard";
 import {
   DASHBOARD_URL,
   PROJECT_DETAILS_URL,
-  PROFILE_URL,
   PROJECTS_URL,
   ROLES_URL,
   TICKETS_URL,
   USERS_URL,
   KANBAN_URL,
-} from "./constants/viewsUrls";
+} from "./constants/screensUrls";
 import TicketsController from "./controllers/screens/TicketsController";
-import Profile from "./views/profile/Profile";
 import ProjectsController from "./controllers/screens/ProjectsController";
 import {
   collection,
@@ -45,6 +42,7 @@ import ProjectDetailsController from "./controllers/screens/ProjectDetailsContro
 import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
 import { RootState } from "./models/redux/store";
 import KanbanController from "./controllers/screens/KanbanController";
+import Dashboard from "./views/screens/dashboard/Dashboard";
 
 function App() {
   const [authInitialized, setAuthInitialized] = useState(false);
@@ -230,7 +228,6 @@ function App() {
             <Route path={USERS_URL} element={<UsersController />} />
             <Route path={PROJECTS_URL} element={<ProjectsController />} />
             <Route path={TICKETS_URL} element={<TicketsController />} />
-            <Route path={PROFILE_URL} element={<Profile />} />
             <Route
               path={PROJECT_DETAILS_URL}
               element={<ProjectDetailsController />}

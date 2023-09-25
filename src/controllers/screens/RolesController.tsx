@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../models/redux/store";
-import RolesView from "../../views/roles/RolesView";
+import RolesView from "../../views/screens/roles/RolesView";
 import { SetStateAction, useState } from "react";
 import { roles } from "../../constants/userConstants";
 import { useUserActions } from "../../models/database/hooks/useUserActions";

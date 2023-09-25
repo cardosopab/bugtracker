@@ -6,8 +6,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { auth } from "../../models/database/firebase-init";
-import { DASHBOARD_URL } from "../../constants/viewsUrls";
-import AuthView from "../../views/auth/AuthView";
+import { DASHBOARD_URL } from "../../constants/screensUrls";
+import AuthView from "../../views/screens/auth/AuthView";
 import { useUserActions } from "../../models/database/hooks/useUserActions";
 
 const AuthController = () => {

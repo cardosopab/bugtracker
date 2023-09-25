@@ -19,9 +19,9 @@ import {
   Paper,
   Divider,
 } from "@mui/material";
-import DrawerController from "../../controllers/components/DrawerController";
-import User from "../../models/User";
-import Project from "../../models/Project";
+import DrawerController from "../../../controllers/components/DrawerController";
+import User from "../../../models/User";
+import Project from "../../../models/Project";
 
 interface UsersViewProps {
   users: User[];

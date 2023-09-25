@@ -6,16 +6,15 @@ import { setDrawerIndex } from "../../models/redux/drawerSlice";
 import { RootState } from "../../models/redux/store";
 import { navOptions } from "../../constants/drawerConstants";
 import { roles } from "../../constants/userConstants";
-import DrawerView from "../../views/drawer/DrawerView";
 import {
   Dashboard,
   Group,
   GroupAdd,
   Handyman,
   List,
-  Person,
   TableChart,
 } from "@mui/icons-material";
+import DrawerView from "../../views/components/drawer/DrawerView";
 
 interface DrawerControllerProps {
   children: React.ReactNode;
@@ -63,8 +62,6 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
         return <Handyman />;
       case "list":
         return <List />;
-      case "person":
-        return <Person />;
       default:
         return <Dashboard />;
     }
