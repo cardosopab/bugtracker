@@ -7,7 +7,7 @@ import {
 } from "../../constants/ticketConstants";
 import { useEffect, useState } from "react";
 import Ticket from "../../models/Ticket";
-import DashboardView from "../../views/screens/dashboard/Dashboard";
+import DashboardView from "../../views/screens/dashboard/DashboardView";
 
 function DashboardController() {
   const tickets = useSelector((state: RootState) => state.tickets.value);
