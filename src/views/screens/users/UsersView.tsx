@@ -26,8 +26,8 @@ import Project from "../../../models/Project";
 interface UsersViewProps {
   users: User[];
   projects: Project[];
-  selectedUser: User;
-  selectedProject: Project;
+  selectedUserName: string;
+  selectedProjectName: string;
   handleProjectDropdown: any;
   handleUserDropdown: any;
   handleAddUser: any;
@@ -38,8 +38,8 @@ interface UsersViewProps {
 function UsersView({
   users,
   projects,
-  selectedUser,
-  selectedProject,
+  selectedUserName,
+  selectedProjectName,
   handleUserDropdown,
   handleProjectDropdown,
   handleAddUser,
@@ -61,8 +61,8 @@ function UsersView({
               <InputLabel id="user-dropdown-label">Select a User</InputLabel>
               <Select
                 labelId="user-dropdown-label"
-                value={selectedUser.name}
-                name={selectedUser.name}
+                value={selectedUserName}
+                name={selectedUserName}
                 label="Select a User"
                 onChange={handleUserDropdown}
               >
@@ -80,8 +80,8 @@ function UsersView({
               </InputLabel>
               <Select
                 labelId="project-dropdown-label"
-                value={selectedProject.name}
-                name={selectedProject.name}
+                value={selectedProjectName}
+                name={selectedProjectName}
                 label="Select a Project"
                 onChange={handleProjectDropdown}
               >

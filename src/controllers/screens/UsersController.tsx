@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import UsersView from "../../views/screens/users/UsersView";
 import { RootState } from "../../models/redux/store";
 import { useEffect, useState } from "react";
-import User from "../../models/User";
 import Project from "../../models/Project";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
@@ -11,71 +10,77 @@ function UsersController() {
   const addUserToProject = useProjectActions().addUserToProject;
   const users = useSelector((state: RootState) => state.users.value);
   const projects = useSelector((state: RootState) => state.projects.value);
-  const [selectedProject, setSelectedProject] = useState<Project>(
+  const [selectedProjectName, setSelectedProjectName] = useState<string>(
+    projects.length > 0 ? projects[0].name : ""
+  );
+  const [selectedProjectObj, setSelectedProjectObject] = useState<Project>(
     projects.length > 0 ? projects[0] : ({} as Project)
   );
-  const [selectedUser, setSelectedUser] = useState<User>(
-    users.length > 0 ? users[0] : ({} as User)
+  const [selectedUserName, setSelectedUserName] = useState<string>(
+    users.length > 0 ? users[0].name : ""
+  );
+  const [selectedUserId, setSelectedUserId] = useState<string>(
+    users.length > 0 ? users[0].id : ""
   );
   const [isRemoveButtonDisabled, setIsRemoveButtonDisabled] = useState(true);
 
-  const findProjectAndUserAvailability = () => {
-    if (!selectedUser.id || !selectedProject.id) {
+  const checkButtonDisableStatus = () => {
+    if (!selectedProjectObj.id) {
       setIsRemoveButtonDisabled(true);
       return;
     }
 
-    const isUserInPersonnelArray = selectedProject.personnel.includes(
-      selectedUser.id
-    );
+    const isUserInPersonnelArray =
+      selectedProjectObj.personnel.includes(selectedUserId);
     setIsRemoveButtonDisabled(!isUserInPersonnelArray);
   };
+
   const handleUserDropdown = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const selectedUserName = event.target.value as string;
-    const selectedUserObj = users.find(
-      (user) => user.name === selectedUserName
-    );
-    if (selectedUserObj) {
-      setSelectedUser(selectedUserObj);
+    const eventUserName = event.target.value as string;
+    const eventUserObj = users.find((user) => user.name === eventUserName);
+    if (eventUserObj) {
+      setSelectedUserName(eventUserObj.name);
+      setSelectedUserId(eventUserObj.id);
     }
   };
   const handleProjectDropdown = (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    const selectedProjectName = event.target.value as string;
-    const selectedProjectObj = projects.find(
-      (project) => project.name === selectedProjectName
+    const eventProjectName = event.target.value as string;
+    const eventProjectObj = projects.find(
+      (project) => project.name === eventProjectName
     );
 
-    if (selectedProjectObj) {
-      setSelectedProject(selectedProjectObj);
+    if (eventProjectObj) {
+      setSelectedProjectName(eventProjectObj.name);
+      setSelectedProjectObject(eventProjectObj);
     }
   };
 
   const handleAddUser = () => {
-    console.log(selectedUser.id, selectedProject.id);
-    addUserToProject(selectedUser.id, selectedProject.id);
+    console.log(selectedUserId, selectedProjectObj);
+    addUserToProject(selectedUserId, selectedProjectObj.id);
     setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
   };
 
   const handleRemoveUser = () => {
-    console.log(selectedUser.id, selectedProject.id);
-    deleteUserFromProject(selectedUser.id, selectedProject.id);
+    console.log(selectedUserId, selectedProjectObj);
+    deleteUserFromProject(selectedUserId, selectedProjectObj.id);
     setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
   };
 
   useEffect(() => {
-    findProjectAndUserAvailability();
-  }, [selectedUser.id, selectedProject.id]);
+    checkButtonDisableStatus();
+  }, [selectedUserId, selectedProjectName]);
 
   return (
     <>
       <UsersView
         users={users}
         projects={projects}
-        selectedUser={selectedUser}
+        selectedUserName={selectedUserName}
         handleUserDropdown={handleUserDropdown}
-        selectedProject={selectedProject}
+        selectedProjectName={selectedProjectName}
         handleProjectDropdown={handleProjectDropdown}
         handleAddUser={handleAddUser}
         handleRemoveUser={handleRemoveUser}
