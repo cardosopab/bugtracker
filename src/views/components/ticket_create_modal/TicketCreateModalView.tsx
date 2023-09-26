@@ -74,6 +74,7 @@ const TicketCreateModalView = ({
     transform: "translate(-50%, -50%)",
     minWidth: 400,
   };
+
   return (
     <>
       <Button onClick={handleModalToggle} sx={{ color: "white" }}>

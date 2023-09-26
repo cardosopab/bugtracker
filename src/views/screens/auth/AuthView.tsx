@@ -9,6 +9,7 @@ interface AuthViewProps {
   isSignIn: any;
   errors: any;
 }
+
 const AuthView = (props: AuthViewProps) => {
   const {
     isSignIn,
@@ -18,6 +19,7 @@ const AuthView = (props: AuthViewProps) => {
     onSubmit,
     errors,
   } = props;
+
   return (
     <div className="center">
       <Card style={{ padding: "2em" }}>

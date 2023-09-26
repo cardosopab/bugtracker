@@ -7,6 +7,7 @@ const ProjectDetailsController = () => {
   const details = useSelector((state: RootState) => state.projectDetails.value);
   let tickets = useSelector((state: RootState) => state.tickets.value);
   const users = useSelector((state: RootState) => state.users.value);
+
   if (details.id === undefined) {
     return (
       <>
@@ -16,6 +17,7 @@ const ProjectDetailsController = () => {
       </>
     );
   }
+
   tickets = tickets.filter((ticket) => ticket.projectId === details.id);
   return (
     <>
@@ -25,4 +27,5 @@ const ProjectDetailsController = () => {
     </>
   );
 };
+
 export default ProjectDetailsController;
