@@ -29,17 +29,15 @@ interface RolesViewProps {
   selectedRole: string;
 }
 
-function RolesView(props: RolesViewProps) {
-  const {
-    users,
-    selectedUserName,
-    handleUserDropdown,
-    roles,
-    handleRoleDropdown,
-    handleRoleSubmit,
-    selectedRole,
-  } = props;
-
+function RolesView({
+  users,
+  selectedUserName,
+  handleUserDropdown,
+  roles,
+  handleRoleDropdown,
+  handleRoleSubmit,
+  selectedRole,
+}: RolesViewProps) {
   return (
     <DrawerController>
       <Grid container spacing={2} padding={2}>
