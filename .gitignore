@@ -25,3 +25,6 @@ dist-ssr
 
 #firebase
 src/models/database/firebase-config.ts
+.firebase
+.firebaserc
+firebase.json
