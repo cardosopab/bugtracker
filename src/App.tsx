@@ -42,7 +42,7 @@ import ProjectDetailsController from "./controllers/screens/ProjectDetailsContro
 import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
 import { RootState } from "./models/redux/store";
 import KanbanController from "./controllers/screens/KanbanController";
-import Dashboard from "./views/screens/dashboard/Dashboard";
+import DashboardController from "./controllers/screens/DashboardController";
 
 function App() {
   const [authInitialized, setAuthInitialized] = useState(false);
@@ -222,7 +222,7 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoutes />}>
             <Route path="/" element={<AuthController />} />
-            <Route path={DASHBOARD_URL} element={<Dashboard />} />
+            <Route path={DASHBOARD_URL} element={<DashboardController />} />
             <Route path={KANBAN_URL} element={<KanbanController />} />
             <Route path={ROLES_URL} element={<RolesController />} />
             <Route path={USERS_URL} element={<UsersController />} />
