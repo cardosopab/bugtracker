@@ -35,19 +35,17 @@ interface UsersViewProps {
   isRemoveButtonDisabled: boolean;
 }
 
-function UsersView(props: UsersViewProps) {
-  const {
-    users,
-    projects,
-    selectedUser,
-    selectedProject,
-    handleUserDropdown,
-    handleProjectDropdown,
-    handleAddUser,
-    handleRemoveUser,
-    isRemoveButtonDisabled,
-  } = props;
-
+function UsersView({
+  users,
+  projects,
+  selectedUser,
+  selectedProject,
+  handleUserDropdown,
+  handleProjectDropdown,
+  handleAddUser,
+  handleRemoveUser,
+  isRemoveButtonDisabled,
+}: UsersViewProps) {
   return (
     <DrawerController>
       {projects.length > 0 ? (

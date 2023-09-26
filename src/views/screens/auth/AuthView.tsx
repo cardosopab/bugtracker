@@ -10,16 +10,14 @@ interface AuthViewProps {
   errors: any;
 }
 
-const AuthView = (props: AuthViewProps) => {
-  const {
-    isSignIn,
-    register,
-    handleButtonToggle,
-    handleSubmit,
-    onSubmit,
-    errors,
-  } = props;
-
+const AuthView = ({
+  isSignIn,
+  register,
+  handleButtonToggle,
+  handleSubmit,
+  onSubmit,
+  errors,
+}: AuthViewProps) => {
   return (
     <div className="center">
       <Card style={{ padding: "2em" }}>

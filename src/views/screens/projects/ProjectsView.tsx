@@ -30,16 +30,14 @@ interface ProjectsViewProps {
   errors: any;
 }
 
-function ProjectsView(props: ProjectsViewProps) {
-  const {
-    handleSubmit,
-    navigateToDetails,
-    onSubmit,
-    register,
-    errors,
-    projects,
-  } = props;
-
+function ProjectsView({
+  handleSubmit,
+  navigateToDetails,
+  onSubmit,
+  register,
+  errors,
+  projects,
+}: ProjectsViewProps) {
   return (
     <DrawerController>
       <Grid container spacing={2} padding={2}>
