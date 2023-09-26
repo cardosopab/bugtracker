@@ -3,7 +3,6 @@ import {
   collection,
   setDoc,
   deleteDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { database } from "./../firebase-init";
 import { TICKETS_COLLECTION } from "./../collections";
