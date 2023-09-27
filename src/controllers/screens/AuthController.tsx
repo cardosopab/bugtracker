@@ -44,6 +44,17 @@ const AuthController = () => {
     }
   };
 
+  const handleDemoLogin = () => {
+    signInWithEmailAndPassword(auth, "demo@demo.com", "demo1234")
+      .then((data) => {
+        console.log("authData", data);
+        navigateTo(DASHBOARD_URL);
+      })
+      .catch((err) => {
+        alert(err.code);
+      });
+  };
+
   const handleButtonToggle = () => {
     setIsSignIn(!isSignIn);
   };
@@ -53,6 +64,7 @@ const AuthController = () => {
       register={register}
       handleButtonToggle={handleButtonToggle}
       handleSubmit={handleSubmit}
+      handleDemoLogin={handleDemoLogin}
       onSubmit={onSubmit}
       isSignIn={isSignIn}
       errors={errors}

@@ -1,12 +1,17 @@
 import { Button, Card, Input, Typography } from "@mui/material";
-import { RegisterOptions } from "react-hook-form";
+import {
+  FieldValues,
+  RegisterOptions,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 
 interface AuthViewProps {
   register: (name: string, options?: RegisterOptions) => any;
-  handleButtonToggle: any;
-  handleSubmit: any;
-  onSubmit: any;
-  isSignIn: any;
+  handleButtonToggle: () => void;
+  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
+  handleDemoLogin: () => void;
+  onSubmit: (values: any) => void;
+  isSignIn: boolean;
   errors: any;
 }
 
@@ -15,6 +20,7 @@ const AuthView = ({
   register,
   handleButtonToggle,
   handleSubmit,
+  handleDemoLogin,
   onSubmit,
   errors,
 }: AuthViewProps) => {
@@ -75,8 +81,21 @@ const AuthView = ({
               placeholder="Password"
             />
             {errors.password && <p>{errors.password.message?.toString()}</p>}
-            <Button type="submit" variant="contained" fullWidth>
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              sx={{ marginBottom: 2 }}
+            >
               {isSignIn ? "Sign In" : "Sign Up"}
+            </Button>
+            <Button
+              onClick={() => handleDemoLogin()}
+              variant="contained"
+              color="success"
+              fullWidth
+            >
+              Demo
             </Button>
           </form>
         </div>
