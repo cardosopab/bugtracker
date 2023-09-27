@@ -73,22 +73,19 @@ function App() {
               })
             );
           } else {
-            console.log("User document not found in Firestore.");
           }
         } catch (error) {
           console.error("Error fetching user document:", error);
         }
       }
-      console.log("onAuthStateChanged", user);
-      console.log("auth: ", auth);
+
       const isAuth = user?.uid != undefined;
-      console.log("isAuth", isAuth);
+
       setAuthInitialized(true);
       dispatch(setAuthStatus(isAuth));
     });
 
     return () => {
-      console.log("unsubscribeAuth");
       unsubscribeAuth();
     };
   }, []);
@@ -133,7 +130,7 @@ function App() {
         const arr: User[] = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          console.log("data", data);
+
           if (data.role !== "Demo") {
             const user: User = {
               id: data.id,
@@ -147,7 +144,6 @@ function App() {
           }
         });
         batch(() => {
-          console.log("subscribedUsers");
           dispatch(setUsers(arr));
         });
       });
@@ -157,7 +153,7 @@ function App() {
         const arr: Project[] = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          console.log("data", data);
+
           const project: Project = {
             id: data.id,
             companyId: data.companyId,
@@ -169,7 +165,6 @@ function App() {
           arr.push(project);
         });
         batch(() => {
-          console.log("subscribedProjects");
           dispatch(setProjects(arr));
         });
       });
@@ -179,7 +174,7 @@ function App() {
         const arr: Ticket[] = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          console.log("data", data);
+
           const ticket: Ticket = {
             id: data.id,
             projectId: data.projectId,
@@ -197,14 +192,12 @@ function App() {
           arr.push(ticket);
         });
         batch(() => {
-          console.log("subscribedTickets");
           dispatch(setTickets(arr));
         });
       });
 
       // Return cleanup function to unsubscribe from all collections
       return () => {
-        console.log("unsubscribe Users, Projects, and Tickets");
         unsubscribeUsers();
         unsubscribeProjects();
         unsubscribeTickets();

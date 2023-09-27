@@ -58,13 +58,11 @@ function UsersController() {
   };
 
   const handleAddUser = () => {
-    console.log(selectedUserId, selectedProjectObj);
     addUserToProject(selectedUserId, selectedProjectObj.id);
     setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
   };
 
   const handleRemoveUser = () => {
-    console.log(selectedUserId, selectedProjectObj);
     deleteUserFromProject(selectedUserId, selectedProjectObj.id);
     setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
   };

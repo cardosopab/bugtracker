@@ -38,7 +38,6 @@ export const useProjectActions = () => {
       };
 
       await setDoc(docRef, newProject);
-      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
       return null;
@@ -53,7 +52,6 @@ export const useProjectActions = () => {
     try {
       const docRef = doc(database, PROJECTS_COLLECTION, projectId);
       await deleteDoc(docRef);
-      console.log("Document removed with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
       return null;
@@ -68,7 +66,6 @@ export const useProjectActions = () => {
     try {
       const docRef = doc(database, PROJECTS_COLLECTION, projectId);
       await setDoc(docRef, { personnel: arrayUnion(uid) }, { merge: true });
-      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
       return null;
@@ -85,7 +82,6 @@ export const useProjectActions = () => {
       await updateDoc(docRef, {
         personnel: arrayRemove(uid),
       });
-      console.log("Document removed with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
       return null;

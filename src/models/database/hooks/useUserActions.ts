@@ -31,7 +31,6 @@ export const useUserActions = () => {
       };
       await setDoc(docRef, newUser);
       await setDoc(companyRef, newCompany);
-      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
       return null;

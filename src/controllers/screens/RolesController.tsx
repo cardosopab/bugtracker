@@ -36,7 +36,6 @@ function RolesController() {
     setSelectedRole(event.target.value);
   };
   const handleRoleSubmit = () => {
-    console.log(selectedUserId);
     updateUserRole(selectedUserId, selectedRole);
   };
   return (

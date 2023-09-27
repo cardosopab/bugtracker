@@ -21,11 +21,9 @@ const AuthController = () => {
   } = useForm();
 
   const onSubmit = (values: any) => {
-    console.log(values);
     if (isSignIn) {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((data) => {
-          console.log("authData", data);
           navigateTo(DASHBOARD_URL);
         })
         .catch((err) => {
@@ -35,7 +33,7 @@ const AuthController = () => {
       createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((data) => {
           createUser(data.user.uid, values.name, values.email);
-          console.log("authData", data);
+
           navigateTo(DASHBOARD_URL);
         })
         .catch((err) => {
@@ -47,7 +45,6 @@ const AuthController = () => {
   const handleDemoLogin = () => {
     signInWithEmailAndPassword(auth, "demo@demo.com", "demo1234")
       .then((data) => {
-        console.log("authData", data);
         navigateTo(DASHBOARD_URL);
       })
       .catch((err) => {

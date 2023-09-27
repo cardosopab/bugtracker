@@ -34,7 +34,6 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
   const handleLogout = () => {
     dispatch(setDrawerIndex(0));
     auth.signOut().then((response) => {
-      console.log("response", response);
       navigateTo("/");
     });
   };
