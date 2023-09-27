@@ -23,7 +23,7 @@ const AuthController = () => {
   const onSubmit = (values: any) => {
     if (isSignIn) {
       signInWithEmailAndPassword(auth, values.email, values.password)
-        .then((data) => {
+        .then((_) => {
           navigateTo(DASHBOARD_URL);
         })
         .catch((err) => {
@@ -44,7 +44,7 @@ const AuthController = () => {
 
   const handleDemoLogin = () => {
     signInWithEmailAndPassword(auth, "demo@demo.com", "demo1234")
-      .then((data) => {
+      .then((_) => {
         navigateTo(DASHBOARD_URL);
       })
       .catch((err) => {
