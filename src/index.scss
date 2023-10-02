@@ -1,7 +1,7 @@
 $Mui-blue: #1976d2;
 $Small-Viewport: 600px;
 $Medium-Viewport: 1300px;
-$Large-Viewport: 1500px;
+$Large-Viewport: 1200px;
 $Secondary-Header: #eee;
 
 :root {
@@ -34,12 +34,12 @@ $Secondary-Header: #eee;
     //   }
     // }
 
-    // @media (min-width:$Large-Viewport) {
-    //   .chart-container {
-    //     width: min(60vw, 60vh);
-    //     height: min(60vw, 60vh);
-    //   }
-    // }
+    @media (min-width:$Large-Viewport) {
+      .chart-container {
+        width: 60vw;
+        height: 35vh;
+      }
+    }
   }
 
   .row {

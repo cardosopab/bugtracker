@@ -22,6 +22,7 @@ interface DashboardViewProps {
     value: number;
     label: string;
   }[];
+  isLarge: boolean;
 }
 
 function DashboardView({
@@ -30,8 +31,14 @@ function DashboardView({
   statusCount,
   typeCount,
   personnelCount,
+  isLarge,
 }: DashboardViewProps) {
-  const barChartParams = { margin: { bottom: 100, left: 40, right: 20 } };
+  const barChartParams = isLarge
+    ? { margin: { bottom: 100, left: 40, right: 20 } }
+    : { margin: { bottom: 50, left: 40, right: 400 } };
+  const pieChartParams = isLarge
+    ? {}
+    : { margin: { bottom: 50, left: 40, right: 400 } };
 
   return (
     <DrawerController>
@@ -62,6 +69,7 @@ function DashboardView({
             <Card sx={{ margin: 2 }}>
               <div className="chart-container">
                 <PieChart
+                  {...pieChartParams}
                   series={[
                     {
                       data: typeCount,
@@ -108,6 +116,7 @@ function DashboardView({
               <CardHeader title="Active Personnel" />
               <div className="chart-container">
                 <PieChart
+                  {...pieChartParams}
                   series={[
                     {
                       data: personnelCount,

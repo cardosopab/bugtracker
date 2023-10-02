@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import Ticket from "../../models/Ticket";
 import DashboardView from "../../views/screens/dashboard/DashboardView";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 function DashboardController() {
   const tickets = useSelector((state: RootState) => state.tickets.value);
@@ -25,6 +26,8 @@ function DashboardController() {
   const [personnelCount, setPersonnelCount] = useState<
     { id: number; value: number; label: string }[]
   >([]);
+  const theme = useTheme();
+  const isLarge = useMediaQuery(theme.breakpoints.down("lg")); // Check for lg screen
 
   useEffect(() => {
     const updatedPriorityCount = new Array(priorityOptions.length).fill(0);
@@ -108,6 +111,7 @@ function DashboardController() {
       statusCount={statusCount}
       typeCount={typeCount}
       personnelCount={personnelCount}
+      isLarge={isLarge}
     />
   );
 }
