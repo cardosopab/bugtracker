@@ -20,16 +20,16 @@ const ProjectDeleteModalView = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    minWidth: 400,
+    minWidth: 300,
   };
 
   return (
     <>
       <Modal open={isModalOpen} onClose={() => handleModalToggle()}>
         <Card sx={style}>
-          <CardHeader title="Confirm Project Delete" />
+          <CardHeader title="Confirm Delete" />
           <Box sx={{ margin: 2 }}>
-            <p>Delete: {project.name}</p>
+            <p>Project: {project.name}</p>
             <Grid style={{ display: "flex", justifyContent: "end" }}>
               <Button onClick={() => handleProjectDelete(project.id)}>
                 Delete
