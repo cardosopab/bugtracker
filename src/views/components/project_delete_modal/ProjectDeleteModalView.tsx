@@ -31,7 +31,10 @@ const ProjectDeleteModalView = ({
           <Box sx={{ margin: 2 }}>
             <p>Project: {project.name}</p>
             <Grid style={{ display: "flex", justifyContent: "end" }}>
-              <Button onClick={() => handleProjectDelete(project.id)}>
+              <Button
+                onClick={() => handleProjectDelete(project.id)}
+                color="error"
+              >
                 Delete
               </Button>
             </Grid>
