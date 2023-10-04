@@ -72,7 +72,7 @@ const TicketCreateModalView = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    minWidth: 400,
+    minWidth: 300,
   };
 
   return (
@@ -129,12 +129,12 @@ const TicketCreateModalView = ({
                   )}
                   <FormControl fullWidth={true} margin={"normal"}>
                     <InputLabel id="priority-dropdown-label">
-                      Ticket Priority
+                      Priority
                     </InputLabel>
                     <Select
                       required
                       labelId="priority-dropdown-label"
-                      label="Ticket Priority"
+                      label="Priority"
                       id="priority-dropdown"
                       value={selectedPriority} // Connect to state
                       onChange={(event) =>
@@ -149,13 +149,11 @@ const TicketCreateModalView = ({
                     </Select>
                   </FormControl>
                   <FormControl fullWidth={true} margin={"normal"}>
-                    <InputLabel id="type-dropdown-label">
-                      Ticket Type
-                    </InputLabel>
+                    <InputLabel id="type-dropdown-label">Type</InputLabel>
                     <Select
                       required
                       labelId="type-dropdown-label"
-                      label="Ticket Type"
+                      label="Type"
                       id="type-dropdown"
                       value={selectedType} // Connect to state
                       onChange={(event) => setSelectedType(event.target.value)} // Update state on change

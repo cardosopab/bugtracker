@@ -76,7 +76,7 @@ const TicketEditModalView = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    minWidth: 400,
+    minWidth: 300,
   };
 
   return (
@@ -123,11 +123,11 @@ const TicketEditModalView = ({
                   </FormControl>
                   <FormControl fullWidth={true} margin={"normal"}>
                     <InputLabel id="priority-dropdown-label">
-                      Ticket Priority
+                      Priority
                     </InputLabel>
                     <Select
                       labelId="priority-dropdown-label"
-                      label="Ticket Priority"
+                      label="Priority"
                       id="priority-dropdown"
                       value={selectedPriority}
                       onChange={(event) =>
@@ -142,12 +142,10 @@ const TicketEditModalView = ({
                     </Select>
                   </FormControl>
                   <FormControl fullWidth={true} margin={"normal"}>
-                    <InputLabel id="type-dropdown-label">
-                      Ticket Type
-                    </InputLabel>
+                    <InputLabel id="type-dropdown-label">Type</InputLabel>
                     <Select
                       labelId="type-dropdown-label"
-                      label="Ticket Type"
+                      label="Type"
                       id="type-dropdown"
                       value={selectedType}
                       onChange={(event) => setSelectedType(event.target.value)}
