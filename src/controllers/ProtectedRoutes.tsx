@@ -4,7 +4,7 @@ import AuthController from "./screens/AuthController";
 import { useSelector } from "react-redux";
 import { RootState } from "../models/redux/store";
 
-function ProtectedRoutes() {
+const ProtectedRoutes = () => {
   // Check if the user is authenticated
   const authStatus = useSelector((state: RootState) => state.auth.authStatus);
   const navigateTo = useNavigate();
@@ -19,6 +19,6 @@ function ProtectedRoutes() {
   }, [authStatus, navigateTo, location]);
 
   return authStatus ? <Outlet /> : <AuthController />;
-}
+};
 
 export default ProtectedRoutes;

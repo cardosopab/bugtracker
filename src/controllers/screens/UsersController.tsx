@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Project from "../../models/Project";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
-function UsersController() {
+const UsersController = () => {
   const deleteUserFromProject = useProjectActions().deleteUserFromProject;
   const addUserToProject = useProjectActions().addUserToProject;
   const users = useSelector((state: RootState) => state.users.value);
@@ -86,5 +86,5 @@ function UsersController() {
       />
     </>
   );
-}
+};
 export default UsersController;

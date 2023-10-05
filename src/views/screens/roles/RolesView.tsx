@@ -29,7 +29,7 @@ interface RolesViewProps {
   selectedRole: string;
 }
 
-function RolesView({
+const RolesView = ({
   users,
   selectedUserName,
   handleUserDropdown,
@@ -37,7 +37,7 @@ function RolesView({
   handleRoleDropdown,
   handleRoleSubmit,
   selectedRole,
-}: RolesViewProps) {
+}: RolesViewProps) => {
   return (
     <DrawerController>
       <Grid container spacing={2} padding={2}>
@@ -133,6 +133,6 @@ function RolesView({
       </Grid>
     </DrawerController>
   );
-}
+};
 
 export default RolesView;

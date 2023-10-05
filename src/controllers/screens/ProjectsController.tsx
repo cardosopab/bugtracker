@@ -9,7 +9,7 @@ import { setProjectDetails } from "../../models/redux/projectDetailsSlice";
 import { PROJECT_DETAILS_URL } from "../../constants/screensUrls";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
-function ProjectsController() {
+const ProjectsController = () => {
   const createProject = useProjectActions().createProject;
   const navigateTo = useNavigate();
   const {
@@ -26,11 +26,11 @@ function ProjectsController() {
     reset();
   };
 
-  function navigateToDetails(details: Project) {
+  const navigateToDetails = (details: Project) => {
     navigateTo(PROJECT_DETAILS_URL);
     dispatch(setDrawerIndex(90));
     dispatch(setProjectDetails(details));
-  }
+  };
   return (
     <>
       <ProjectsView
@@ -43,5 +43,5 @@ function ProjectsController() {
       />
     </>
   );
-}
+};
 export default ProjectsController;

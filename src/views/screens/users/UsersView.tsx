@@ -35,7 +35,7 @@ interface UsersViewProps {
   isRemoveButtonDisabled: boolean;
 }
 
-function UsersView({
+const UsersView = ({
   users,
   projects,
   selectedUserName,
@@ -45,7 +45,7 @@ function UsersView({
   handleAddUser,
   handleRemoveUser,
   isRemoveButtonDisabled,
-}: UsersViewProps) {
+}: UsersViewProps) => {
   return (
     <DrawerController>
       {projects.length > 0 ? (
@@ -159,6 +159,6 @@ function UsersView({
       )}
     </DrawerController>
   );
-}
+};
 
 export default UsersView;

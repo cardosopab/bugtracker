@@ -30,14 +30,14 @@ interface ProjectsViewProps {
   errors: any;
 }
 
-function ProjectsView({
+const ProjectsView = ({
   handleSubmit,
   navigateToDetails,
   onSubmit,
   register,
   errors,
   projects,
-}: ProjectsViewProps) {
+}: ProjectsViewProps) => {
   return (
     <DrawerController>
       <Grid container spacing={2} padding={2}>
@@ -148,6 +148,6 @@ function ProjectsView({
       </Grid>
     </DrawerController>
   );
-}
+};
 
 export default ProjectsView;

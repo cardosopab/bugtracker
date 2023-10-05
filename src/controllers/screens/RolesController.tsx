@@ -5,7 +5,7 @@ import { SetStateAction, useState } from "react";
 import { roles } from "../../constants/userConstants";
 import { useUserActions } from "../../models/database/hooks/useUserActions";
 
-function RolesController() {
+const RolesController = () => {
   const updateUserRole = useUserActions().updateUserRole;
   const users = useSelector((state: RootState) => state.users.value);
   const [selectedUserName, setSelectedUserName] = useState(
@@ -49,5 +49,5 @@ function RolesController() {
       selectedRole={selectedRole}
     />
   );
-}
+};
 export default RolesController;

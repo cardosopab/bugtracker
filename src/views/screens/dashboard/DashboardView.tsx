@@ -25,14 +25,14 @@ interface DashboardViewProps {
   isLarge: boolean;
 }
 
-function DashboardView({
+const DashboardView = ({
   projects,
   priorityCount,
   statusCount,
   typeCount,
   personnelCount,
   isLarge,
-}: DashboardViewProps) {
+}: DashboardViewProps) => {
   const barChartParams = isLarge
     ? { margin: { bottom: 100, left: 40, right: 20 } }
     : { margin: { bottom: 50, left: 40, right: 400 } };
@@ -144,6 +144,6 @@ function DashboardView({
       )}
     </DrawerController>
   );
-}
+};
 
 export default DashboardView;

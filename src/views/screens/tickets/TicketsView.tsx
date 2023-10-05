@@ -27,7 +27,7 @@ interface TicketsProps {
   openTickets: { [id: string]: boolean };
 }
 
-function TicketsView({ tickets, users, projects }: TicketsProps) {
+const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
 
@@ -146,6 +146,6 @@ function TicketsView({ tickets, users, projects }: TicketsProps) {
       )}
     </DrawerController>
   );
-}
+};
 
 export default TicketsView;

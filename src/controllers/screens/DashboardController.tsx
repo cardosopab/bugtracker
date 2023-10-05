@@ -10,7 +10,7 @@ import Ticket from "../../models/Ticket";
 import DashboardView from "../../views/screens/dashboard/DashboardView";
 import { useMediaQuery, useTheme } from "@mui/material";
 
-function DashboardController() {
+const DashboardController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.value);
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
@@ -114,5 +114,5 @@ function DashboardController() {
       isLarge={isLarge}
     />
   );
-}
+};
 export default DashboardController;
