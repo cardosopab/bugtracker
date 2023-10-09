@@ -18,4 +18,6 @@ const typeOptions: string[] = [
   "Duplicate/Invalid",
 ];
 
-export { statusOptions, priorityOptions, typeOptions };
+const radioOptions = ["Date", "Priority"];
+
+export { statusOptions, priorityOptions, typeOptions, radioOptions };
