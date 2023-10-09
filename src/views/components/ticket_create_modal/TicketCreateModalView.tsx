@@ -67,21 +67,13 @@ const TicketCreateModalView = ({
   handleModalToggle,
   handleTicketCreate,
 }: CreateTicketModalViewProps) => {
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: 300,
-  };
-
   return (
     <>
       <Button onClick={handleModalToggle} sx={{ color: "white" }}>
         Create Ticket
       </Button>
       <Modal open={open} onClose={handleModalToggle}>
-        <Card style={style}>
+        <Card className="center" style={{ minWidth: 300 }}>
           <CardHeader
             title={`Create Ticket${
               project == null ? "" : ` for ${project?.name}`

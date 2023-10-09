@@ -15,18 +15,10 @@ const ProjectDeleteModalView = ({
   handleModalToggle,
   handleProjectDelete,
 }: ProjectDeleteModalViewProps) => {
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: 300,
-  };
-
   return (
     <>
       <Modal open={isModalOpen} onClose={() => handleModalToggle()}>
-        <Card sx={style}>
+        <Card className="center" style={{ minWidth: 300 }}>
           <CardHeader title="Confirm Delete" />
           <Box sx={{ margin: 2 }}>
             <p>Project: {project.name}</p>

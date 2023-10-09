@@ -71,14 +71,6 @@ const TicketEditModalView = ({
   handleModalToggle,
   handleTicketRemoval,
 }: TicketEditModalViewProps) => {
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: 300,
-  };
-
   return (
     <>
       <Button
@@ -89,7 +81,7 @@ const TicketEditModalView = ({
         {title ? title : "Edit"}
       </Button>
       <Modal open={isModalOpen} onClose={() => handleModalToggle()}>
-        <Card style={style}>
+        <Card className="center" style={{ minWidth: 300 }}>
           <CardHeader title={`Edit Ticket: ${ticket.title}`} />
           <Table style={{ tableLayout: "fixed" }}>
             <TableBody>
