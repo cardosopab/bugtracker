@@ -1,6 +1,6 @@
 import { doc, collection, setDoc, deleteDoc } from "firebase/firestore";
 import { database } from "./../firebase-init";
-import { TICKETS_COLLECTION } from "./../collections";
+import { TICKETS_COLLECTION } from "../../../constants/collections";
 import Ticket from "./../../Ticket";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";

@@ -8,7 +8,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { database } from "../firebase-init";
-import { PROJECTS_COLLECTION } from "../collections";
+import { PROJECTS_COLLECTION } from "../../../constants/collections";
 import Project from "../../Project";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
