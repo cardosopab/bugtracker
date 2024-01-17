@@ -23,8 +23,12 @@ dist-ssr
 *.sln
 *.sw?
 
-#firebase
+# Firebase
 src/models/database/firebase-config.ts
+client/src/models/database/firebase-config.ts
 .firebase
 .firebaserc
 firebase.json
+
+# Env
+server/.env
