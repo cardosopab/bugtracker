@@ -1,6 +1,9 @@
 import { doc, collection, setDoc } from "firebase/firestore";
 import { database } from "./../firebase-init";
-import { USERS_COLLECTION, COMPANY_COLLECTION } from "./../collections";
+import {
+  USERS_COLLECTION,
+  COMPANY_COLLECTION,
+} from "../../../constants/collections";
 import User from "./../../User";
 import Company from "./../../Company";
 import { useSelector } from "react-redux";

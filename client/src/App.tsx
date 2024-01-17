@@ -33,7 +33,7 @@ import {
   PROJECTS_COLLECTION,
   TICKETS_COLLECTION,
   USERS_COLLECTION,
-} from "./models/database/collections";
+} from "./constants/collections";
 import { onAuthStateChanged } from "firebase/auth";
 import AuthController from "./controllers/screens/AuthController";
 import RolesController from "./controllers/screens/RolesController";
@@ -43,6 +43,7 @@ import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
 import { RootState } from "./models/redux/store";
 import KanbanController from "./controllers/screens/KanbanController";
 import DashboardController from "./controllers/screens/DashboardController";
+import { CircularProgress, Grid } from "@mui/material";
 
 function App() {
   const [authInitialized, setAuthInitialized] = useState(false);
@@ -206,28 +207,32 @@ function App() {
   }, [authInitialized, authStatus]);
 
   if (!authInitialized) {
-    return <div className="center">Loading...</div>;
+    return (
+      <Grid>
+        <Grid>
+          <CircularProgress />
+        </Grid>
+      </Grid>
+    );
   }
 
   return (
     <BrowserRouter>
-      <div>
-        <Routes>
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/" element={<AuthController />} />
-            <Route path={DASHBOARD_URL} element={<DashboardController />} />
-            <Route path={KANBAN_URL} element={<KanbanController />} />
-            <Route path={ROLES_URL} element={<RolesController />} />
-            <Route path={USERS_URL} element={<UsersController />} />
-            <Route path={PROJECTS_URL} element={<ProjectsController />} />
-            <Route path={TICKETS_URL} element={<TicketsController />} />
-            <Route
-              path={PROJECT_DETAILS_URL}
-              element={<ProjectDetailsController />}
-            />
-          </Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/" element={<AuthController />} />
+          <Route path={DASHBOARD_URL} element={<DashboardController />} />
+          <Route path={KANBAN_URL} element={<KanbanController />} />
+          <Route path={ROLES_URL} element={<RolesController />} />
+          <Route path={USERS_URL} element={<UsersController />} />
+          <Route path={PROJECTS_URL} element={<ProjectsController />} />
+          <Route path={TICKETS_URL} element={<TicketsController />} />
+          <Route
+            path={PROJECT_DETAILS_URL}
+            element={<ProjectDetailsController />}
+          />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
