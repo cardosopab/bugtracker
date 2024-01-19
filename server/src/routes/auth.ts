@@ -16,13 +16,11 @@ router.post(
 
 // Login
 router.post("/api/auth/login", passport.authenticate("local"), (req, res) => {
-  console.log("api/auth");
   res.sendStatus(200);
 });
 
 // Status
 router.get("/api/auth/status", (req, res) => {
-  console.log(req.user);
   if (req.user) {
     res.sendStatus(200);
   } else {
@@ -36,7 +34,6 @@ router.post("/api/auth/logout", (req, res) => {
 
   req.logout((err) => {
     if (err) return res.sendStatus(400);
-    console.log("logout");
     res.sendStatus(200);
   });
 });

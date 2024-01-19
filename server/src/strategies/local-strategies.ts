@@ -6,13 +6,10 @@ import SerializedUser from "../models/SerializedUser";
 import { comparePassword } from "../utils/helpers";
 
 passport.serializeUser((user: SerializedUser, done) => {
-  console.log(`Inside Serialize User:`);
-  console.log(user);
   done(null, user.id);
 });
 
 passport.deserializeUser((id: string, done) => {
-  console.log(`Inside Deserialize UserId: ${id}`);
   try {
     const findUser = User.findById(id);
     if (!findUser) throw new Error("User Not Found.");
@@ -24,7 +21,6 @@ passport.deserializeUser((id: string, done) => {
 
 export default passport.use(
   new Strategy(async (username, password, done) => {
-    console.log(`Username: ${username}, Password: ${password}`);
     try {
       const findUser = await User.findOne({ username });
 
