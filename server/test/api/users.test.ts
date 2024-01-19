@@ -1,8 +1,9 @@
 import request from "supertest";
 
-import app from "../../src/app";
+import { createApp } from "../../src/createApp";
 
 const createEndpoint = "/api/v1/users/create";
+const app = createApp();
 describe(`POST ${createEndpoint}`, () => {
   it(`responds 201`, (done) => {
     request(app)
