@@ -2,12 +2,21 @@ import mongoose, { Document } from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
-    username: {
+    name: {
+      type: mongoose.Schema.Types.String,
+      required: true,
+    },
+    email: {
       type: mongoose.Schema.Types.String,
       required: true,
       unique: true,
     },
-    displayName: { type: mongoose.Schema.Types.String, required: true },
+    role: {
+      type: mongoose.Schema.Types.String,
+    },
+    companyId: {
+      type: mongoose.Schema.Types.String,
+    },
     password: { type: mongoose.Schema.Types.String, required: true },
   },
   { timestamps: true }
