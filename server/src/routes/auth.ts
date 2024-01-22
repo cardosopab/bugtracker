@@ -1,18 +1,8 @@
 import passport from "passport";
 import { Router } from "express";
 import "../strategies/local-strategies";
-import { createUserHandler } from "../handlers/authHandlers";
-import { checkSchema } from "express-validator";
-import { UserValidationSchema } from "../utils/validationSchemas/userValidationSchema";
 
 const router = Router();
-
-// Create
-router.post(
-  "/api/auth/create",
-  checkSchema(UserValidationSchema),
-  createUserHandler
-);
 
 // Login
 router.post("/api/auth/login", passport.authenticate("local"), (req, res) => {

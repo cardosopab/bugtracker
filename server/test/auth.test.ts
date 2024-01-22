@@ -9,6 +9,7 @@ describe("create user and login", () => {
   const username = `test_${userId}`;
   const password = "test1234";
   const authEndpoint = "/api/auth/";
+  const usersEndpoint = "/api/users/";
 
   beforeAll(async () => {
     await connectDatabase();
@@ -17,7 +18,7 @@ describe("create user and login", () => {
 
   test("should create user", async () => {
     const res = await request(app)
-      .post(authEndpoint + "create")
+      .post(usersEndpoint + "create")
       .send({
         username: username,
         password: password,
