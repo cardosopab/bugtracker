@@ -39,7 +39,6 @@ export function createApp() {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.use("/api/v1", api);
   app.use(routes);
 
   app.use(middlewares.notFound);
