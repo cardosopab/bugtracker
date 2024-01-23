@@ -52,7 +52,7 @@ describe("create user and login", () => {
 
   afterAll(async () => {
     // Close MongoDB connection or perform any necessary cleanup
-    // await mongoose.connection.dropDatabase();
+    await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
   });
 });
