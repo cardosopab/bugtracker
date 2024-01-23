@@ -1,7 +1,7 @@
 type SerializedUser = {
   id?: string;
-  username?: string;
-  displayName?: string;
+  name?: string;
+  email?: string;
   // Add other properties as needed
 };
 
