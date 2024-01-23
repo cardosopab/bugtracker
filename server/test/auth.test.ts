@@ -6,7 +6,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-describe("create user and login", () => {
+describe("User life cycle", () => {
+  const MONGO_TEST_URI = process.env.MONGO_TEST_URI!;
   let app: any;
   let loginResult: any;
   const userId = Date.now();
@@ -18,7 +19,7 @@ describe("create user and login", () => {
 
   beforeAll(async () => {
     app = createApp();
-    await connectDatabase(process.env.MONGO_TEST_URI!);
+    await connectDatabase(MONGO_TEST_URI);
   });
 
   test("should create user", async () => {
@@ -43,11 +44,25 @@ describe("create user and login", () => {
     expect(res.statusCode).toBe(200);
   });
 
-  test("should check status and return 200", async () => {
+  test("should check if logged in", async () => {
     const res = await request(app)
       .get(authEndpoint + "status")
       .set("Cookie", loginResult.headers["set-cookie"]);
     expect(res.statusCode).toBe(200);
+  });
+
+  test("should logout user", async () => {
+    const res = await request(app)
+      .post(authEndpoint + "logout")
+      .set("Cookie", loginResult.headers["set-cookie"]);
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("should check if logged out", async () => {
+    const res = await request(app)
+      .get(authEndpoint + "status")
+      .set("Cookie", loginResult.headers["set-cookie"]);
+    expect(res.statusCode).toBe(401);
   });
 
   afterAll(async () => {
