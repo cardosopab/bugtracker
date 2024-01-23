@@ -1,31 +1,21 @@
 import passport from "passport";
 import { Router } from "express";
 import "../strategies/local-strategies";
+import {
+  loginHandler,
+  logoutHandler,
+  statusHandler,
+} from "../handlers/authHandlers";
 
 const router = Router();
 
 // Login
-router.post("/api/auth/login", passport.authenticate("local"), (req, res) => {
-  res.sendStatus(200);
-});
+router.post("/api/auth/login", passport.authenticate("local"), loginHandler);
 
 // Status
-router.get("/api/auth/status", (req, res) => {
-  if (req.user) {
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(401);
-  }
-});
+router.get("/api/auth/status", statusHandler);
 
 // Logout
-router.post("/api/auth/logout", (req, res) => {
-  if (!req.user) return res.sendStatus(401);
-
-  req.logout((err) => {
-    if (err) return res.sendStatus(400);
-    res.sendStatus(200);
-  });
-});
+router.post("/api/auth/logout", logoutHandler);
 
 export default router;
