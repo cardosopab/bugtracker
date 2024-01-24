@@ -8,7 +8,7 @@ dotenv.config();
 
 describe("User life cycle", () => {
   const MONGO_TEST_URI = process.env.MONGO_TEST_URI!;
-  let app: any;
+  let app!: Express.Application;
   let loginResult: any;
   const userId = Date.now();
   const name = `test_${userId}`;
