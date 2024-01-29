@@ -6,16 +6,17 @@ import {
   logoutHandler,
   statusHandler,
 } from "../handlers/authHandlers";
+import { AuthEndpoints } from "../contants/endpoints";
 
 const router = Router();
 
 // Login
-router.post("/api/auth/login", passport.authenticate("local"), loginHandler);
+router.post(AuthEndpoints.LOGIN, passport.authenticate("local"), loginHandler);
 
 // Status
-router.get("/api/auth/status", statusHandler);
+router.get(AuthEndpoints.STATUS, statusHandler);
 
 // Logout
-router.post("/api/auth/logout", logoutHandler);
+router.post(AuthEndpoints.LOGOUT, logoutHandler);
 
 export default router;

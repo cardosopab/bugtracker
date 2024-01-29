@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { createApp } from "../src/createApp";
 import connectDatabase from "../src/connectDatabase";
 import dotenv from "dotenv";
+import { AuthEndpoints, UsersEndpoints } from "../src/contants/endpoints";
 
 dotenv.config();
 
@@ -14,8 +15,6 @@ describe("User life cycle", () => {
   const name = `test_${userId}`;
   const email = `${name}@email.com`;
   const password = "test1234";
-  const authEndpoint = "/api/auth/";
-  const usersEndpoint = "/api/users";
 
   beforeAll(async () => {
     app = createApp();
@@ -23,7 +22,7 @@ describe("User life cycle", () => {
   });
 
   test("should create user", async () => {
-    const res = await request(app).post(usersEndpoint).send({
+    const res = await request(app).post(UsersEndpoints.USERS).send({
       name: name,
       password: password,
       email: email,
@@ -32,33 +31,31 @@ describe("User life cycle", () => {
   });
 
   test("should log user in", async () => {
-    const res = await request(app)
-      .post(authEndpoint + "login")
-      .send({
-        email: email,
-        password: password,
-      });
+    const res = await request(app).post(AuthEndpoints.LOGIN).send({
+      email: email,
+      password: password,
+    });
     loginResult = res;
     expect(res.statusCode).toBe(200);
   });
 
   test("should check if logged in", async () => {
     const res = await request(app)
-      .get(authEndpoint + "status")
+      .get(AuthEndpoints.STATUS)
       .set("Cookie", loginResult.headers["set-cookie"]);
     expect(res.statusCode).toBe(200);
   });
 
   test("should logout user", async () => {
     const res = await request(app)
-      .post(authEndpoint + "logout")
+      .post(AuthEndpoints.LOGOUT)
       .set("Cookie", loginResult.headers["set-cookie"]);
     expect(res.statusCode).toBe(200);
   });
 
   test("should check if logged out", async () => {
     const res = await request(app)
-      .get(authEndpoint + "status")
+      .get(AuthEndpoints.STATUS)
       .set("Cookie", loginResult.headers["set-cookie"]);
     expect(res.statusCode).toBe(401);
   });

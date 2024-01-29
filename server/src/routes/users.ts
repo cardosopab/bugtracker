@@ -3,13 +3,13 @@ import "../strategies/local-strategies";
 import { checkSchema } from "express-validator";
 import { UserValidationSchema } from "../utils/validationSchemas/userValidationSchema";
 import { createUserHandler } from "../handlers/userHandlers";
+import { UsersEndpoints } from "../contants/endpoints";
 
 const router = Router();
 
-const usersEndpoint = "/api/users/";
 // Create
 router.post(
-  usersEndpoint,
+  UsersEndpoints.USERS,
   checkSchema(UserValidationSchema),
   createUserHandler
 );
