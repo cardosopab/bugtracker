@@ -7,3 +7,11 @@ export const AuthEndpoints = {
 export const UsersEndpoints = {
   USERS: "/api/users",
 };
+
+export const ProjectsEndpoints = {
+  USERS: "/api/projects",
+};
+
+export const CompaniesEndpoints = {
+  USERS: "/api/companies",
+};
