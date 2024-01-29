@@ -15,6 +15,7 @@ describe("Project life cycle", () => {
   const companyId = `companyId_${projectId}`;
   const description = `description_${projectId}`;
   const personnelArray = ["Steve Wozniak", "Steve Jobs"];
+  let mongoProjectId: string;
 
   beforeAll(async () => {
     app = createApp();
@@ -29,6 +30,26 @@ describe("Project life cycle", () => {
       personnel: personnelArray,
     });
     expect(res.statusCode).toBe(201);
+  });
+
+  test("should find project by name", async () => {
+    const res = await request(app).get(ProjectsEndpoints.PROJECT_BY_NAME).send({
+      name: name,
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeDefined();
+    expect(res.body.name).toBe(name);
+    mongoProjectId = res.body._id;
+    console.log(mongoProjectId);
+  });
+
+  test("should delete project by id", async () => {
+    const res = await request(app)
+      .delete(ProjectsEndpoints.PROJECT_BY_ID)
+      .send({
+        projectId: mongoProjectId,
+      });
+    expect(res.statusCode).toBe(200);
   });
 
   afterAll(async () => {
