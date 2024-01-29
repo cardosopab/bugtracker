@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { createApp } from "../src/createApp";
 import connectDatabase from "../src/connectDatabase";
 import dotenv from "dotenv";
-import { AuthEndpoints, UsersEndpoints } from "../src/contants/endpoints";
+import { AuthEndpoints, UsersEndpoints } from "../src/constants/endpoints";
 
 dotenv.config();
 
