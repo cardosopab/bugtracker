@@ -9,7 +9,7 @@ const router = Router();
 const usersEndpoint = "/api/users/";
 // Create
 router.post(
-  usersEndpoint + "create",
+  usersEndpoint,
   checkSchema(UserValidationSchema),
   createUserHandler
 );

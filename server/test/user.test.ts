@@ -15,7 +15,7 @@ describe("User life cycle", () => {
   const email = `${name}@email.com`;
   const password = "test1234";
   const authEndpoint = "/api/auth/";
-  const usersEndpoint = "/api/users/";
+  const usersEndpoint = "/api/users";
 
   beforeAll(async () => {
     app = createApp();
@@ -23,13 +23,11 @@ describe("User life cycle", () => {
   });
 
   test("should create user", async () => {
-    const res = await request(app)
-      .post(usersEndpoint + "create")
-      .send({
-        name: name,
-        password: password,
-        email: email,
-      });
+    const res = await request(app).post(usersEndpoint).send({
+      name: name,
+      password: password,
+      email: email,
+    });
     expect(res.statusCode).toBe(201);
   });
 
