@@ -3,7 +3,7 @@ import "../strategies/local-strategies";
 import { checkSchema } from "express-validator";
 import { UserValidationSchema } from "../utils/validationSchemas/userValidationSchema";
 import { createUserHandler } from "../handlers/userHandlers";
-import { UsersEndpoints } from "../contants/endpoints";
+import { UsersEndpoints } from "../constants/endpoints";
 
 const router = Router();
 
