@@ -6,7 +6,7 @@ import {
   logoutHandler,
   statusHandler,
 } from "../handlers/authHandlers";
-import { AuthEndpoints } from "../contants/endpoints";
+import { AuthEndpoints } from "../constants/endpoints";
 
 const router = Router();
 
