@@ -10,7 +10,10 @@ export const UsersEndpoints = {
 
 export const ProjectsEndpoints = {
   PROJECTS: "/api/projects",
+  PROJECT_BY_NAME: "/api/projects/by-name",
+  PROJECT_BY_ID: "/api/projects/by-id",
 };
+
 export const CompaniesEndpoints = {
   COMPANIES: "/api/companies",
 };
