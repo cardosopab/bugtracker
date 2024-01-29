@@ -9,9 +9,8 @@ export const UsersEndpoints = {
 };
 
 export const ProjectsEndpoints = {
-  USERS: "/api/projects",
+  PROJECTS: "/api/projects",
 };
-
 export const CompaniesEndpoints = {
-  USERS: "/api/companies",
+  COMPANIES: "/api/companies",
 };
