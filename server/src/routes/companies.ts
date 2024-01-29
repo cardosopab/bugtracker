@@ -3,13 +3,13 @@ import "../strategies/local-strategies";
 import { checkSchema } from "express-validator";
 import { CompanyValidationSchema } from "../utils/validationSchemas/companyValidationSchema";
 import { createCompanyHandler } from "../handlers/companyHandlers";
+import { CompaniesEndpoints } from "../constants/endpoints";
 
 const router = Router();
 
-const companiesEndpoint = "/api/companies/";
 // Create
 router.post(
-  companiesEndpoint,
+  CompaniesEndpoints.COMPANIES,
   checkSchema(CompanyValidationSchema),
   createCompanyHandler
 );

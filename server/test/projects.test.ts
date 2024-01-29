@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { createApp } from "../src/createApp";
 import connectDatabase from "../src/connectDatabase";
 import dotenv from "dotenv";
+import { ProjectsEndpoints } from "../src/constants/endpoints";
 
 dotenv.config();
 
@@ -13,7 +14,6 @@ describe("Project life cycle", () => {
   const name = `name_${projectId}`;
   const companyId = `companyId_${projectId}`;
   const description = `description_${projectId}`;
-  const projectsEndpoint = "/api/projects/";
   const personnelArray = ["Steve Wozniak", "Steve Jobs"];
 
   beforeAll(async () => {
@@ -22,7 +22,7 @@ describe("Project life cycle", () => {
   });
 
   test("should create project", async () => {
-    const res = await request(app).post(projectsEndpoint).send({
+    const res = await request(app).post(ProjectsEndpoints.PROJECTS).send({
       companyId: companyId,
       name: name,
       description: description,

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { createApp } from "../src/createApp";
 import connectDatabase from "../src/connectDatabase";
 import dotenv from "dotenv";
+import { CompaniesEndpoints } from "../src/constants/endpoints";
 
 dotenv.config();
 
@@ -12,7 +13,6 @@ describe("Company life cycle", () => {
   let loginResult: any;
   const companyId = Date.now();
   const name = `test_${companyId}`;
-  const companiesEndpoint = "/api/companies/";
   const personnelArray = ["Steve Wozniak", "Steve Jobs"];
 
   beforeAll(async () => {
@@ -21,7 +21,7 @@ describe("Company life cycle", () => {
   });
 
   test("should create company", async () => {
-    const res = await request(app).post(companiesEndpoint).send({
+    const res = await request(app).post(CompaniesEndpoints.COMPANIES).send({
       name: name,
       personnel: personnelArray,
     });
@@ -30,7 +30,7 @@ describe("Company life cycle", () => {
 
   afterAll(async () => {
     // Close MongoDB connection or perform any necessary cleanup
-    // await mongoose.connection.dropDatabase();
+    await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
   });
 });
