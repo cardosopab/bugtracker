@@ -34,7 +34,7 @@ export const readProjectByIdHandler = async (req: Request, res: Response) => {
   if (!result.isEmpty()) return res.status(400).send(result.array());
   const data = matchedData(req);
   try {
-    const project = await Project.findById(data);
+    const project = await Project.findById(data.projectId);
     return res.status(200).send(project);
   } catch (err) {
     console.log(err);
