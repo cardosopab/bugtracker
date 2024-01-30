@@ -12,6 +12,7 @@ export const ProjectsEndpoints = {
   PROJECTS: "/api/projects",
   PROJECT_BY_NAME: "/api/projects/by-name",
   PROJECT_BY_ID: "/api/projects/by-id",
+  PERSONNEL: "/api/projects/personnel",
 };
 
 export const CompaniesEndpoints = {
