@@ -12,9 +12,14 @@ describe("Project life cycle", () => {
   let app: any;
   const projectId = Date.now();
   const name = `name_${projectId}`;
-  const companyId = `companyId_${projectId}`;
+  const companyId = new mongoose.Types.ObjectId();
   const description = `description_${projectId}`;
-  const personnelArray = ["Steve Wozniak", "Steve Jobs"];
+  const newPersonnelId = new mongoose.Types.ObjectId();
+  const personnelIdArray = [
+    new mongoose.Types.ObjectId(),
+    new mongoose.Types.ObjectId(),
+  ];
+  const updatedPersonnelIdArrary = [...personnelIdArray, newPersonnelId];
   let mongoProjectId: string;
 
   beforeAll(async () => {
@@ -27,7 +32,7 @@ describe("Project life cycle", () => {
       companyId: companyId,
       name: name,
       description: description,
-      personnel: personnelArray,
+      personnel: personnelIdArray,
     });
     expect(res.statusCode).toBe(201);
   });
@@ -52,13 +57,41 @@ describe("Project life cycle", () => {
     expect(res.body._id).toBe(mongoProjectId);
   });
 
+  test("should add personnel id", async () => {
+    const res = await request(app).post(ProjectsEndpoints.PERSONNEL).send({
+      projectId: mongoProjectId,
+      personnelId: newPersonnelId,
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeDefined();
+    expect(res.body.name).toBe(name);
+    expect(res.body._id).toBe(mongoProjectId);
+    expect(res.body.personnel.map(String).sort()).toEqual(
+      updatedPersonnelIdArrary.map(String).sort()
+    );
+  });
+
+  test("should delete personnel id", async () => {
+    const res = await request(app).delete(ProjectsEndpoints.PERSONNEL).send({
+      projectId: mongoProjectId,
+      personnelId: newPersonnelId,
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeDefined();
+    expect(res.body.name).toBe(name);
+    expect(res.body._id).toBe(mongoProjectId);
+    expect(res.body.personnel.map(String).sort()).toEqual(
+      personnelIdArray.map(String).sort()
+    );
+  });
+
   test("should delete project by id", async () => {
     const res = await request(app)
       .delete(ProjectsEndpoints.PROJECT_BY_ID)
       .send({
         projectId: mongoProjectId,
       });
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(204);
   });
 
   afterAll(async () => {
