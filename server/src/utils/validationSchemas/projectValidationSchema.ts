@@ -1,10 +1,10 @@
 export const ProjectValidationSchema = {
   companyId: {
     notEmpty: {
-      errorMessage: "company ID cannot be empty",
+      errorMessage: "company id cannot be empty",
     },
     isString: {
-      errorMessage: "company ID is not a string",
+      errorMessage: "company id is not a string",
     },
   },
   name: {
@@ -33,10 +33,29 @@ export const ProjectNameValidationSchema = {
 export const ProjectIdValidationSchema = {
   projectId: {
     notEmpty: {
-      errorMessage: "project ID cannot be empty",
+      errorMessage: "project id cannot be empty",
     },
     isString: {
-      errorMessage: "project ID is not a string",
+      errorMessage: "project id is not a string",
+    },
+  },
+};
+
+export const PersonnelValidationSchema = {
+  projectId: {
+    notEmpty: {
+      errorMessage: "project id cannot be empty",
+    },
+    isString: {
+      errorMessage: "project id is not a string",
+    },
+  },
+  personnelId: {
+    notEmpty: {
+      errorMessage: "personnel id cannot be empty",
+    },
+    isString: {
+      errorMessage: "personnel id is not a string",
     },
   },
 };
