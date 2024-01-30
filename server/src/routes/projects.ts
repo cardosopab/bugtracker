@@ -9,6 +9,7 @@ import {
 import {
   createProjectHandler,
   deleteProjectHandler,
+  readProjectByIdHandler,
   readProjectByNameHandler,
 } from "../handlers/projectHandlers";
 import { ProjectsEndpoints } from "../constants/endpoints";
@@ -22,11 +23,18 @@ router.post(
   createProjectHandler
 );
 
-// Read By Name
+// Read By NAME
 router.get(
   ProjectsEndpoints.PROJECT_BY_NAME,
   checkSchema(ProjectNameValidationSchema),
   readProjectByNameHandler
+);
+
+// Read By ID
+router.get(
+  ProjectsEndpoints.PROJECT_BY_ID,
+  checkSchema(ProjectIdValidationSchema),
+  readProjectByIdHandler
 );
 
 // Delete
