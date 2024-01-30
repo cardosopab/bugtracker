@@ -40,7 +40,16 @@ describe("Project life cycle", () => {
     expect(res.body).toBeDefined();
     expect(res.body.name).toBe(name);
     mongoProjectId = res.body._id;
-    console.log(mongoProjectId);
+  });
+
+  test("should find project by id", async () => {
+    const res = await request(app).get(ProjectsEndpoints.PROJECT_BY_ID).send({
+      projectId: mongoProjectId,
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeDefined();
+    expect(res.body.name).toBe(name);
+    expect(res.body._id).toBe(mongoProjectId);
   });
 
   test("should delete project by id", async () => {
