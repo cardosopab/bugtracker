@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
     },
     companyId: {
-      type: mongoose.Schema.Types.String,
+      type: mongoose.Schema.Types.ObjectId,
     },
     password: { type: mongoose.Schema.Types.String, required: true },
   },

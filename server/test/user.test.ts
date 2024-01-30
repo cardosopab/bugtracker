@@ -15,6 +15,7 @@ describe("User life cycle", () => {
   const name = `test_${userId}`;
   const email = `${name}@email.com`;
   const password = "test1234";
+  const companyId = new mongoose.Types.ObjectId();
 
   beforeAll(async () => {
     app = createApp();
@@ -26,6 +27,7 @@ describe("User life cycle", () => {
       name: name,
       password: password,
       email: email,
+      companyId: companyId,
     });
     expect(res.statusCode).toBe(201);
   });
