@@ -45,10 +45,7 @@ export const readProjectByNameHandler = async (req: Request, res: Response) => {
   const data = matchedData(req);
   try {
     const project = await Project.findOne(data);
-
-    if (!project) {
-      return res.status(404).send("Project not found");
-    }
+    if (!project) return res.status(404).send("Project not found");
 
     return res.status(200).send(project);
   } catch (err) {
@@ -63,10 +60,7 @@ export const readProjectByIdHandler = async (req: Request, res: Response) => {
   const data = matchedData(req);
   try {
     const project = await Project.findById(data.projectId);
-
-    if (!project) {
-      return res.status(404).send("Project not found");
-    }
+    if (!project) return res.status(404).send("Project not found");
 
     return res.status(200).send(project);
   } catch (err) {
@@ -80,7 +74,9 @@ export const deleteProjectHandler = async (req: Request, res: Response) => {
   if (!result.isEmpty()) return res.status(400).send(result.array());
   const data = matchedData(req);
   try {
-    await Project.findByIdAndDelete(data.projectId);
+    const project = await Project.findByIdAndDelete(data.projectId);
+    if (!project) return res.status(404).send("Project not found");
+
     return res.sendStatus(204);
   } catch (err) {
     console.log(err);
