@@ -1,8 +1,16 @@
 import { Router } from "express";
 import "../strategies/local-strategies";
 import { checkSchema } from "express-validator";
-import { UserValidationSchema } from "../utils/validationSchemas/userValidationSchema";
-import { createUserHandler } from "../handlers/userHandlers";
+import {
+  UserEmailValidationSchema,
+  UserIdValidationSchema,
+  UserValidationSchema,
+} from "../utils/validationSchemas/userValidationSchema";
+import {
+  createUserHandler,
+  deleteUserByIdHandler,
+  readUserByEmailHandler,
+} from "../handlers/userHandlers";
 import { UsersEndpoints } from "../constants/endpoints";
 
 const router = Router();
@@ -13,5 +21,17 @@ router.post(
   checkSchema(UserValidationSchema),
   createUserHandler
 );
+// Read By EMAIL
+router.get(
+  UsersEndpoints.USER_BY_EMAIL,
+  checkSchema(UserEmailValidationSchema),
+  readUserByEmailHandler
+);
 
+// Delete
+router.delete(
+  UsersEndpoints.USERS,
+  checkSchema(UserIdValidationSchema),
+  deleteUserByIdHandler
+);
 export default router;
