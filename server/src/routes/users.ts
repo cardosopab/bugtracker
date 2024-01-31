@@ -2,6 +2,7 @@ import { Router } from "express";
 import "../strategies/local-strategies";
 import { checkSchema } from "express-validator";
 import {
+  PatchUserValidationSchema,
   UserEmailValidationSchema,
   UserIdValidationSchema,
   UserValidationSchema,
@@ -11,6 +12,7 @@ import {
   deleteUserByIdHandler,
   readUserByEmailHandler,
   readUserByIdHandler,
+  updateUserByIdHandler,
 } from "../handlers/userHandlers";
 import { UsersEndpoints } from "../constants/endpoints";
 
@@ -35,6 +37,13 @@ router.get(
   UsersEndpoints.USER_BY_ID,
   checkSchema(UserIdValidationSchema),
   readUserByIdHandler
+);
+
+// Update By ID
+router.patch(
+  UsersEndpoints.USER_BY_ID,
+  checkSchema(PatchUserValidationSchema),
+  updateUserByIdHandler
 );
 
 // Delete
