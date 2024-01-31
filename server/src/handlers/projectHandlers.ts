@@ -80,7 +80,7 @@ export const deleteProjectHandler = async (req: Request, res: Response) => {
   if (!result.isEmpty()) return res.status(400).send(result.array());
   const data = matchedData(req);
   try {
-    Project.findByIdAndDelete(data.projectId);
+    await Project.findByIdAndDelete(data.projectId);
     return res.sendStatus(204);
   } catch (err) {
     console.log(err);
