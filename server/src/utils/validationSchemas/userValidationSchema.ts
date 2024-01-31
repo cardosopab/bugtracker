@@ -26,3 +26,19 @@ export const UserValidationSchema = {
     },
   },
 };
+
+export const UserIdValidationSchema = {
+  userId: {
+    notEmpty: {
+      errorMessage: "userId cannot be empty",
+    },
+  },
+};
+
+export const UserEmailValidationSchema = {
+  email: {
+    notEmpty: {
+      errorMessage: "email cannot be empty",
+    },
+  },
+};
