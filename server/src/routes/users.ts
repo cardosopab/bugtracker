@@ -10,6 +10,7 @@ import {
   createUserHandler,
   deleteUserByIdHandler,
   readUserByEmailHandler,
+  readUserByIdHandler,
 } from "../handlers/userHandlers";
 import { UsersEndpoints } from "../constants/endpoints";
 
@@ -21,6 +22,7 @@ router.post(
   checkSchema(UserValidationSchema),
   createUserHandler
 );
+
 // Read By EMAIL
 router.get(
   UsersEndpoints.USER_BY_EMAIL,
@@ -28,9 +30,16 @@ router.get(
   readUserByEmailHandler
 );
 
+// Read By ID
+router.get(
+  UsersEndpoints.USER_BY_ID,
+  checkSchema(UserIdValidationSchema),
+  readUserByIdHandler
+);
+
 // Delete
 router.delete(
-  UsersEndpoints.USERS,
+  UsersEndpoints.USER_BY_ID,
   checkSchema(UserIdValidationSchema),
   deleteUserByIdHandler
 );
