@@ -12,8 +12,8 @@ describe("Auth life cycle", () => {
   let app: any;
   let loginResult: any;
   let userMongoId: mongoose.Types.ObjectId;
-  const userId = Date.now();
-  const name = `test_${userId}`;
+  const dateNow = Date.now();
+  const name = `test_${dateNow}`;
   const email = `${name}@email.com`;
   const password = "test1234";
   const companyId = new mongoose.Types.ObjectId();

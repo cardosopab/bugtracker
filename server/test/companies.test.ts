@@ -11,8 +11,8 @@ describe("Company life cycle", () => {
   const MONGO_TEST_URI = process.env.MONGO_TEST_URI!;
   let app: any;
   let loginResult: any;
-  const companyId = Date.now();
-  const name = `test_${companyId}`;
+  const dateNow = Date.now();
+  const name = `test_${dateNow}`;
   const personnelArray = ["Steve Wozniak", "Steve Jobs"];
 
   beforeAll(async () => {

@@ -10,10 +10,10 @@ dotenv.config();
 describe("Project life cycle", () => {
   const MONGO_TEST_URI = process.env.MONGO_TEST_URI!;
   let app: any;
-  const projectId = Date.now();
-  const name = `name_${projectId}`;
+  const dateNow = Date.now();
+  const name = `name_${dateNow}`;
   const companyId = new mongoose.Types.ObjectId();
-  const description = `description_${projectId}`;
+  const description = `description_${dateNow}`;
   const newPersonnelId = new mongoose.Types.ObjectId();
   const personnelIdArray = [
     new mongoose.Types.ObjectId(),
