@@ -40,14 +40,28 @@ describe("User life cycle", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.name).toBe(name);
     userMongoId = res.body._id;
-    console.log(`userMongoId ${userMongoId}`);
+  });
+
+  test("should find user by id", async () => {
+    const res = await request(app).get(UsersEndpoints.USER_BY_ID).send({
+      userId: userMongoId,
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.name).toBe(name);
   });
 
   test("should delete user", async () => {
-    const res = await request(app).delete(UsersEndpoints.USERS).send({
+    const res = await request(app).delete(UsersEndpoints.USER_BY_ID).send({
       userId: userMongoId,
     });
     expect(res.statusCode).toBe(204);
+  });
+
+  test("should verify deletion", async () => {
+    const res = await request(app).get(UsersEndpoints.USER_BY_ID).send({
+      userId: userMongoId,
+    });
+    expect(res.statusCode).toBe(404);
   });
 
   afterAll(async () => {
