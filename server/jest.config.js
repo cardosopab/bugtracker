@@ -8,6 +8,7 @@ module.exports = {
     "/build/",
     // "/companies.test.ts",
     // "/projects.test.ts",
-    // "/user.test.ts",
+    // "/users.test.ts",
+    // "/auth.test.ts",
   ],
 };
