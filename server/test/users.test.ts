@@ -11,6 +11,7 @@ describe("User life cycle", () => {
   const MONGO_TEST_URI = process.env.MONGO_TEST_URI!;
   let app: any;
   let loginResult: any;
+  let userMongoId: mongoose.Types.ObjectId;
   const userId = Date.now();
   const name = `test_${userId}`;
   const email = `${name}@email.com`;
@@ -32,34 +33,21 @@ describe("User life cycle", () => {
     expect(res.statusCode).toBe(201);
   });
 
-  test("should log user in", async () => {
-    const res = await request(app).post(AuthEndpoints.LOGIN).send({
+  test("should find user by email", async () => {
+    const res = await request(app).get(UsersEndpoints.USER_BY_EMAIL).send({
       email: email,
-      password: password,
     });
-    loginResult = res;
     expect(res.statusCode).toBe(200);
+    expect(res.body.name).toBe(name);
+    userMongoId = res.body._id;
+    console.log(`userMongoId ${userMongoId}`);
   });
 
-  test("should check if logged in", async () => {
-    const res = await request(app)
-      .get(AuthEndpoints.STATUS)
-      .set("Cookie", loginResult.headers["set-cookie"]);
-    expect(res.statusCode).toBe(200);
-  });
-
-  test("should logout user", async () => {
-    const res = await request(app)
-      .post(AuthEndpoints.LOGOUT)
-      .set("Cookie", loginResult.headers["set-cookie"]);
-    expect(res.statusCode).toBe(200);
-  });
-
-  test("should check if logged out", async () => {
-    const res = await request(app)
-      .get(AuthEndpoints.STATUS)
-      .set("Cookie", loginResult.headers["set-cookie"]);
-    expect(res.statusCode).toBe(401);
+  test("should delete user", async () => {
+    const res = await request(app).delete(UsersEndpoints.USERS).send({
+      userId: userMongoId,
+    });
+    expect(res.statusCode).toBe(204);
   });
 
   afterAll(async () => {
