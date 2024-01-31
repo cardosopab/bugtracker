@@ -25,6 +25,8 @@ export const UserValidationSchema = {
       errorMessage: "password cannot be empty",
     },
   },
+  role: {},
+  companyId: {},
 };
 
 export const UserIdValidationSchema = {
@@ -41,4 +43,13 @@ export const UserEmailValidationSchema = {
       errorMessage: "email cannot be empty",
     },
   },
+};
+
+export const PatchUserValidationSchema = {
+  userId: {},
+  name: {},
+  email: {},
+  password: {},
+  role: {},
+  companyId: {},
 };
