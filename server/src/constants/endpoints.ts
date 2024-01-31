@@ -6,6 +6,7 @@ export const AuthEndpoints = {
 
 export const UsersEndpoints = {
   USERS: "/api/users",
+  USER_BY_EMAIL: "/api/users/by-email",
 };
 
 export const ProjectsEndpoints = {
