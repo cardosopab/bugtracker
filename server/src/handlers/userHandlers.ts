@@ -18,6 +18,18 @@ export const createUserHandler = async (req: Request, res: Response) => {
   }
 };
 
+export const readAllUsersHandler = async (req: Request, res: Response) => {
+  try {
+    const user = await User.find();
+    if (!user) return res.status(404).send("User not found");
+
+    return res.status(200).send(user);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
 export const readUserByEmailHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).send(result.array());
