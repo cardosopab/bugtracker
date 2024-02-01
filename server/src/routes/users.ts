@@ -10,6 +10,7 @@ import {
 import {
   createUserHandler,
   deleteUserByIdHandler,
+  readAllUsersHandler,
   readUserByEmailHandler,
   readUserByIdHandler,
   updateUserByIdHandler,
@@ -23,6 +24,13 @@ router.post(
   UsersEndpoints.USERS,
   checkSchema(UserValidationSchema),
   createUserHandler
+);
+
+// Read By All
+router.get(
+  UsersEndpoints.USERS,
+  // checkSchema(UserEmailValidationSchema),
+  readAllUsersHandler
 );
 
 // Read By EMAIL
