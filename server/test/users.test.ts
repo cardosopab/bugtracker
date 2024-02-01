@@ -34,6 +34,12 @@ describe("User life cycle", () => {
     expect(res.statusCode).toBe(201);
   });
 
+  test("should get all users", async () => {
+    const res = await request(app).get(UsersEndpoints.USERS);
+    expect(res.statusCode).toBe(200);
+    expect(res.body[0].name).toBe(name);
+  });
+
   test("should find user by email", async () => {
     const res = await request(app).get(UsersEndpoints.USER_BY_EMAIL).send({
       email: email,
