@@ -16,12 +16,14 @@ import {
   updateUserByIdHandler,
 } from "../handlers/userHandlers";
 import { UsersEndpoints } from "../constants/endpoints";
+import { isAdminMiddleware } from "../middlewares";
 
 const router = Router();
 
 // Create
 router.post(
   UsersEndpoints.USERS,
+  isAdminMiddleware,
   checkSchema(UserValidationSchema),
   createUserHandler
 );
@@ -29,13 +31,13 @@ router.post(
 // Read By All
 router.get(
   UsersEndpoints.USERS,
-  // checkSchema(UserEmailValidationSchema),
   readAllUsersHandler
 );
 
 // Read By EMAIL
 router.get(
   UsersEndpoints.USER_BY_EMAIL,
+  isAdminMiddleware,
   checkSchema(UserEmailValidationSchema),
   readUserByEmailHandler
 );
@@ -43,6 +45,7 @@ router.get(
 // Read By ID
 router.get(
   UsersEndpoints.USER_BY_ID,
+  isAdminMiddleware,
   checkSchema(UserIdValidationSchema),
   readUserByIdHandler
 );
@@ -50,6 +53,7 @@ router.get(
 // Update By ID
 router.patch(
   UsersEndpoints.USER_BY_ID,
+  isAdminMiddleware,
   checkSchema(PatchUserValidationSchema),
   updateUserByIdHandler
 );
@@ -57,6 +61,7 @@ router.patch(
 // Delete
 router.delete(
   UsersEndpoints.USER_BY_ID,
+  isAdminMiddleware,
   checkSchema(UserIdValidationSchema),
   deleteUserByIdHandler
 );
