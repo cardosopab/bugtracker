@@ -2,7 +2,6 @@ import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
-
 import * as middlewares from "./middlewares";
 import routes from "./routes/index";
 import MessageResponse from "./interfaces/MessageResponse";
@@ -11,8 +10,9 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import passport from "passport";
-
+import "./strategies/local-strategies";
 require("dotenv").config();
+
 export function createApp() {
   const app = express();
 
@@ -28,6 +28,7 @@ export function createApp() {
       resave: false,
       cookie: {
         maxAge: 60000 * 60,
+        httpOnly: true, 
       },
       store: MongoStore.create({
         mongoUrl: process.env.MONGO_URI,
