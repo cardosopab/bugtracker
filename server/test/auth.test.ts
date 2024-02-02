@@ -29,6 +29,7 @@ describe("Auth life cycle", () => {
       password: password,
       email: email,
       companyId: companyId,
+      role: "Admin",
     });
     expect(res.statusCode).toBe(201);
   });
