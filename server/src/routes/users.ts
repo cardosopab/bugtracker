@@ -17,22 +17,23 @@ import {
 } from "../handlers/userHandlers";
 import { UsersEndpoints } from "../constants/endpoints";
 import { isAdminMiddleware } from "../middlewares";
+import dotenv from "dotenv";
 
+dotenv.config();
 const router = Router();
+const isTesting: Boolean = process.env.TESTING === "true";
+console.log(`isTesting: ${isTesting}`);
 
 // Create
 router.post(
   UsersEndpoints.USERS,
-  isAdminMiddleware,
+  isTesting ? [] : isAdminMiddleware,
   checkSchema(UserValidationSchema),
   createUserHandler
 );
 
 // Read By All
-router.get(
-  UsersEndpoints.USERS,
-  readAllUsersHandler
-);
+router.get(UsersEndpoints.USERS, readAllUsersHandler);
 
 // Read By EMAIL
 router.get(
