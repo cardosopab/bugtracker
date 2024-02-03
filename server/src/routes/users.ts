@@ -22,7 +22,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const router = Router();
 const isTesting: Boolean = process.env.TESTING === "true";
-console.log(`isTesting: ${isTesting}`);
+if (isTesting) console.log(`isTesting: ${isTesting}`);
 
 // Create
 router.post(
