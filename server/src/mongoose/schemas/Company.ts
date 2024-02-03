@@ -8,7 +8,7 @@ const CompanySchema = new mongoose.Schema(
       unique: true,
     },
     personnel: {
-      type: [mongoose.Schema.Types.String],
+      type: [mongoose.Schema.Types.ObjectId],
     },
   },
   { timestamps: true }
