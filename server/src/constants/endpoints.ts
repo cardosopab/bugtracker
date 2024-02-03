@@ -19,4 +19,7 @@ export const ProjectsEndpoints = {
 
 export const CompaniesEndpoints = {
   COMPANIES: "/api/companies",
+  COMPANY_BY_NAME: "/api/companies/by-name",
+  COMPANY_BY_ID: "/api/companies/by-id",
+  PERSONNEL: "/api/companies/personnel",
 };
