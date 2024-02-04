@@ -11,6 +11,7 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import passport from "passport";
 import "./strategies/local-strategies";
+import path from "path";
 require("dotenv").config();
 
 export function createApp() {
@@ -28,7 +29,7 @@ export function createApp() {
       resave: false,
       cookie: {
         maxAge: 60000 * 60,
-        httpOnly: true, 
+        httpOnly: true,
       },
       store: MongoStore.create({
         mongoUrl: process.env.MONGO_URI,
@@ -39,6 +40,12 @@ export function createApp() {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, "../../client/dist")));
+  // Serve the React app
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+  });
   app.use(routes);
 
   app.use(middlewares.notFound);
