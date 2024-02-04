@@ -15,6 +15,9 @@ import {
   TableChart,
 } from "@mui/icons-material";
 import DrawerView from "../../views/components/drawer/DrawerView";
+import { setAuthStatus } from "../../models/redux/authSlice";
+import axios from "axios";
+import { AuthEndpoints } from "../../constants/endpoints";
 
 interface DrawerControllerProps {
   children: React.ReactNode;
@@ -32,10 +35,19 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
   };
 
   const handleLogout = () => {
-    dispatch(setDrawerIndex(0));
-    auth.signOut().then((_) => {
-      navigateTo("/");
-    });
+    axios
+      .post(AuthEndpoints.LOGOUT)
+      .then((res) => {
+        const isLogout = res.status === 200;
+        console.log(`isLogout: ${isLogout}`);
+        dispatch(setAuthStatus(isLogout));
+        navigateTo("/");
+        dispatch(setDrawerIndex(0));
+        dispatch(setAuthStatus(false));
+      })
+      .catch((error) => {
+        alert(error.response?.data?.message || "An error occurred");
+      });
   };
 
   const handleListItemClick = (
