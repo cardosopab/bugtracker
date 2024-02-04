@@ -1,17 +1,16 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { auth } from "../../models/database/firebase-init";
 import { DASHBOARD_URL } from "../../constants/screensUrls";
 import AuthView from "../../views/screens/auth/AuthView";
-import { useUserActions } from "../../models/database/hooks/useUserActions";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setAuthStatus } from "../../models/redux/authSlice";
+import { AuthEndpoints, UsersEndpoints } from "../../constants/endpoints";
 
 const AuthController = () => {
-  const createUser = useUserActions().createUser;
+  // const authStatus = useSelector((state: RootState) => state.auth.authStatus);
+  const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const navigateTo = useNavigate();
   const {
@@ -21,34 +20,33 @@ const AuthController = () => {
   } = useForm();
 
   const onSubmit = (values: any) => {
-    if (isSignIn) {
-      signInWithEmailAndPassword(auth, values.email, values.password)
-        .then((_) => {
-          navigateTo(DASHBOARD_URL);
-        })
-        .catch((err) => {
-          alert(err.code);
-        });
-    } else {
-      createUserWithEmailAndPassword(auth, values.email, values.password)
-        .then((data) => {
-          createUser(data.user.uid, values.name, values.email);
+    const authEndpoint = isSignIn ? AuthEndpoints.LOGIN : UsersEndpoints.USERS;
 
-          navigateTo(DASHBOARD_URL);
-        })
-        .catch((err) => {
-          alert(err.code);
-        });
-    }
+    axios
+      .post(authEndpoint, values)
+      .then((res) => {
+        const isAuth = res.status === 200;
+        console.log(`isAuth: ${isAuth}`);
+        dispatch(setAuthStatus(isAuth));
+        navigateTo(DASHBOARD_URL);
+      })
+      .catch((error) => {
+        alert(error.response?.data?.message || "An error occurred");
+      });
   };
 
   const handleDemoLogin = () => {
-    signInWithEmailAndPassword(auth, "demo@demo.com", "demo1234")
-      .then((_) => {
+    const authEndpoint = AuthEndpoints.LOGIN;
+    axios
+      .post(authEndpoint, { email: "demo@demo.com", password: "test1234" })
+      .then((res) => {
+        const isAuth = res.status === 200;
+        console.log(`isAuth: ${isAuth}`);
+        dispatch(setAuthStatus(isAuth));
         navigateTo(DASHBOARD_URL);
       })
-      .catch((err) => {
-        alert(err.code);
+      .catch((error) => {
+        alert(error.response?.data?.message || "An error occurred");
       });
   };
 
