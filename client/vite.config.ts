@@ -19,4 +19,8 @@ export default defineConfig({
       },
     },
   },
+  define: {
+    'process.env.VITE_DEV_MODE': process.env.NODE_ENV !== 'production',
+    'process.env.VITE_API_BASE_URL': process.env.VITE_API_BASE_URL,
+  },
 });
