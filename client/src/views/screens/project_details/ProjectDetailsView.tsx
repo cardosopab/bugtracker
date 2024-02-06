@@ -109,7 +109,7 @@ const ProjectDetailsView = ({ project, users, tickets }: DetailsProps) => {
               <TableBody>
                 {tickets.map((ticket) => {
                   const {
-                    id,
+                    _id,
                     title,
                     submitterId,
                     personnelId,
@@ -123,7 +123,7 @@ const ProjectDetailsView = ({ project, users, tickets }: DetailsProps) => {
                     (user) => user.id === personnelId
                   );
                   return (
-                    <TableRow key={id}>
+                    <TableRow key={_id}>
                       <TableCell>{title}</TableCell>
                       {!isMobile && <TableCell>{submitter?.name}</TableCell>}
                       {!isMobile && <TableCell>{personnel?.name}</TableCell>}

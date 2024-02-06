@@ -30,7 +30,7 @@ const KanbanController = () => {
       const updatedTicketsByStatus: { [status: string]: Ticket[] } = {};
 
       tickets.forEach((ticket: Ticket) => {
-        if (ticket.projectId === selectedProject.id) {
+        if (ticket.projectId === selectedProject._id) {
           if (!updatedTicketsByStatus[ticket.status]) {
             updatedTicketsByStatus[ticket.status] = [];
           }

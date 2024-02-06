@@ -69,7 +69,7 @@ const KanbanMobileView = ({
               }}
             >
               {projects.map((option) => (
-                <MenuItem key={option.id} value={option.name}>
+                <MenuItem key={option._id} value={option.name}>
                   {option.name}
                 </MenuItem>
               ))}
@@ -108,7 +108,7 @@ const KanbanMobileView = ({
                   {ticketsByStatus[status]?.map((ticket: Ticket) => {
                     return (
                       <TicketEditModalController
-                        key={`edit-${ticket.id}`}
+                        key={`edit-${ticket._id}`}
                         ticket={ticket}
                         title={ticket.title}
                       />

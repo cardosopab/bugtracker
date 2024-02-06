@@ -1,7 +1,7 @@
 import Comment from "./Comment";
 // Define the Ticket model using an interface
 interface Ticket {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   projectId: string;

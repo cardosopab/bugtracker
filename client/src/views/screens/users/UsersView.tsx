@@ -86,7 +86,7 @@ const UsersView = ({
                 onChange={handleProjectDropdown}
               >
                 {projects.map((option) => (
-                  <MenuItem key={option.id} value={option.name}>
+                  <MenuItem key={option._id} value={option.name}>
                     {option.name}
                   </MenuItem>
                 ))}
@@ -125,8 +125,8 @@ const UsersView = ({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {projects.map(({ id, name, personnel }) => (
-                      <TableRow key={id}>
+                    {projects.map(({ _id, name, personnel }) => (
+                      <TableRow key={_id}>
                         <TableCell>{name}</TableCell>
                         <TableCell>
                           <div className="column">

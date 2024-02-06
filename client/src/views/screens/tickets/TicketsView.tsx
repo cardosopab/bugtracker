@@ -76,7 +76,7 @@ const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
                 <TableBody>
                   {tickets.map((ticket) => {
                     const {
-                      id,
+                      _id,
                       title,
                       projectId,
                       submitterId,
@@ -93,11 +93,11 @@ const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
                       (user) => user.id === personnelId
                     );
                     const project = projects.find(
-                      (project) => project.id === projectId
+                      (project) => project._id === projectId
                     );
 
                     return (
-                      <TableRow key={id}>
+                      <TableRow key={_id}>
                         {!isMobile ? ( // Render all columns except for xs screens
                           <>
                             <TableCell>{title}</TableCell>

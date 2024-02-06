@@ -25,7 +25,7 @@ const UsersController = () => {
   const [isRemoveButtonDisabled, setIsRemoveButtonDisabled] = useState(true);
 
   const checkButtonDisableStatus = () => {
-    if (!selectedProjectObj.id) {
+    if (!selectedProjectObj._id) {
       setIsRemoveButtonDisabled(true);
       return;
     }
@@ -58,12 +58,12 @@ const UsersController = () => {
   };
 
   const handleAddUser = () => {
-    addUserToProject(selectedUserId, selectedProjectObj.id);
+    addUserToProject(selectedUserId, selectedProjectObj._id);
     setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
   };
 
   const handleRemoveUser = () => {
-    deleteUserFromProject(selectedUserId, selectedProjectObj.id);
+    deleteUserFromProject(selectedUserId, selectedProjectObj._id);
     setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
   };
 
