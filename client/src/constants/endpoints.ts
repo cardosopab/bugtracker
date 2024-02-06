@@ -18,6 +18,13 @@ export const ProjectsEndpoints = {
   PERSONNEL: `${BASE_URL}/api/projects/personnel`,
 };
 
+export const TicketsEndpoints = {
+  TICKETS: `${BASE_URL}/api/tickets`,
+  TICKET_BY_NAME: `${BASE_URL}/api/tickets/by-name`,
+  TICKET_BY_ID: `${BASE_URL}/api/tickets/by-id`,
+  PERSONNEL: `${BASE_URL}/api/tickets/personnel`,
+};
+
 export const CompaniesEndpoints = {
   COMPANIES: `${BASE_URL}/api/companies`,
   COMPANY_BY_NAME: `${BASE_URL}/api/companies/by-name`,
