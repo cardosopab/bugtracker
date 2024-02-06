@@ -8,7 +8,7 @@ const ProjectDetailsController = () => {
   let tickets = useSelector((state: RootState) => state.tickets.value);
   const users = useSelector((state: RootState) => state.users.value);
 
-  if (details.id === undefined) {
+  if (details._id === undefined) {
     return (
       <>
         <DrawerController>
@@ -18,7 +18,7 @@ const ProjectDetailsController = () => {
     );
   }
 
-  tickets = tickets.filter((ticket) => ticket.projectId === details.id);
+  tickets = tickets.filter((ticket) => ticket.projectId === details._id);
   return (
     <>
       <DrawerController>
