@@ -39,6 +39,18 @@ export const addPersonnelToArrayHandler = async (
   }
 };
 
+export const readAllProjectsHandler = async (req: Request, res: Response) => {
+  try {
+    const projects = await Project.find();
+    if (!projects) return res.status(404).send("Project not found");
+
+    return res.status(200).send(projects);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
 export const readProjectByNameHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).send(result.array());
@@ -71,13 +83,17 @@ export const readProjectByIdHandler = async (req: Request, res: Response) => {
 
 export const deleteProjectHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
+  console.log(`result: ${JSON.stringify(result)}`);
   if (!result.isEmpty()) return res.status(400).send(result.array());
   const data = matchedData(req);
   try {
-    const project = await Project.findByIdAndDelete(data.projectId);
-    if (!project) return res.status(404).send("Project not found");
+    const deletedProject = await Project.findByIdAndDelete(data.projectId);
+    if (!deletedProject) return res.status(404).send("Project not found");
 
-    return res.sendStatus(204);
+    const projects = await Project.find();
+    if (!projects) return res.status(404).send("Project not found");
+
+    return res.status(200).send(projects);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
