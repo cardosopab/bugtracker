@@ -24,7 +24,7 @@ const ProjectDeleteModalView = ({
             <p>Project: {project.name}</p>
             <Grid style={{ display: "flex", justifyContent: "end" }}>
               <Button
-                onClick={() => handleProjectDelete(project.id)}
+                onClick={() => handleProjectDelete(project._id)}
                 color="error"
               >
                 Delete
