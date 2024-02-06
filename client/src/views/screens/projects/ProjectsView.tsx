@@ -105,11 +105,8 @@ const ProjectsView = ({
                     {projects.map((project) => {
                       const {
                         _id,
-                        companyId,
                         name,
                         description,
-                        createdAt,
-                        personnel,
                       } = project;
                       return (
                         <TableRow key={_id}>
@@ -118,16 +115,7 @@ const ProjectsView = ({
                           <TableCell>
                             <div className="column">
                               <Button
-                                onClick={() =>
-                                  navigateToDetails({
-                                    _id: _id,
-                                    companyId: companyId,
-                                    name: name,
-                                    description: description,
-                                    createdAt: createdAt,
-                                    personnel: personnel,
-                                  })
-                                }
+                                onClick={() => navigateToDetails(project)}
                               >
                                 Details
                               </Button>
