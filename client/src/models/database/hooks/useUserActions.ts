@@ -17,7 +17,7 @@ export const useUserActions = () => {
       const docRef = doc(collection(database, USERS_COLLECTION), uid);
       const companyRef = doc(collection(database, COMPANY_COLLECTION));
 
-      const date = Date.now();
+      const date = new Date();
       const newUser: User = {
         id: uid,
         createdAt: date,
