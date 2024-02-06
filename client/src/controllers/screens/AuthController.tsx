@@ -5,11 +5,11 @@ import { DASHBOARD_URL } from "../../constants/screensUrls";
 import AuthView from "../../views/screens/auth/AuthView";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setAuthStatus } from "../../models/redux/authSlice";
+import { setAuthStatus, setCurrentUser } from "../../models/redux/authSlice";
 import { AuthEndpoints, UsersEndpoints } from "../../constants/endpoints";
+import User from "../../models/User";
 
 const AuthController = () => {
-  // const authStatus = useSelector((state: RootState) => state.auth.authStatus);
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const navigateTo = useNavigate();
@@ -25,9 +25,10 @@ const AuthController = () => {
     axios
       .post(authEndpoint, values)
       .then((res) => {
+        const user: User = res.data;
         const isAuth = res.status === 200;
-        console.log(`isAuth: ${isAuth}`);
         dispatch(setAuthStatus(isAuth));
+        dispatch(setCurrentUser(user));
         navigateTo(DASHBOARD_URL);
       })
       .catch((error) => {
