@@ -12,6 +12,7 @@ import {
   createProjectHandler,
   deletePersonnelFromArrayHandler,
   deleteProjectHandler,
+  readAllProjectsHandler,
   readProjectByIdHandler,
   readProjectByNameHandler,
 } from "../handlers/projectHandlers";
@@ -31,6 +32,13 @@ router.post(
   ProjectsEndpoints.PERSONNEL,
   checkSchema(PersonnelValidationSchema),
   addPersonnelToArrayHandler
+);
+
+// Read All
+router.get(
+  ProjectsEndpoints.PROJECTS,
+  // checkSchema(ProjectNameValidationSchema),
+  readAllProjectsHandler
 );
 
 // Read By NAME
