@@ -8,7 +8,6 @@ import { setProjects } from "../../redux/projectsSlice";
 export const useProjectActions = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
-  const projects = useSelector((state: RootState) => state.projects.value);
 
   const createProject = async (
     name: string,
@@ -27,21 +26,26 @@ export const useProjectActions = () => {
       personnel: [],
     };
 
-    axios
-      .post(ProjectsEndpoints.PROJECTS, newProject)
-      .then((res) => {
-        dispatch(setProjects([...projects, res.data]));
-      })
-      .catch((e) => {
-        console.error("Error adding document: ", e);
-        return null;
-      });
+    try {
+      const res = await axios.post(ProjectsEndpoints.PROJECTS, newProject);
+      dispatch(setProjects(res.data));
+    } catch (error: any) {
+      if (error.response) {
+        console.error("Server responded with an error:", error.response.status);
+        alert(`Error: ${error.response.data.message}`);
+      } else if (error.request) {
+        console.error("No response received from the server");
+        alert("No response received from the server");
+      } else {
+        console.error("Error setting up the request:", error.message);
+        alert(`Error: ${error.message}`);
+      }
+    }
   };
 
   const readProjects = async () => {
     try {
       const res = await axios.get(ProjectsEndpoints.PROJECTS);
-      console.log(res.data);
       dispatch(setProjects(res.data));
     } catch (error: any) {
       if (error.response) {
@@ -58,13 +62,14 @@ export const useProjectActions = () => {
   };
 
   const deleteProject = async (projectId: string) => {
-    const data = { projectId: projectId };
-    console.log(`data: ${projectId} ${JSON.stringify(data)}`);
+    if (currentUser.role === "Demo") {
+      return;
+    }
+
     try {
       const res = await axios.delete(ProjectsEndpoints.PROJECT_BY_ID, {
-        data: data,
+        data: { projectId: projectId },
       });
-      console.log(res.data);
       dispatch(setProjects(res.data));
     } catch (error: any) {
       if (error.response) {
