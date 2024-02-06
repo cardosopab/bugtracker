@@ -1,6 +1,6 @@
 // Define the Company model using an interface
 interface Company {
-  id: string;
+  _id: string;
   name: string;
   createdAt: Date;
   personnel: string[];

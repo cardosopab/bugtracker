@@ -1,6 +1,6 @@
 // Define the Comment model using an interface
 interface Comment {
-  id: string;
+  _id: string;
   parentId: string;
   message: string;
   createdAt: number;
