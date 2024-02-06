@@ -67,7 +67,7 @@ const UsersView = ({
                 onChange={handleUserDropdown}
               >
                 {users.map((option) => (
-                  <MenuItem key={option.id} value={option.name}>
+                  <MenuItem key={option._id} value={option.name}>
                     {option.name}
                   </MenuItem>
                 ))}
@@ -133,7 +133,7 @@ const UsersView = ({
                             <List>
                               {personnel.map((id) => {
                                 const user = users.find(
-                                  (user) => user.id === id
+                                  (user) => user._id === id
                                 );
                                 return (
                                   <ListItem key={id}>

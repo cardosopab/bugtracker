@@ -1,6 +1,6 @@
 // Define the User model using an interface
 interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;

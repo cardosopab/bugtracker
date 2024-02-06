@@ -87,10 +87,10 @@ const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
                       createdAt,
                     } = ticket;
                     const submitter = users.find(
-                      (user) => user.id === submitterId
+                      (user) => user._id === submitterId
                     );
                     const personnel = users.find(
-                      (user) => user.id === personnelId
+                      (user) => user._id === personnelId
                     );
                     const project = projects.find(
                       (project) => project._id === projectId

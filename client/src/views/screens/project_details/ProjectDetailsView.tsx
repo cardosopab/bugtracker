@@ -69,7 +69,7 @@ const ProjectDetailsView = ({ project, users, tickets }: DetailsProps) => {
               </TableHead>
               <TableBody>
                 {personnel.map((id) => {
-                  const user = users.find((user) => user.id === id);
+                  const user = users.find((user) => user._id === id);
                   return (
                     <TableRow key={id}>
                       <TableCell>{user?.name}</TableCell>
@@ -117,10 +117,10 @@ const ProjectDetailsView = ({ project, users, tickets }: DetailsProps) => {
                     createdAt,
                   } = ticket;
                   const submitter = users.find(
-                    (user) => user.id === submitterId
+                    (user) => user._id === submitterId
                   );
                   const personnel = users.find(
-                    (user) => user.id === personnelId
+                    (user) => user._id === personnelId
                   );
                   return (
                     <TableRow key={_id}>

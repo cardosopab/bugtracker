@@ -20,7 +20,7 @@ const UsersController = () => {
     users.length > 0 ? users[0].name : ""
   );
   const [selectedUserId, setSelectedUserId] = useState<string>(
-    users.length > 0 ? users[0].id : ""
+    users.length > 0 ? users[0]._id : ""
   );
   const [isRemoveButtonDisabled, setIsRemoveButtonDisabled] = useState(true);
 
@@ -40,7 +40,7 @@ const UsersController = () => {
     const eventUserObj = users.find((user) => user.name === eventUserName);
     if (eventUserObj) {
       setSelectedUserName(eventUserObj.name);
-      setSelectedUserId(eventUserObj.id);
+      setSelectedUserId(eventUserObj._id);
     }
   };
   const handleProjectDropdown = (
