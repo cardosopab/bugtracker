@@ -39,8 +39,8 @@ const TicketCreateModalController = ({ project }: CreateTicketProps) => {
       (user) => user.name === selectedPersonnel
     )?.id;
     createTicket(
-      project?.id ??
-        projects.find((project) => project.name == selectedProject)!.id,
+      project?._id ??
+        projects.find((project) => project.name == selectedProject)!._id,
       currentUser?.companyId ?? "0",
       currentUser.id,
       personnelId!,
