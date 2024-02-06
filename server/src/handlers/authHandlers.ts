@@ -1,7 +1,27 @@
 import { Request, Response } from "express";
+import SerializedUser from "../models/SerializedUser";
 
-export const loginHandler = (req: Request, res: Response) => {
-  res.sendStatus(200);
+export const loginHandler = (
+  req: Request & { user?: SerializedUser },
+  res: Response
+) => {
+  // Assuming that req.user contains the authenticated user information
+  const user = req.user;
+
+  if (user) {
+    const responseData: SerializedUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+      companyId: user.companyId,
+    };
+
+    res.status(200).json(responseData);
+  } else {
+    res.sendStatus(401);
+  }
 };
 
 export const statusHandler = (req: Request, res: Response) => {
