@@ -11,7 +11,12 @@ export const createUserHandler = async (req: Request, res: Response) => {
   const newUser = new User(data);
   try {
     const savedUser = await newUser.save();
-    return res.status(201).send(savedUser);
+    if (!savedUser) return res.status(404).send("User not created");
+
+    const users = await User.find().select("name email");
+    if (!users) return res.status(404).send("User not found");
+
+    return res.status(200).send(users);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
@@ -21,7 +26,8 @@ export const createUserHandler = async (req: Request, res: Response) => {
 export const readAllUsersHandler = async (req: Request, res: Response) => {
   try {
     const users = await User.find().select("name email");
-    if (!users) return res.status(404).send("User not found");
+    if (!users) return res.status(404).send("Users not found");
+
     return res.status(200).send(users);
   } catch (err) {
     console.log(err);
@@ -75,12 +81,13 @@ export const updateUserByIdHandler = async (req: Request, res: Response) => {
       { $set: userDataWithoutId },
       { new: true }
     );
-
-    if (updatedUser) {
-      return res.status(200).send(updatedUser);
-    } else {
+    if (!updatedUser)
       return res.status(404).send("User not found or no changes made.");
-    }
+
+    const users = await User.find().select("name email");
+    if (!users) return res.status(404).send("Users not found");
+
+    return res.status(200).send(users);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
@@ -95,7 +102,10 @@ export const deleteUserByIdHandler = async (req: Request, res: Response) => {
     const user = await User.findByIdAndDelete(data.userId);
     if (!user) return res.status(404).send("User not found");
 
-    return res.sendStatus(204);
+    const users = await User.find().select("name email");
+    if (!users) return res.status(404).send("Users not found");
+
+    return res.status(200).send(users);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
