@@ -112,7 +112,7 @@ const TicketCreateModalView = ({
                         } // Update state on change
                       >
                         {projects.map((project) => (
-                          <MenuItem key={project.id} value={project.name}>
+                          <MenuItem key={project._id} value={project.name}>
                             {project.name}
                           </MenuItem>
                         ))}
@@ -187,7 +187,7 @@ const TicketCreateModalView = ({
                       } // Update state on change
                     >
                       {users.map((user) => (
-                        <MenuItem key={user.id} value={user.name}>
+                        <MenuItem key={user._id} value={user.name}>
                           {user.name}
                         </MenuItem>
                       ))}
