@@ -59,7 +59,7 @@ const RolesView = ({
                 onChange={handleUserDropdown}
               >
                 {users.map((option) => (
-                  <MenuItem key={option.id} value={option.name}>
+                  <MenuItem key={option._id} value={option.name}>
                     {option.name}
                   </MenuItem>
                 ))}
@@ -108,8 +108,8 @@ const RolesView = ({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {users.map(({ id, name, email, role }) => (
-                      <TableRow key={id}>
+                    {users.map(({ _id, name, email, role }) => (
+                      <TableRow key={_id}>
                         <TableCell>{name}</TableCell>
                         <TableCell
                           style={{
