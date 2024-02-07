@@ -25,7 +25,7 @@ const AuthController = () => {
     axios
       .post(authEndpoint, values)
       .then((res) => {
-        const user: User = res.data;
+        const user: User = { ...res.data, _id: res.data.id };
         const isAuth = res.status === 200;
         dispatch(setAuthStatus(isAuth));
         dispatch(setCurrentUser(user));
