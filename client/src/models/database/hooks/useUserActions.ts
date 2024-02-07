@@ -6,10 +6,14 @@ import {
 } from "../../../constants/collections";
 import User from "./../../User";
 import Company from "./../../Company";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { UsersEndpoints } from "../../../constants/endpoints";
+import { setUsers } from "../../redux/usersSlice";
+import axios from "axios";
 
 export const useUserActions = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   const createUser = async (uid: string, name: string, email: string) => {
@@ -19,7 +23,7 @@ export const useUserActions = () => {
 
       const date = new Date();
       const newUser: User = {
-        id: uid,
+        _id: uid,
         createdAt: date,
         name: name,
         email: email,
@@ -27,7 +31,7 @@ export const useUserActions = () => {
         companyId: companyRef.id,
       };
       const newCompany: Company = {
-        id: companyRef.id,
+        _id: companyRef.id,
         createdAt: date,
         name: "Unassigned",
         personnel: [uid],
@@ -40,6 +44,24 @@ export const useUserActions = () => {
     }
   };
 
+  const readUsers = async () => {
+    try {
+      const res = await axios.get(UsersEndpoints.USERS);
+      dispatch(setUsers(res.data));
+    } catch (error: any) {
+      if (error.response) {
+        console.error("Server responded with an error:", error.response.status);
+        alert(`Error: ${error.response.data.message}`);
+      } else if (error.request) {
+        console.error("No response received from the server");
+        alert("No response received from the server");
+      } else {
+        console.error("Error setting up the request:", error.message);
+        alert(`Error: ${error.message}`);
+      }
+    }
+  };
+
   const updateUserRole = async (uid: string, role: string) => {
     if (currentUser.role === "Demo") {
       return;
@@ -49,5 +71,5 @@ export const useUserActions = () => {
     setDoc(user, { role: role }, { merge: true });
   };
 
-  return { createUser, updateUserRole };
+  return { createUser, readUsers, updateUserRole };
 };
