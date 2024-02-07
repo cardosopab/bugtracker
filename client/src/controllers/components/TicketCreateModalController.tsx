@@ -4,6 +4,7 @@ import { useState } from "react";
 import Project from "../../models/Project";
 import { useTicketActions } from "../../models/database/hooks/useTicketActions";
 import TicketCreateModalView from "../../views/components/ticket_create_modal/TicketCreateModalView";
+import Ticket from "../../models/Ticket";
 
 interface CreateTicketProps {
   project?: Project;
@@ -35,21 +36,28 @@ const TicketCreateModalController = ({ project }: CreateTicketProps) => {
   };
 
   const handleTicketCreate = () => {
-    const personnelId = users.find(
-      (user) => user.name === selectedPersonnel
-    )?.id;
-    createTicket(
+    const currentUserId = currentUser._id;
+    const personnelId =
+      users.find((user) => user.name === selectedPersonnel)?._id ?? "";
+    const projectId =
       project?._id ??
-        projects.find((project) => project.name == selectedProject)!._id,
-      currentUser?.companyId ?? "0",
-      currentUser.id,
-      personnelId!,
-      titleValue,
-      descriptionValue,
-      selectedPriority,
-      selectedStatus,
-      selectedType
-    );
+      projects.find((project) => project.name == selectedProject)!._id;
+    const companyId = currentUser?.companyId ?? "0";
+    const newTicket: Ticket = {
+      _id: "",
+      title: titleValue,
+      description: descriptionValue,
+      projectId: projectId,
+      companyId: companyId,
+      submitterId: currentUserId,
+      personnelId: personnelId,
+      priority: selectedPriority,
+      status: selectedStatus,
+      type: selectedType,
+      comments: [],
+      createdAt: new Date(),
+    };
+    createTicket(newTicket);
     handleModalToggle();
     setSelectedProject("");
     setSelectedPriority("");
