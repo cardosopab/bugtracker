@@ -13,7 +13,7 @@ export const createUserHandler = async (req: Request, res: Response) => {
     const savedUser = await newUser.save();
     if (!savedUser) return res.status(404).send("User not created");
 
-    const users = await User.find().select("name email");
+    const users = await User.find().select("name email role");
     if (!users) return res.status(404).send("User not found");
 
     return res.status(200).send(users);
@@ -25,7 +25,7 @@ export const createUserHandler = async (req: Request, res: Response) => {
 
 export const readAllUsersHandler = async (req: Request, res: Response) => {
   try {
-    const users = await User.find().select("name email");
+    const users = await User.find().select("name email role");
     if (!users) return res.status(404).send("Users not found");
 
     return res.status(200).send(users);
@@ -68,7 +68,10 @@ export const readUserByIdHandler = async (req: Request, res: Response) => {
 
 export const updateUserByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result);
+    return res.status(400).send(result.array());
+  }
 
   const data = matchedData(req);
   try {
@@ -84,7 +87,7 @@ export const updateUserByIdHandler = async (req: Request, res: Response) => {
     if (!updatedUser)
       return res.status(404).send("User not found or no changes made.");
 
-    const users = await User.find().select("name email");
+    const users = await User.find().select("name email role");
     if (!users) return res.status(404).send("Users not found");
 
     return res.status(200).send(users);
@@ -102,7 +105,7 @@ export const deleteUserByIdHandler = async (req: Request, res: Response) => {
     const user = await User.findByIdAndDelete(data.userId);
     if (!user) return res.status(404).send("User not found");
 
-    const users = await User.find().select("name email");
+    const users = await User.find().select("name email role");
     if (!users) return res.status(404).send("Users not found");
 
     return res.status(200).send(users);
