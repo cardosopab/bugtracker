@@ -11,8 +11,8 @@ interface Ticket {
   priority: string;
   status: string;
   type: string;
-  createdAt: number;
   comments: Comment[];
+  createdAt: Date;
 }
 
 export default Ticket;
