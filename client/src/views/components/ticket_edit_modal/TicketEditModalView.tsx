@@ -107,7 +107,7 @@ const TicketEditModalView = ({
                       }
                     >
                       {projects.map((project) => (
-                        <MenuItem key={project.id} value={project.name}>
+                        <MenuItem key={project._id} value={project.name}>
                           {project.name}
                         </MenuItem>
                       ))}
@@ -179,7 +179,7 @@ const TicketEditModalView = ({
                       }
                     >
                       {users.map((user) => (
-                        <MenuItem key={user.id} value={user.name}>
+                        <MenuItem key={user._id} value={user.name}>
                           {user.name}
                         </MenuItem>
                       ))}
@@ -214,7 +214,7 @@ const TicketEditModalView = ({
                     <Button
                       variant="contained"
                       color="error"
-                      onClick={() => handleTicketRemoval(ticket.id)}
+                      onClick={() => handleTicketRemoval(ticket._id)}
                     >
                       Delete Ticket
                     </Button>
@@ -222,18 +222,18 @@ const TicketEditModalView = ({
                       variant="contained"
                       color="primary"
                       onClick={() =>
-                        handleUpdate(ticket.id, {
-                          id: ticket.id,
+                        handleUpdate(ticket._id, {
+                          _id: ticket._id,
                           projectId: projects.find(
                             (project) => project.name === selectedProject
-                          )!.id,
+                          )!._id,
                           companyId: ticket.companyId,
                           title: titleValue,
                           description: descriptionValue,
                           submitterId: ticket.submitterId,
                           personnelId: users.find(
                             (user) => user.name === selectedPersonnel
-                          )!.id,
+                          )!._id,
                           priority: selectedPriority,
                           status: selectedStatus,
                           type: selectedType,
