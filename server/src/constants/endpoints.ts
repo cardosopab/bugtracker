@@ -17,6 +17,13 @@ export const ProjectsEndpoints = {
   PERSONNEL: "/api/projects/personnel",
 };
 
+export const TicketsEndpoints = {
+  TICKETS: "/api/tickets",
+  TICKET_BY_NAME: "/api/tickets/by-name",
+  TICKET_BY_ID: "/api/tickets/by-id",
+  COMMENTS: "/api/tickets/comments",
+};
+
 export const CompaniesEndpoints = {
   COMPANIES: "/api/companies",
   COMPANY_BY_NAME: "/api/companies/by-name",
