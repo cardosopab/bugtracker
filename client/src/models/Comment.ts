@@ -3,7 +3,7 @@ interface Comment {
   _id: string;
   parentId: string;
   message: string;
-  createdAt: number;
+  createdAt: Date;
 }
 
 export default Comment;
