@@ -9,7 +9,11 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
   const newCompany = new Company(data);
   try {
     const savedCompany = await newCompany.save();
-    return res.status(201).send(savedCompany);
+
+    const companies = await Company.find();
+    if (!companies) return res.status(404).send("Companies not found");
+
+    return res.status(200).send(companies);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
@@ -32,7 +36,23 @@ export const addPersonnelToArrayHandler = async (
 
     company.personnel.push(personnelId);
     const updatedCompany = await company.save();
-    return res.status(200).send(updatedCompany);
+
+    const companies = await Company.find();
+    if (!companies) return res.status(404).send("Companies not found");
+
+    return res.status(200).send(companies);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const readAllCompaniesHandler = async (req: Request, res: Response) => {
+  try {
+    const companies = await Company.find();
+    if (!companies) return res.status(404).send("Companies not found");
+
+    return res.status(200).send(companies);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
@@ -74,10 +94,11 @@ export const deleteCompanyHandler = async (req: Request, res: Response) => {
   if (!result.isEmpty()) return res.status(400).send(result.array());
   const data = matchedData(req);
   try {
-    const company = await Company.findByIdAndDelete(data.companyId);
-    if (!company) return res.status(404).send("Company not found");
+    const deletedCompany = await Company.findByIdAndDelete(data.companyId);
+    const companies = await Company.find();
+    if (!companies) return res.status(404).send("Companies not found");
 
-    return res.sendStatus(204);
+    return res.status(200).send(companies);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
@@ -103,7 +124,11 @@ export const deletePersonnelFromArrayHandler = async (
 
     company.personnel.splice(index, 1);
     const updatedCompany = await company.save();
-    return res.status(200).send(updatedCompany);
+
+    const companies = await Company.find();
+    if (!companies) return res.status(404).send("Companies not found");
+
+    return res.status(200).send(companies);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
