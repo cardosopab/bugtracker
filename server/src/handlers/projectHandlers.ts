@@ -9,7 +9,11 @@ export const createProjectHandler = async (req: Request, res: Response) => {
   const newProject = new Project(data);
   try {
     const savedProject = await newProject.save();
-    return res.status(201).send(savedProject);
+
+    const projects = await Project.find();
+    if (!projects) return res.status(404).send("Project not found");
+
+    return res.status(200).send(projects);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
@@ -32,7 +36,11 @@ export const addPersonnelToArrayHandler = async (
 
     project.personnel.push(personnelId);
     const updatedProject = await project.save();
-    return res.status(200).send(updatedProject);
+
+    const projects = await Project.find();
+    if (!projects) return res.status(404).send("Project not found");
+
+    return res.status(200).send(projects);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
@@ -119,7 +127,11 @@ export const deletePersonnelFromArrayHandler = async (
 
     project.personnel.splice(index, 1);
     const updatedProject = await project.save();
-    return res.status(200).send(updatedProject);
+
+    const projects = await Project.find();
+    if (!projects) return res.status(404).send("Project not found");
+
+    return res.status(200).send(projects);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
