@@ -12,7 +12,7 @@ const RolesController = () => {
     users.length > 0 ? users[0].name : ""
   );
   const [selectedUserId, setSelectedUserId] = useState(
-    users.length > 0 ? users[0].id : ""
+    users.length > 0 ? users[0]._id : ""
   );
   const [selectedRole, setSelectedRole] = useState(
     users.length > 0 ? users[0].role : ""
@@ -25,7 +25,7 @@ const RolesController = () => {
     );
 
     if (selectedUserObj) {
-      setSelectedUserId(selectedUserObj.id);
+      setSelectedUserId(selectedUserObj._id);
       setSelectedUserName(selectedUserName);
     }
   };
