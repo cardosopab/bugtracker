@@ -8,10 +8,9 @@ import { setDrawerIndex } from "../../models/redux/drawerSlice";
 import { setProjectDetails } from "../../models/redux/projectDetailsSlice";
 import { PROJECT_DETAILS_URL } from "../../constants/screensUrls";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
-import { useEffect } from "react";
 
 const ProjectsController = () => {
-  const { createProject, readProjects } = useProjectActions();
+  const { createProject } = useProjectActions();
   const navigateTo = useNavigate();
   const {
     handleSubmit,
@@ -32,10 +31,6 @@ const ProjectsController = () => {
     dispatch(setDrawerIndex(90));
     dispatch(setProjectDetails(details));
   };
-
-  useEffect(() => {
-    readProjects();
-  }, []);
 
   return (
     <>
