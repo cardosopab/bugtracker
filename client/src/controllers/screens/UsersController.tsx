@@ -6,8 +6,8 @@ import Project from "../../models/Project";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
 const UsersController = () => {
-  const deleteUserFromProject = useProjectActions().deleteUserFromProject;
-  const addUserToProject = useProjectActions().addUserToProject;
+  const { addUserToProject,  deleteUserFromProject } =
+    useProjectActions();
   const users = useSelector((state: RootState) => state.users.value);
   const projects = useSelector((state: RootState) => state.projects.value);
   const [selectedProjectName, setSelectedProjectName] = useState<string>(
