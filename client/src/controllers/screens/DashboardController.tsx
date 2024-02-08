@@ -66,7 +66,7 @@ const DashboardController = () => {
         updatedTypeCount[typeIdx].value += 1;
       }
 
-      const personnel = users.find((user) => user.id === ticket.personnelId);
+      const personnel = users.find((user) => user._id === ticket.personnelId);
       if (
         personnel &&
         (ticket.status === statusOptions[1] ||
