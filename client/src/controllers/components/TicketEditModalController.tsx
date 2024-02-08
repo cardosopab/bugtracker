@@ -24,7 +24,7 @@ const TicketEditModalController = ({ ticket, title }: EditTicketProps) => {
   const [selectedPriority, setSelectedPriority] = useState(ticket.priority);
   const [selectedType, setSelectedType] = useState(ticket.type);
   const [selectedPersonnel, setSelectedPersonnel] = useState(
-    users.find((user) => user.id === ticket.personnelId)?.name ?? users[0].name
+    users.find((user) => user._id === ticket.personnelId)?.name ?? users[0].name
   );
   const [selectedStatus, setSelectedStatus] = useState(ticket.status);
 
