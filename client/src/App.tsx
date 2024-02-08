@@ -17,22 +17,26 @@ import UsersController from "./controllers/screens/UsersController";
 import ProjectDetailsController from "./controllers/screens/ProjectDetailsController";
 import KanbanController from "./controllers/screens/KanbanController";
 import DashboardController from "./controllers/screens/DashboardController";
+import { useTicketActions } from "./models/database/hooks/useTicketActions";
+import { useProjectActions } from "./models/database/hooks/useProjectActions";
+import { useUserActions } from "./models/database/hooks/useUserActions";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "./models/redux/store";
 
 function App() {
-  // const [authInitialized, setAuthInitialized] = useState(false);
-  // const authStatus = useSelector((state: RootState) => state.auth.authStatus);
-  // const currentUser = useSelector((state: RootState) => state.auth.currentUser);
-  // const dispatch = useDispatch();
+  const authStatus = useSelector((state: RootState) => state.auth.authStatus);
+  const { readUsers } = useUserActions();
+  const { readProjects } = useProjectActions();
+  const { readTickets } = useTicketActions();
 
-  // if (!authInitialized) {
-  //   return (
-  //     <Grid>
-  //       <Grid>
-  //         <CircularProgress />
-  //       </Grid>
-  //     </Grid>
-  //   );
-  // }
+  useEffect(() => {
+    if (authStatus) {
+      readTickets();
+      readProjects();
+      readUsers();
+    }
+  }, [authStatus]);
 
   return (
     <BrowserRouter>
