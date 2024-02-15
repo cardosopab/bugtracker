@@ -4,13 +4,13 @@ import User from "../User";
 interface AuthState {
   authInitialized: boolean;
   authStatus: boolean;
-  currentUser: User;
+  currentUser: User | null;
 }
 
 const initialState: AuthState = {
   authInitialized: false,
   authStatus: false,
-  currentUser: {} as User,
+  currentUser: null,
 };
 
 const authSlice = createSlice({
@@ -23,7 +23,7 @@ const authSlice = createSlice({
     setAuthStatus: (state, action: PayloadAction<boolean>) => {
       state.authStatus = action.payload;
     },
-    setCurrentUser: (state, action: PayloadAction<User>) => {
+    setCurrentUser: (state, action: PayloadAction<User | null>) => {
       state.currentUser = action.payload;
     },
   },
