@@ -20,23 +20,62 @@ import DashboardController from "./controllers/screens/DashboardController";
 import { useTicketActions } from "./models/database/hooks/useTicketActions";
 import { useProjectActions } from "./models/database/hooks/useProjectActions";
 import { useUserActions } from "./models/database/hooks/useUserActions";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./models/redux/store";
+import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
+import axios from "axios";
+import { AuthEndpoints } from "./constants/endpoints";
 
 function App() {
+  const dispatch = useDispatch();
   const authStatus = useSelector((state: RootState) => state.auth.authStatus);
+  const users = useSelector((state: RootState) => state.users.value);
+  const projects = useSelector((state: RootState) => state.projects.value);
+  const tickets = useSelector((state: RootState) => state.tickets.value);
   const { readUsers } = useUserActions();
   const { readProjects } = useProjectActions();
   const { readTickets } = useTicketActions();
+  const [loginInitiated, setLoginInitiated] = useState(false);
 
   useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        await axios.get(AuthEndpoints.STATUS, {
+          withCredentials: true,
+        });
+      } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+          // User is not authenticated, perform logout
+          dispatch(setAuthStatus(false));
+          dispatch(setCurrentUser(null));
+          window.location.replace("/");
+        }
+        console.error("Error checking auth status:", error);
+      }
+    };
+
     if (authStatus) {
+      // Check auth status when the component mounts
+      checkAuthStatus();
+    }
+    if (authStatus && !loginInitiated) {
+      // Fetch data if user is authenticated
       readTickets();
       readProjects();
       readUsers();
+      setLoginInitiated(true);
     }
-  }, [authStatus]);
+  }, [
+    authStatus,
+    dispatch,
+    readTickets,
+    readProjects,
+    readUsers,
+    tickets,
+    projects,
+    users,
+  ]);
 
   return (
     <BrowserRouter>
@@ -58,4 +97,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
 export default App;
