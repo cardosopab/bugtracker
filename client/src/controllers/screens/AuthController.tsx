@@ -23,7 +23,7 @@ const AuthController = () => {
     const authEndpoint = isSignIn ? AuthEndpoints.LOGIN : UsersEndpoints.USERS;
 
     axios
-      .post(authEndpoint, values)
+      .post(authEndpoint, values, { withCredentials: true })
       .then((res) => {
         const user: User = { ...res.data, _id: res.data.id };
         const isAuth = res.status === 200;
