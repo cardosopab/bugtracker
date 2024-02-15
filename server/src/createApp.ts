@@ -4,7 +4,6 @@ import helmet from "helmet";
 import cors from "cors";
 import * as middlewares from "./middlewares";
 import routes from "./routes/index";
-import MessageResponse from "./interfaces/MessageResponse";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -15,11 +14,15 @@ import path from "path";
 require("dotenv").config();
 
 export function createApp() {
+  const corsOptions = {
+    origin: "http://localhost:5173",
+    credentials: true,
+  };
   const app = express();
 
   app.use(morgan("dev"));
   app.use(helmet());
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use(express.json());
   app.use(cookieParser(process.env.COOKIE_PARSER));
   app.use(
@@ -39,6 +42,7 @@ export function createApp() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
+  app.options("*", cors(corsOptions));
 
   // Serve static files from the React app
   app.use(express.static(path.join(__dirname, "../../client/dist")));
