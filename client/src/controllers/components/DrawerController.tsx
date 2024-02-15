@@ -15,7 +15,7 @@ import {
   TableChart,
 } from "@mui/icons-material";
 import DrawerView from "../../views/components/drawer/DrawerView";
-import { setAuthStatus } from "../../models/redux/authSlice";
+import { setAuthStatus, setCurrentUser } from "../../models/redux/authSlice";
 import axios from "axios";
 import { AuthEndpoints } from "../../constants/endpoints";
 
@@ -36,7 +36,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
 
   const handleLogout = () => {
     axios
-      .post(AuthEndpoints.LOGOUT)
+      .post(AuthEndpoints.LOGOUT, {}, { withCredentials: true }) // Add withCredentials
       .then((res) => {
         const isLogout = res.status === 200;
         console.log(`isLogout: ${isLogout}`);
@@ -44,9 +44,16 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
         navigateTo("/");
         dispatch(setDrawerIndex(0));
         dispatch(setAuthStatus(false));
+        dispatch(setCurrentUser(null));
       })
       .catch((error) => {
-        alert(error.response?.data?.message || "An error occurred");
+        if (error.response && error.response.status === 401) {
+          // User is not authenticated, perform logout
+          dispatch(setAuthStatus(false));
+          dispatch(setCurrentUser(null));
+          window.location.replace("/");
+        }
+        console.log(error.response?.data?.message || "An error occurred");
       });
   };
 
@@ -81,7 +88,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
   return (
     <DrawerView
       auth={auth}
-      currentUser={currentUser}
+      currentUser={currentUser!}
       open={open}
       navOptions={navOptions}
       roles={roles}
