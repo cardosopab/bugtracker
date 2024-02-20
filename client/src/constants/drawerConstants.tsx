@@ -2,6 +2,7 @@ import {
   DASHBOARD_URL,
   KANBAN_URL,
   PROJECTS_URL,
+  PROJECT_ASSIGNMENT_URL,
   ROLES_URL,
   TICKETS_URL,
   USERS_URL,
@@ -13,7 +14,8 @@ const navOptions = [
   { name: "Projects Overview", icon: "handy-man", url: PROJECTS_URL },
   { name: "Tickets Overview", icon: "list", url: TICKETS_URL },
   { name: "Role Assignment", icon: "group-add", url: ROLES_URL },
-  { name: "Personnel Assignment", icon: "group", url: USERS_URL },
+  { name: "Project Assignment", icon: "group", url: PROJECT_ASSIGNMENT_URL },
+  { name: "User Management", icon: "user", url: USERS_URL },
 ];
 
 export { navOptions };
