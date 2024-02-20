@@ -10,7 +10,7 @@ export const useTicketActions = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   const createTicket = async (ticket: Ticket) => {
-    if (currentUser.role === "Demo") {
+    if (currentUser?.role === "Demo") {
       return;
     }
 
@@ -50,7 +50,7 @@ export const useTicketActions = () => {
   };
 
   const updateTicket = async (ticketId: string, ticket: Ticket) => {
-    if (currentUser.role === "Demo") {
+    if (currentUser?.role === "Demo") {
       return;
     }
 
@@ -65,7 +65,7 @@ export const useTicketActions = () => {
   };
 
   const deleteTicket = async (ticketId: string) => {
-    if (currentUser.role === "Demo") {
+    if (currentUser?.role === "Demo") {
       return;
     }
 
