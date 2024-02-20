@@ -5,7 +5,6 @@ const CompanySchema = new mongoose.Schema(
     name: {
       type: mongoose.Schema.Types.String,
       required: true,
-      unique: true,
     },
     personnel: {
       type: [mongoose.Schema.Types.ObjectId],
