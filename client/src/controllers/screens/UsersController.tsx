@@ -1,90 +1,84 @@
 import { useSelector } from "react-redux";
 import UsersView from "../../views/screens/users/UsersView";
 import { RootState } from "../../models/redux/store";
-import { useEffect, useState } from "react";
-import Project from "../../models/Project";
-import { useProjectActions } from "../../models/database/hooks/useProjectActions";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useUserActions } from "../../models/database/hooks/useUserActions";
+import User from "../../models/User";
 
 const UsersController = () => {
-  const { addUserToProject,  deleteUserFromProject } =
-    useProjectActions();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm();
   const users = useSelector((state: RootState) => state.users.value);
-  const projects = useSelector((state: RootState) => state.projects.value);
-  const [selectedProjectName, setSelectedProjectName] = useState<string>(
-    projects.length > 0 ? projects[0].name : ""
-  );
-  const [selectedProjectObj, setSelectedProjectObject] = useState<Project>(
-    projects.length > 0 ? projects[0] : ({} as Project)
-  );
-  const [selectedUserName, setSelectedUserName] = useState<string>(
-    users.length > 0 ? users[0].name : ""
-  );
-  const [selectedUserId, setSelectedUserId] = useState<string>(
-    users.length > 0 ? users[0]._id : ""
-  );
-  const [isRemoveButtonDisabled, setIsRemoveButtonDisabled] = useState(true);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const createUser = useUserActions().createUser;
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState<User[]>();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const checkButtonDisableStatus = () => {
-    if (!selectedProjectObj._id) {
-      setIsRemoveButtonDisabled(true);
-      return;
-    }
-
-    const isUserInPersonnelArray =
-      selectedProjectObj.personnel.includes(selectedUserId);
-    setIsRemoveButtonDisabled(!isUserInPersonnelArray);
+  const onSubmit = (values: any) => {
+    createUser(values.name, values.email, values.password, isAdmin);
+    reset();
+    setIsAdmin(false);
   };
 
-  const handleUserDropdown = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const eventUserName = event.target.value as string;
-    const eventUserObj = users.find((user) => user.name === eventUserName);
-    if (eventUserObj) {
-      setSelectedUserName(eventUserObj.name);
-      setSelectedUserId(eventUserObj._id);
-    }
+  const handleIsAdminDropdown = (event: any) => {
+    const eventValue = event.target.value as string;
+    const eventIsAdmin = eventValue === "YES";
+    setIsAdmin(eventIsAdmin);
   };
-  const handleProjectDropdown = (
-    event: React.ChangeEvent<{ value: unknown }>
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    const eventProjectName = event.target.value as string;
-    const eventProjectObj = projects.find(
-      (project) => project.name === eventProjectName
-    );
+    event.preventDefault();
+  };
 
-    if (eventProjectObj) {
-      setSelectedProjectName(eventProjectObj.name);
-      setSelectedProjectObject(eventProjectObj);
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchValue(query);
+
+    if (query) {
+      // Filter the users based on the search query.
+      const filtered = users.filter((user) =>
+        user.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredUsers(filtered);
+    } else {
+      // When the search input is empty, show the full list.
+      setFilteredUsers([]);
     }
   };
 
-  const handleAddUser = () => {
-    addUserToProject(selectedUserId, selectedProjectObj._id);
-    setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
+  const handleSearchClear = () => {
+    setSearchValue("");
+    setFilteredUsers([]);
   };
-
-  const handleRemoveUser = () => {
-    deleteUserFromProject(selectedUserId, selectedProjectObj._id);
-    setIsRemoveButtonDisabled(!isRemoveButtonDisabled);
-  };
-
-  useEffect(() => {
-    checkButtonDisableStatus();
-  }, [selectedUserId, selectedProjectName]);
 
   return (
-    <>
-      <UsersView
-        users={users}
-        projects={projects}
-        selectedUserName={selectedUserName}
-        handleUserDropdown={handleUserDropdown}
-        selectedProjectName={selectedProjectName}
-        handleProjectDropdown={handleProjectDropdown}
-        handleAddUser={handleAddUser}
-        handleRemoveUser={handleRemoveUser}
-        isRemoveButtonDisabled={isRemoveButtonDisabled}
-      />
-    </>
+    <UsersView
+      users={users}
+      register={register}
+      onSubmit={onSubmit}
+      handleSubmit={handleSubmit}
+      errors={errors}
+      selectedIsAdmin={isAdmin ? "YES" : "NO"}
+      handleIsAdminDropdown={handleIsAdminDropdown}
+      showPassword={showPassword}
+      handleClickShowPassword={handleClickShowPassword}
+      handleMouseDownPassword={handleMouseDownPassword}
+      searchValue={searchValue}
+      handleSearch={handleSearch}
+      handleSearchClear={handleSearchClear}
+      filteredUsers={filteredUsers}
+    />
   );
 };
+
 export default UsersController;
