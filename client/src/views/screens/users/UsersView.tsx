@@ -29,6 +29,7 @@ import {
 } from "react-hook-form";
 import { Clear, Visibility, VisibilityOff } from "@mui/icons-material";
 import User from "../../../models/User";
+import UserEditModalController from "../../../controllers/components/UserEditModalController";
 
 interface UsersViewProps {
   users: User[];
@@ -224,7 +225,7 @@ const UsersView = ({
                                 {email}
                               </TableCell>
                               <TableCell>
-                                {/* <UserEditModalController user={user} /> */}
+                                <UserEditModalController user={user} />
                               </TableCell>
                             </TableRow>
                           );
