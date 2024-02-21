@@ -8,6 +8,7 @@ import {
 import { setUsers } from "../../redux/usersSlice";
 import axios from "axios";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";
+import User from "../../User";
 
 export const useUserActions = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ export const useUserActions = () => {
         email: email,
         password: password,
         role: role,
-        companyId: companyResponse.data._id,
+        companyId: companyResponse.data[0]._id,
       };
       const userResponse = await axios.post(UsersEndpoints.USERS, newUser, {
         withCredentials: true,
@@ -66,6 +67,24 @@ export const useUserActions = () => {
   const readUsers = async () => {
     try {
       const res = await axios.get(UsersEndpoints.USERS);
+      dispatch(setUsers(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
+  const updateUser = async (user: User) => {
+    if (currentUser?.role === "Demo") {
+      return;
+    }
+
+    const userWithUserId = { ...user, userId: user._id };
+    console.log("updateUserByIdHandler", JSON.stringify(userWithUserId));
+
+    try {
+      const res = await axios.patch(UsersEndpoints.USER_BY_ID, userWithUserId, {
+        withCredentials: true,
+      });
       dispatch(setUsers(res.data));
     } catch (error: any) {
       handleAxiosError(error);
@@ -100,20 +119,17 @@ export const useUserActions = () => {
     }
 
     try {
-      const res = await axios.patch(
-        UsersEndpoints.USER_BY_ID,
-        {
+      const res = await axios.delete(UsersEndpoints.USER_BY_ID, {
+        withCredentials: true,
+        data: {
           userId: userId,
         },
-        {
-          withCredentials: true,
-        }
-      );
+      });
       dispatch(setUsers(res.data));
     } catch (error: any) {
       handleAxiosError(error);
     }
   };
 
-  return { createUser, readUsers, updateUserRole, deleteUser };
+  return { createUser, readUsers, updateUser, updateUserRole, deleteUser };
 };
