@@ -29,19 +29,17 @@ const UserEditModalController = ({ user, buttonLabel }: EditUserProps) => {
   };
 
   const handleUserUpdate = () => {
-    const isDiff = user.name != nameInput || (user.role == "Admin") != isAdmin;
-    if (isDiff) {
-      const newUser: User = {
-        _id: user._id,
-        name: nameInput,
-        email: user.email,
-        role: "",
-        companyId: "",
-        createdAt: new Date(),
-        // updateUser(user._id, newUser);
-      };
-      handleModalToggle();
-    }
+    // TODO: update view to select other values
+    const newUser: User = {
+      _id: user._id,
+      name: nameInput,
+      email: user.email,
+      role: user.role,
+      companyId: user.companyId,
+      createdAt: user.createdAt,
+    };
+    updateUser(newUser);
+    handleModalToggle();
   };
 
   const handleIsAdminDropdown = (event: any) => {
