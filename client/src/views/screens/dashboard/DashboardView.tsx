@@ -1,7 +1,6 @@
 import { Card, CardHeader } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from "@mui/x-charts/PieChart";
-import DrawerController from "../../../controllers/components/DrawerController";
 import {
   priorityOptions,
   statusOptions,
@@ -41,7 +40,7 @@ const DashboardView = ({
     : { margin: { bottom: 50, left: 40, right: 400 } };
 
   return (
-    <DrawerController>
+    <>
       {projects.length > 0 ? (
         <div className="column">
           <div className="row">
@@ -142,7 +141,7 @@ const DashboardView = ({
           <CardHeader title="No Projects have been created yet!" />
         </Card>
       )}
-    </DrawerController>
+    </>
   );
 };
 

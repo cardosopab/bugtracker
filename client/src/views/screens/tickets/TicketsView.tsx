@@ -12,7 +12,6 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import DrawerController from "../../../controllers/components/DrawerController";
 import Ticket from "../../../models/Ticket";
 import User from "../../../models/User";
 import Project from "../../../models/Project";
@@ -32,7 +31,7 @@ const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
 
   return (
-    <DrawerController>
+    <>
       {projects.length > 0 ? (
         <Grid container spacing={2} padding={2}>
           {/* Title/Header */}
@@ -144,7 +143,7 @@ const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
           <CardHeader title="No Projects have been created yet!" />
         </Card>
       )}
-    </DrawerController>
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 import { Grid, CardHeader, Card, SelectChangeEvent } from "@mui/material";
 import Ticket from "../../../models/Ticket";
 import Project from "../../../models/Project";
-import DrawerController from "../../../controllers/components/DrawerController";
 import KanbanMobileView from "./KanbanMobileView";
 import KanbanDesktopView from "./KanbanDesktopView";
 
@@ -21,7 +20,7 @@ const KanbanView = ({
   ticketsByStatus,
 }: KanbanViewProps) => {
   return (
-    <DrawerController>
+    <>
       {projects.length > 0 && selectedProject !== undefined ? (
         <Grid container spacing={2} padding={2}>
           {/* Title/Header */}
@@ -53,7 +52,7 @@ const KanbanView = ({
           <CardHeader title="No Projects have been created yet!" />
         </Card>
       )}
-    </DrawerController>
+    </>
   );
 };
 

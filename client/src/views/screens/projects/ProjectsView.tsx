@@ -12,7 +12,6 @@ import {
   TableRow,
   Grid,
 } from "@mui/material";
-import DrawerController from "../../../controllers/components/DrawerController";
 import {
   FieldValues,
   RegisterOptions,
@@ -39,7 +38,7 @@ const ProjectsView = ({
   projects,
 }: ProjectsViewProps) => {
   return (
-    <DrawerController>
+    <>
       <Grid container spacing={2} padding={2}>
         {/* Title/Header */}
         <Grid item xs={12}>
@@ -103,11 +102,7 @@ const ProjectsView = ({
                   </TableHead>
                   <TableBody>
                     {projects.map((project) => {
-                      const {
-                        _id,
-                        name,
-                        description,
-                      } = project;
+                      const { _id, name, description } = project;
                       return (
                         <TableRow key={_id}>
                           <TableCell>{name}</TableCell>
@@ -134,7 +129,7 @@ const ProjectsView = ({
           </Card>
         </Grid>
       </Grid>
-    </DrawerController>
+    </>
   );
 };
 

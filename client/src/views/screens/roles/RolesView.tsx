@@ -1,4 +1,3 @@
-import DrawerController from "../../../controllers/components/DrawerController";
 import {
   Button,
   Card,
@@ -39,7 +38,7 @@ const RolesView = ({
   selectedRole,
 }: RolesViewProps) => {
   return (
-    <DrawerController>
+    <>
       <Grid container spacing={2} padding={2}>
         {/* Title/Header */}
         <Grid item xs={12}>
@@ -131,7 +130,7 @@ const RolesView = ({
           </Card>
         </Grid>
       </Grid>
-    </DrawerController>
+    </>
   );
 };
 

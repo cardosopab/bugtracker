@@ -19,7 +19,6 @@ import {
   Paper,
   Divider,
 } from "@mui/material";
-import DrawerController from "../../../controllers/components/DrawerController";
 import User from "../../../models/User";
 import Project from "../../../models/Project";
 
@@ -47,7 +46,7 @@ const ProjectAssigmentView = ({
   isRemoveButtonDisabled,
 }: UsersViewProps) => {
   return (
-    <DrawerController>
+    <>
       {projects.length > 0 ? (
         <Grid container spacing={2} padding={2}>
           {/* Title/Header */}
@@ -157,7 +156,7 @@ const ProjectAssigmentView = ({
           <CardHeader title="No Projects have been created yet!" />
         </Card>
       )}
-    </DrawerController>
+    </>
   );
 };
 
