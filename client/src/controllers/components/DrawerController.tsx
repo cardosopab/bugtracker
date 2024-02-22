@@ -2,7 +2,6 @@ import * as React from "react";
 import { auth } from "../../models/database/firebase-init";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setDrawerIndex } from "../../models/redux/drawerSlice";
 import { RootState } from "../../models/redux/store";
 import { navOptions } from "../../constants/drawerConstants";
 import { roles } from "../../constants/userConstants";
@@ -42,7 +41,6 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
         console.log(`isLogout: ${isLogout}`);
         dispatch(setAuthStatus(isLogout));
         navigateTo("/");
-        dispatch(setDrawerIndex(0));
         dispatch(setAuthStatus(false));
         dispatch(setCurrentUser(null));
       })
@@ -59,10 +57,8 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
 
   const handleListItemClick = (
     _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number,
     url: string
   ) => {
-    dispatch(setDrawerIndex(index));
     navigateTo(url);
   };
 

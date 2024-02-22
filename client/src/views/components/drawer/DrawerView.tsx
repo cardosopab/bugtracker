@@ -32,7 +32,6 @@ interface DrawerViewProps {
   location: Location<any>;
   handleListItemClick: (
     _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number,
     url: string
   ) => void;
   handleIconSwitch: (icon: string) => JSX.Element;
@@ -108,7 +107,7 @@ const DrawerView = ({
             <ListItem key={name} disablePadding>
               <ListItemButton
                 selected={location.pathname === url}
-                onClick={(event) => handleListItemClick(event, i, url)}
+                onClick={(event) => handleListItemClick(event, url)}
               >
                 <ListItemIcon>{handleIconSwitch(icon)}</ListItemIcon>
                 <ListItemText primary={name} />

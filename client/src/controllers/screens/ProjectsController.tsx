@@ -4,7 +4,6 @@ import { RootState } from "../../models/redux/store";
 import Project from "../../models/Project";
 import ProjectsView from "../../views/screens/projects/ProjectsView";
 import { useNavigate } from "react-router-dom";
-import { setDrawerIndex } from "../../models/redux/drawerSlice";
 import { setProjectDetails } from "../../models/redux/projectDetailsSlice";
 import { PROJECT_DETAILS_URL } from "../../constants/screensUrls";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
@@ -22,13 +21,12 @@ const ProjectsController = () => {
   const projects = useSelector((state: RootState) => state.projects.value);
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const onSubmit = (values: any) => {
-    createProject(values.name, values.description, currentUser.companyId);
+    createProject(values.name, values.description, currentUser!.companyId);
     reset();
   };
 
   const navigateToDetails = (details: Project) => {
     navigateTo(PROJECT_DETAILS_URL);
-    dispatch(setDrawerIndex(90));
     dispatch(setProjectDetails(details));
   };
 
