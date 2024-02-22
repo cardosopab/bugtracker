@@ -12,6 +12,7 @@ import {
   Handyman,
   List,
   TableChart,
+  Person,
 } from "@mui/icons-material";
 import DrawerView from "../../views/components/drawer/DrawerView";
 import { setAuthStatus, setCurrentUser } from "../../models/redux/authSlice";
@@ -76,6 +77,8 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
         return <Handyman />;
       case "list":
         return <List />;
+      case "user":
+        return <Person />;
       default:
         return <Dashboard />;
     }
