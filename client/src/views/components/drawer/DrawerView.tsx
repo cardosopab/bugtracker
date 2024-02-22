@@ -17,6 +17,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { Logout, Menu } from "@mui/icons-material";
 import { Auth } from "firebase/auth";
 import User from "../../../models/User";
+import { Location } from "react-router-dom";
 
 interface DrawerViewProps {
   auth: Auth;
@@ -28,7 +29,7 @@ interface DrawerViewProps {
     url: string;
   }[];
   roles: string[];
-  drawerIndex: number;
+  location: Location<any>;
   handleListItemClick: (
     _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
@@ -46,7 +47,7 @@ const DrawerView = ({
   open,
   navOptions,
   roles,
-  drawerIndex,
+  location,
   handleListItemClick,
   handleIconSwitch,
   handleDrawerToggle,
@@ -91,6 +92,7 @@ const DrawerView = ({
       </DrawerHeader>
       <Divider />
       <List>
+        {/* TODO: Refactor to make more readable */}
         {navOptions.map(({ name, icon, url }, i) => {
           const isNavOptionVisible =
             (i !== 4 && i !== 5) || // Display all options except navOptions[4] and navOptions[5]
@@ -105,7 +107,7 @@ const DrawerView = ({
           return (
             <ListItem key={name} disablePadding>
               <ListItemButton
-                selected={drawerIndex === i}
+                selected={location.pathname === url}
                 onClick={(event) => handleListItemClick(event, i, url)}
               >
                 <ListItemIcon>{handleIconSwitch(icon)}</ListItemIcon>

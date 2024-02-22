@@ -1,6 +1,6 @@
 import * as React from "react";
 import { auth } from "../../models/database/firebase-init";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawerIndex } from "../../models/redux/drawerSlice";
 import { RootState } from "../../models/redux/store";
@@ -24,11 +24,11 @@ interface DrawerControllerProps {
 }
 
 const DrawerController = ({ children }: DrawerControllerProps) => {
+  const location = useLocation();
   const navigateTo = useNavigate();
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
-  const drawerIndex = useSelector((state: RootState) => state.drawer.index);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -92,7 +92,7 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
       open={open}
       navOptions={navOptions}
       roles={roles}
-      drawerIndex={drawerIndex}
+      location={location}
       handleListItemClick={handleListItemClick}
       handleIconSwitch={handleIconSwitch}
       handleDrawerToggle={handleDrawerToggle}
