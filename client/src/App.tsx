@@ -28,6 +28,7 @@ import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
 import axios from "axios";
 import { AuthEndpoints } from "./constants/endpoints";
 import ProjectAssigmentController from "./controllers/screens/ProjectAssignmentController";
+import Layout from "./Layout";
 
 function App() {
   const dispatch = useDispatch();
@@ -84,20 +85,22 @@ function App() {
       <Routes>
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<AuthController />} />
-          <Route path={DASHBOARD_URL} element={<DashboardController />} />
-          <Route path={KANBAN_URL} element={<KanbanController />} />
-          <Route path={PROJECTS_URL} element={<ProjectsController />} />
-          <Route path={TICKETS_URL} element={<TicketsController />} />
-          <Route path={ROLES_URL} element={<RolesController />} />
-          <Route
-            path={PROJECT_ASSIGNMENT_URL}
-            element={<ProjectAssigmentController />}
-          />
-          <Route path={USERS_URL} element={<UsersController />} />
-          <Route
-            path={PROJECT_DETAILS_URL}
-            element={<ProjectDetailsController />}
-          />
+          <Route path="" element={<Layout />}>
+            <Route path={DASHBOARD_URL} element={<DashboardController />} />
+            <Route path={KANBAN_URL} element={<KanbanController />} />
+            <Route path={PROJECTS_URL} element={<ProjectsController />} />
+            <Route path={TICKETS_URL} element={<TicketsController />} />
+            <Route path={ROLES_URL} element={<RolesController />} />
+            <Route
+              path={PROJECT_ASSIGNMENT_URL}
+              element={<ProjectAssigmentController />}
+            />
+            <Route path={USERS_URL} element={<UsersController />} />
+            <Route
+              path={PROJECT_DETAILS_URL}
+              element={<ProjectDetailsController />}
+            />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
