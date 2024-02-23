@@ -4,6 +4,7 @@ import { RootState } from "../../redux/store";
 import axios from "axios";
 import { ProjectsEndpoints } from "../../../constants/endpoints";
 import { setProjects } from "../../redux/projectsSlice";
+import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 
 export const useProjectActions = () => {
   const dispatch = useDispatch();
@@ -14,9 +15,10 @@ export const useProjectActions = () => {
     description: string,
     companyId: string
   ) => {
-    if (currentUser.role === "Demo") {
+    if (currentUser?.role === "Demo") {
       return;
     }
+
     const newProject: Project = {
       _id: "",
       name: name,
@@ -30,16 +32,22 @@ export const useProjectActions = () => {
       const res = await axios.post(ProjectsEndpoints.PROJECTS, newProject);
       dispatch(setProjects(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
+    }
+  };
+
+  const addUserToProject = async (projectId: string, personnelId: string) => {
+    if (currentUser?.role === "Demo") {
+      return;
+    }
+
+    try {
+      const res = await axios.patch(ProjectsEndpoints.PERSONNEL, {
+        data: { projectId: projectId, personnelId: personnelId },
+      });
+      dispatch(setProjects(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
     }
   };
 
@@ -48,21 +56,33 @@ export const useProjectActions = () => {
       const res = await axios.get(ProjectsEndpoints.PROJECTS);
       dispatch(setProjects(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
+    }
+  };
+
+  const updateProject = async (project: Project) => {
+    if (currentUser?.role === "Demo") {
+      return;
+    }
+
+    const projectWithProjectId = { ...project, projectId: project._id };
+
+    try {
+      const res = await axios.patch(
+        ProjectsEndpoints.PROJECT_BY_ID,
+        projectWithProjectId,
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(setProjects(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
     }
   };
 
   const deleteProject = async (projectId: string) => {
-    if (currentUser.role === "Demo") {
+    if (currentUser?.role === "Demo") {
       return;
     }
 
@@ -72,54 +92,34 @@ export const useProjectActions = () => {
       });
       dispatch(setProjects(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
     }
   };
 
-  const addUserToProject = async (uid: string, projectId: string) => {
-    console.log(uid, projectId);
-    // if (currentUser.role === "Demo") {
-    //   return;
-    // }
-    // try {
-    //   const docRef = doc(database, PROJECTS_COLLECTION, projectId);
-    //   await setDoc(docRef, { personnel: arrayUnion(uid) }, { merge: true });
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    //   return null;
-    // }
-  };
+  const deleteUserFromProject = async (
+    projectId: string,
+    personnelId: string
+  ) => {
+    if (currentUser?.role === "Demo") {
+      return;
+    }
 
-  const deleteUserFromProject = async (uid: string, projectId: string) => {
-    console.log(uid, projectId);
-    // if (currentUser.role === "Demo") {
-    //   return;
-    // }
-    // try {
-    //   const docRef = doc(database, PROJECTS_COLLECTION, projectId);
-    //   await updateDoc(docRef, {
-    //     personnel: arrayRemove(uid),
-    //   });
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    //   return null;
-    // }
+    try {
+      const res = await axios.delete(ProjectsEndpoints.PERSONNEL, {
+        data: { projectId: projectId, personnelId: personnelId },
+      });
+      dispatch(setProjects(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
   };
 
   return {
     createProject,
-    readProjects,
-    deleteProject,
     addUserToProject,
+    readProjects,
+    updateProject,
+    deleteProject,
     deleteUserFromProject,
   };
 };
