@@ -15,20 +15,13 @@ import {
 } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { Logout, Menu } from "@mui/icons-material";
-import { Auth } from "firebase/auth";
 import User from "../../../models/User";
 import { Location } from "react-router-dom";
+import { adminPages, navOptions } from "../../../constants/drawerConstants";
 
 interface DrawerViewProps {
-  auth: Auth;
   currentUser: User;
   open: boolean;
-  navOptions: {
-    name: string;
-    icon: string;
-    url: string;
-  }[];
-  roles: string[];
   location: Location<any>;
   handleListItemClick: (
     _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -39,13 +32,13 @@ interface DrawerViewProps {
   handleLogout: () => void;
   children: React.ReactNode;
 }
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
 
 const DrawerView = ({
-  auth,
   currentUser,
   open,
-  navOptions,
-  roles,
   location,
   handleListItemClick,
   handleIconSwitch,
@@ -54,9 +47,7 @@ const DrawerView = ({
   children,
 }: DrawerViewProps) => {
   const drawerWidth = 240;
-  interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
-  }
+  const currentRole = currentUser?.role;
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -91,16 +82,14 @@ const DrawerView = ({
       </DrawerHeader>
       <Divider />
       <List>
-        {/* TODO: Refactor to make more readable */}
-        {navOptions.map(({ name, icon, url }, i) => {
-          const isNavOptionVisible =
-            (i !== 4 && i !== 5) || // Display all options except navOptions[4] and navOptions[5]
-            currentUser?.role === roles[3] ||
-            currentUser?.role === roles[4] ||
-            currentUser?.role === "Demo"; // Display navOptions[4] and navOptions[5] for roles[3] and roles[4]
+        {navOptions.map(({ name, icon, url }) => {
+          const isUserAdmin = currentRole === "Admin" || currentRole === "Demo";
+          const isAdminPage = adminPages.includes(url);
+          const isNavOptionVisible = isUserAdmin || !isAdminPage;
 
           if (!isNavOptionVisible) {
-            return null; // Hide the navigation option for other roles
+            // Hide the navigation option for other roles
+            return null;
           }
 
           return (
@@ -141,7 +130,7 @@ const DrawerView = ({
             <Menu />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            {auth.currentUser?.email}
+            {currentUser?.email}
           </Typography>
           <IconButton color="inherit" onClick={handleLogout} edge="end">
             <Logout />
@@ -158,7 +147,8 @@ const DrawerView = ({
           open={open}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", lg: "none" },
