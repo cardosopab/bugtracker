@@ -1,10 +1,7 @@
 import * as React from "react";
-import { auth } from "../../models/database/firebase-init";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../models/redux/store";
-import { navOptions } from "../../constants/drawerConstants";
-import { roles } from "../../constants/userConstants";
 import {
   Dashboard,
   Group,
@@ -86,11 +83,8 @@ const DrawerController = ({ children }: DrawerControllerProps) => {
 
   return (
     <DrawerView
-      auth={auth}
       currentUser={currentUser!}
       open={open}
-      navOptions={navOptions}
-      roles={roles}
       location={location}
       handleListItemClick={handleListItemClick}
       handleIconSwitch={handleIconSwitch}
