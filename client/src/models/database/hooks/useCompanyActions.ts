@@ -4,6 +4,7 @@ import { RootState } from "../../redux/store";
 import axios from "axios";
 import { CompaniesEndpoints } from "../../../constants/endpoints";
 import { setCompanies } from "../../redux/companiesSlice";
+import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 
 export const useCompanyActions = () => {
   const dispatch = useDispatch();
@@ -18,16 +19,7 @@ export const useCompanyActions = () => {
       const res = await axios.post(CompaniesEndpoints.COMPANIES, company);
       dispatch(setCompanies(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
     }
   };
 
@@ -36,32 +28,29 @@ export const useCompanyActions = () => {
       const res = await axios.get(CompaniesEndpoints.COMPANIES);
       dispatch(setCompanies(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
     }
   };
 
-  const updateCompany = async (companyId: string, company: Company) => {
+  const updateCompany = async (company: Company) => {
     if (currentUser?.role === "Demo") {
       return;
     }
 
-    console.log(companyId, company);
-    // try {
-    //   const docRef = doc(database, COMPANIES_COLLECTION, companyId);
-    //   await setDoc(docRef, company);
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    //   return null;
-    // }
+    const companyWithCompanyId = { ...company, companyId: company._id };
+
+    try {
+      const res = await axios.patch(
+        CompaniesEndpoints.COMPANY_BY_ID,
+        companyWithCompanyId,
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(setCompanies(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
   };
 
   const deleteCompany = async (companyId: string) => {
@@ -75,16 +64,7 @@ export const useCompanyActions = () => {
       });
       dispatch(setCompanies(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
     }
   };
 
