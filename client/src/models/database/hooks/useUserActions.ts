@@ -51,13 +51,6 @@ export const useUserActions = () => {
         withCredentials: true,
       });
 
-      console.log(
-        "newCompany",
-        JSON.stringify(newCompany),
-        "newUser",
-        JSON.stringify(newUser)
-      );
-
       dispatch(setUsers(userResponse.data));
     } catch (error: any) {
       handleAxiosError(error);
@@ -79,7 +72,6 @@ export const useUserActions = () => {
     }
 
     const userWithUserId = { ...user, userId: user._id };
-    console.log("updateUserByIdHandler", JSON.stringify(userWithUserId));
 
     try {
       const res = await axios.patch(UsersEndpoints.USER_BY_ID, userWithUserId, {
