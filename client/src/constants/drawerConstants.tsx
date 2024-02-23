@@ -2,9 +2,9 @@ import {
   DASHBOARD_URL,
   KANBAN_URL,
   PROJECTS_URL,
-  PROJECT_ASSIGNMENT_URL,
-  ROLES_URL,
   TICKETS_URL,
+  ROLES_URL,
+  PROJECT_ASSIGNMENT_URL,
   USERS_URL,
 } from "./screensUrls";
 
@@ -18,4 +18,6 @@ const navOptions = [
   { name: "User Management", icon: "user", url: USERS_URL },
 ];
 
-export { navOptions };
+const adminPages = [ROLES_URL, PROJECT_ASSIGNMENT_URL, USERS_URL];
+
+export { navOptions, adminPages };
