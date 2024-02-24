@@ -89,6 +89,34 @@ export const readTicketByIdHandler = async (req: Request, res: Response) => {
   }
 };
 
+export const updateTicketByIdHandler = async (req: Request, res: Response) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) return res.status(400).send(result.array());
+
+  const data = matchedData(req);
+  try {
+    // Create a new object without the ticketId field
+    const ticketDataWithoutId = { ...data };
+    delete ticketDataWithoutId.ticketId;
+
+    const updatedTicket = await Ticket.findOneAndUpdate(
+      { _id: data.ticketId },
+      { $set: ticketDataWithoutId },
+      { new: true }
+    );
+    if (!updatedTicket)
+      return res.status(404).send("Ticket not found or no changes made.");
+
+    const tickets = await Ticket.find();
+    if (!tickets) return res.status(404).send("Tickets not found");
+
+    return res.status(200).send(tickets);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
 export const deleteTicketHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
   console.log(`result: ${JSON.stringify(result)}`);
