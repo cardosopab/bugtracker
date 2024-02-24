@@ -69,7 +69,6 @@ export const readUserByIdHandler = async (req: Request, res: Response) => {
 export const updateUserByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
-    console.log(result);
     return res.status(400).send(result.array());
   }
 
