@@ -55,6 +55,12 @@ router.get(
   readTicketByIdHandler
 );
 
+// Update By ID
+router.patch(
+  TicketsEndpoints.TICKET_BY_ID,
+  checkSchema(TicketValidationSchema)
+);
+
 // Delete
 router.delete(
   TicketsEndpoints.TICKET_BY_ID,
