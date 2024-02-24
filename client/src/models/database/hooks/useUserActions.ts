@@ -33,10 +33,7 @@ export const useUserActions = () => {
       };
       const companyResponse = await axios.post(
         CompaniesEndpoints.COMPANIES,
-        newCompany,
-        {
-          withCredentials: true,
-        }
+        newCompany
       );
 
       const role = isAdmin ? "Admin" : "Unassigned";
