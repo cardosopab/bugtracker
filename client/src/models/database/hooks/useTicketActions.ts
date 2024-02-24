@@ -4,6 +4,7 @@ import { RootState } from "../../redux/store";
 import axios from "axios";
 import { TicketsEndpoints } from "../../../constants/endpoints";
 import { setTickets } from "../../redux/ticketsSlice";
+import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 
 export const useTicketActions = () => {
   const dispatch = useDispatch();
@@ -18,16 +19,7 @@ export const useTicketActions = () => {
       const res = await axios.post(TicketsEndpoints.TICKETS, ticket);
       dispatch(setTickets(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
     }
   };
 
@@ -36,32 +28,26 @@ export const useTicketActions = () => {
       const res = await axios.get(TicketsEndpoints.TICKETS);
       dispatch(setTickets(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
     }
   };
 
-  const updateTicket = async (ticketId: string, ticket: Ticket) => {
+  const updateTicket = async (ticket: Ticket) => {
     if (currentUser?.role === "Demo") {
       return;
     }
 
-    console.log(ticketId, ticket);
-    // try {
-    //   const docRef = doc(database, TICKETS_COLLECTION, ticketId);
-    //   await setDoc(docRef, ticket);
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    //   return null;
-    // }
+    const ticketWithTicketId = { ...ticket, ticketId: ticket._id };
+
+    try {
+      const res = await axios.patch(
+        TicketsEndpoints.TICKET_BY_ID,
+        ticketWithTicketId
+      );
+      dispatch(setTickets(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
   };
 
   const deleteTicket = async (ticketId: string) => {
@@ -75,16 +61,7 @@ export const useTicketActions = () => {
       });
       dispatch(setTickets(res.data));
     } catch (error: any) {
-      if (error.response) {
-        console.error("Server responded with an error:", error.response.status);
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        console.error("No response received from the server");
-        alert("No response received from the server");
-      } else {
-        console.error("Error setting up the request:", error.message);
-        alert(`Error: ${error.message}`);
-      }
+      handleAxiosError(error);
     }
   };
 
