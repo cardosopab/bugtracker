@@ -70,10 +70,7 @@ export const useProjectActions = () => {
     try {
       const res = await axios.patch(
         ProjectsEndpoints.PROJECT_BY_ID,
-        projectWithProjectId,
-        {
-          withCredentials: true,
-        }
+        projectWithProjectId
       );
       dispatch(setProjects(res.data));
     } catch (error: any) {

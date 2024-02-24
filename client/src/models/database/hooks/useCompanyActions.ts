@@ -42,10 +42,7 @@ export const useCompanyActions = () => {
     try {
       const res = await axios.patch(
         CompaniesEndpoints.COMPANY_BY_ID,
-        companyWithCompanyId,
-        {
-          withCredentials: true,
-        }
+        companyWithCompanyId
       );
       dispatch(setCompanies(res.data));
     } catch (error: any) {
