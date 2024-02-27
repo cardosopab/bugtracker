@@ -29,13 +29,11 @@ import axios from "axios";
 import { AuthEndpoints } from "./constants/endpoints";
 import ProjectAssigmentController from "./controllers/screens/ProjectAssignmentController";
 import Layout from "./Layout";
+import User from "./models/User";
 
 function App() {
   const dispatch = useDispatch();
   const authStatus = useSelector((state: RootState) => state.auth.authStatus);
-  const users = useSelector((state: RootState) => state.users.value);
-  const projects = useSelector((state: RootState) => state.projects.value);
-  const tickets = useSelector((state: RootState) => state.tickets.value);
   const { readUsers } = useUserActions();
   const { readProjects } = useProjectActions();
   const { readTickets } = useTicketActions();
@@ -44,24 +42,34 @@ function App() {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        await axios.get(AuthEndpoints.STATUS, {
+        const res = await axios.get(AuthEndpoints.STATUS, {
           withCredentials: true,
         });
-      } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-          // User is not authenticated, perform logout
-          dispatch(setAuthStatus(false));
-          dispatch(setCurrentUser(null));
-          window.location.replace("/");
+        const status = res.status;
+        const isAuth = status === 200;
+        if (isAuth) {
+          // User is authenticated
+          const data = res.data;
+          const newUser: User = {
+            _id: data.id,
+            name: data.name,
+            email: data.email,
+            role: data.role,
+            companyId: data.companyId,
+            createdAt: data.createdAt,
+          };
+          dispatch(setAuthStatus(isAuth));
+          dispatch(setCurrentUser(newUser));
         }
-        console.error("Error checking auth status:", error);
+      } catch (error: any) {
+        console.log("Error checking auth status:", error);
       }
     };
 
-    if (authStatus) {
-      // Check auth status when the component mounts
-      checkAuthStatus();
-    }
+    checkAuthStatus();
+  }, []);
+
+  useEffect(() => {
     if (authStatus && !loginInitiated) {
       // Fetch data if user is authenticated
       readTickets();
@@ -69,16 +77,7 @@ function App() {
       readUsers();
       setLoginInitiated(true);
     }
-  }, [
-    authStatus,
-    dispatch,
-    readTickets,
-    readProjects,
-    readUsers,
-    tickets,
-    projects,
-    users,
-  ]);
+  }, [authStatus, loginInitiated, readTickets, readProjects, readUsers]);
 
   return (
     <BrowserRouter>
