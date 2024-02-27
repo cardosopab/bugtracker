@@ -24,9 +24,23 @@ export const loginHandler = (
   }
 };
 
-export const statusHandler = (req: Request, res: Response) => {
-  if (req.user) {
-    res.sendStatus(200);
+export const statusHandler = (
+  req: Request & { user?: SerializedUser },
+  res: Response
+) => {
+  const user = req.user;
+
+  if (user) {
+    const responseData: SerializedUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+      companyId: user.companyId,
+    };
+
+    res.status(200).json(responseData);
   } else {
     res.sendStatus(401);
   }
