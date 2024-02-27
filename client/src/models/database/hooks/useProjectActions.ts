@@ -36,14 +36,17 @@ export const useProjectActions = () => {
     }
   };
 
-  const addUserToProject = async (projectId: string, personnelId: string) => {
+  const addUserToProject = async (personnelId: string, projectId: string) => {
     if (currentUser?.role === "Demo") {
       return;
     }
 
+    console.log(personnelId, projectId);
+
     try {
-      const res = await axios.patch(ProjectsEndpoints.PERSONNEL, {
-        data: { projectId: projectId, personnelId: personnelId },
+      const res = await axios.post(ProjectsEndpoints.PERSONNEL, {
+        personnelId: personnelId,
+        projectId: projectId,
       });
       dispatch(setProjects(res.data));
     } catch (error: any) {
@@ -94,8 +97,8 @@ export const useProjectActions = () => {
   };
 
   const deleteUserFromProject = async (
-    projectId: string,
-    personnelId: string
+    personnelId: string,
+    projectId: string
   ) => {
     if (currentUser?.role === "Demo") {
       return;
