@@ -49,17 +49,9 @@ function App() {
         const isAuth = status === 200;
         if (isAuth) {
           // User is authenticated
-          const data = res.data;
-          const newUser: User = {
-            _id: data.id,
-            name: data.name,
-            email: data.email,
-            role: data.role,
-            companyId: data.companyId,
-            createdAt: data.createdAt,
-          };
+          const user: User = { ...res.data, _id: res.data.id };
           dispatch(setAuthStatus(isAuth));
-          dispatch(setCurrentUser(newUser));
+          dispatch(setCurrentUser(user));
         }
       } catch (error: any) {
         console.log("Error checking auth status:", error);
