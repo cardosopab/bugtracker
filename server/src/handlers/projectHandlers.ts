@@ -4,7 +4,10 @@ import Project from "../mongoose/schemas/Project";
 
 export const createProjectHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   const newProject = new Project(data);
   try {
@@ -25,7 +28,10 @@ export const addPersonnelToArrayHandler = async (
   res: Response
 ) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
 
   const data = matchedData(req);
   const { projectId, personnelId } = data;
@@ -61,7 +67,10 @@ export const readAllProjectsHandler = async (req: Request, res: Response) => {
 
 export const readProjectByNameHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
     const project = await Project.findOne(data);
@@ -76,7 +85,10 @@ export const readProjectByNameHandler = async (req: Request, res: Response) => {
 
 export const readProjectByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
     const project = await Project.findById(data.projectId);
@@ -91,8 +103,10 @@ export const readProjectByIdHandler = async (req: Request, res: Response) => {
 
 export const deleteProjectHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  console.log(`result: ${JSON.stringify(result)}`);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
     const deletedProject = await Project.findByIdAndDelete(data.projectId);
@@ -113,7 +127,10 @@ export const deletePersonnelFromArrayHandler = async (
   res: Response
 ) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
 
   const data = matchedData(req);
   const { projectId, personnelId } = data;
