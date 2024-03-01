@@ -4,16 +4,14 @@ import {
   DASHBOARD_URL,
   PROJECT_DETAILS_URL,
   PROJECTS_URL,
-  ROLES_URL,
   TICKETS_URL,
   USERS_URL,
   KANBAN_URL,
   PROJECT_ASSIGNMENT_URL,
-} from "./constants/screensUrls";
+} from "./constants/viewEndpoints";
 import TicketsController from "./controllers/screens/TicketsController";
 import ProjectsController from "./controllers/screens/ProjectsController";
 import AuthController from "./controllers/screens/AuthController";
-import RolesController from "./controllers/screens/RolesController";
 import UsersController from "./controllers/screens/UsersController";
 import ProjectDetailsController from "./controllers/screens/ProjectDetailsController";
 import KanbanController from "./controllers/screens/KanbanController";
@@ -57,7 +55,6 @@ function App() {
             <Route path={KANBAN_URL} element={<KanbanController />} />
             <Route path={PROJECTS_URL} element={<ProjectsController />} />
             <Route path={TICKETS_URL} element={<TicketsController />} />
-            <Route path={ROLES_URL} element={<RolesController />} />
             <Route
               path={PROJECT_ASSIGNMENT_URL}
               element={<ProjectAssigmentController />}
