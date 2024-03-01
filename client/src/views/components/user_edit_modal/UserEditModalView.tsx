@@ -11,30 +11,38 @@ import {
   Grid,
 } from "@mui/material";
 import User from "../../../models/User";
+import {
+  FieldValues,
+  RegisterOptions,
+  UseFormHandleSubmit,
+} from "react-hook-form";
+import { roles } from "../../../constants/userConstants";
 
 interface UserEditModalViewProps {
   buttonLabel?: string;
   user: User;
-  nameInput: string;
-  selectedIsAdmin: string;
+  register: (name: string, options?: RegisterOptions) => any;
+  onSubmit: (values: any) => void;
+  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
+  errors: any;
+  selectedRole: string;
   isModalOpen: boolean;
-  handleNameInputChange: (event: any) => void;
-  handleIsAdminDropdown: (event: any) => void;
+  handleRoleDropdown: (event: any) => void;
   handleModalToggle: () => void;
-  handleUserUpdate: () => void;
   handleUserRemoval: (userId: string) => void;
 }
 
 const UserEditModalView = ({
   buttonLabel,
   user,
-  nameInput,
-  selectedIsAdmin,
+  register,
+  onSubmit,
+  handleSubmit,
+  errors,
+  selectedRole,
   isModalOpen,
-  handleNameInputChange,
-  handleIsAdminDropdown,
+  handleRoleDropdown,
   handleModalToggle,
-  handleUserUpdate,
   handleUserRemoval,
 }: UserEditModalViewProps) => {
   return (
@@ -65,61 +73,75 @@ const UserEditModalView = ({
         >
           <CardHeader title={`Edit User: ${user.name}`} />
           <Grid container padding={2}>
-            <Grid item xs={12}>
-              <FormControl fullWidth margin={"normal"}>
-                <InputLabel htmlFor="name-input">Name</InputLabel>
-                <Input
-                  required
-                  id="name-input"
-                  value={nameInput}
-                  onChange={handleNameInputChange}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth margin={"normal"}>
-                <InputLabel id="is_admin-dropdown-label">
-                  Is User Admin
-                </InputLabel>
-                <Select
-                  id="admin-select"
-                  labelId="is_admin-dropdown-label"
-                  value={selectedIsAdmin}
-                  name={selectedIsAdmin}
-                  label="Is User Admin"
-                  onChange={handleIsAdminDropdown}
-                >
-                  {["NO", "YES"].map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid
-              container
-              sx={{
-                justifyContent: "space-between",
-                marginTop: 3,
-                marginBottom: 2,
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
               }}
             >
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => handleUserRemoval(user._id)}
+              <Grid item xs={12}>
+                <Input
+                  id="name-input"
+                  name="name-input"
+                  defaultValue={user.name}
+                  sx={{ marginTop: 2, marginBottom: 2 }}
+                  placeholder="Name"
+                  type="text"
+                  {...register("name", { required: "Required" })}
+                />
+                {errors.name && <p>{errors.name.message}</p>}
+                <Input
+                  id="email-input"
+                  name="email-input"
+                  defaultValue={user.email}
+                  sx={{ marginTop: 2, marginBottom: 2 }}
+                  placeholder="Email"
+                  type="text"
+                  {...register("email", { required: "Required" })}
+                />
+                {errors.email && <p>{errors.email.message}</p>}
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel id="admin-dropdown-label">
+                    Is User Admin
+                  </InputLabel>
+                  <Select
+                    labelId="admin-dropdown-label"
+                    id="admin-dropdown"
+                    name="admin-dropdown"
+                    value={selectedRole}
+                    label="Is User Admin"
+                    onChange={handleRoleDropdown}
+                  >
+                    {roles.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid
+                container
+                sx={{
+                  justifyContent: "space-between",
+                  marginTop: 3,
+                  marginBottom: 2,
+                }}
               >
-                Delete User
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleUserUpdate}
-              >
-                Update User
-              </Button>
-            </Grid>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => handleUserRemoval(user._id)}
+                >
+                  Delete User
+                </Button>
+                <Button variant="contained" color="primary" type="submit">
+                  Update User
+                </Button>
+              </Grid>
+            </form>
           </Grid>
         </Card>
       </Modal>

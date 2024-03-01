@@ -2,6 +2,7 @@ import { useState } from "react";
 import User from "../../models/User";
 import { useUserActions } from "../../models/database/hooks/useUserActions";
 import UserEditModalView from "../../views/components/user_edit_modal/UserEditModalView";
+import { useForm } from "react-hook-form";
 
 interface EditUserProps {
   user: User;
@@ -9,57 +10,56 @@ interface EditUserProps {
 }
 
 const UserEditModalController = ({ user, buttonLabel }: EditUserProps) => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm();
   const { deleteUser, updateUser } = useUserActions();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [nameInput, setNameInput] = useState(user.name);
-  const [isAdmin, setIsAdmin] = useState(user.role == "Admin");
+  const [selectedRole, setSelectedRole] = useState(user.role);
+
+  const onSubmit = (values: any) => {
+    const updatedUser: User = {
+      _id: user._id,
+      name: values.name,
+      email: values.email,
+      role: selectedRole,
+      companyId: user.companyId,
+      createdAt: user.createdAt,
+    };
+    updateUser(updatedUser);
+    reset();
+    setIsModalOpen((prev) => !prev);
+  };
 
   const handleModalToggle = () => {
     setIsModalOpen((prev) => !prev);
-    setNameInput(user.name);
-    setIsAdmin(user.role == "Admin");
+    reset();
   };
 
   const handleUserRemoval = () => {
     deleteUser(user._id);
   };
 
-  const handleNameInputChange = (event: any) => {
-    setNameInput(event.target.value);
-  };
-
-  const handleUserUpdate = () => {
-    // TODO: update view to select other values
-    const newUser: User = {
-      _id: user._id,
-      name: nameInput,
-      email: user.email,
-      role: user.role,
-      companyId: user.companyId,
-      createdAt: user.createdAt,
-    };
-    updateUser(newUser);
-    handleModalToggle();
-  };
-
-  const handleIsAdminDropdown = (event: any) => {
-    const eventValue = event.target.value as string;
-    const eventIsAdmin = eventValue === "YES";
-    setIsAdmin(eventIsAdmin);
+  const handleRoleDropdown = (event: any) => {
+    setSelectedRole(event.target.value);
   };
 
   return (
     <UserEditModalView
       user={user}
       buttonLabel={buttonLabel}
-      nameInput={nameInput}
-      selectedIsAdmin={isAdmin ? "YES" : "NO"}
       isModalOpen={isModalOpen}
-      handleNameInputChange={handleNameInputChange}
-      handleIsAdminDropdown={handleIsAdminDropdown}
       handleModalToggle={handleModalToggle}
-      handleUserUpdate={handleUserUpdate}
       handleUserRemoval={handleUserRemoval}
+      register={register}
+      onSubmit={onSubmit}
+      handleSubmit={handleSubmit}
+      errors={errors}
+      selectedRole={selectedRole}
+      handleRoleDropdown={handleRoleDropdown}
     />
   );
 };
