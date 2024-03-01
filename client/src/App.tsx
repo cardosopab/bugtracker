@@ -22,44 +22,20 @@ import { useTicketActions } from "./models/database/hooks/useTicketActions";
 import { useProjectActions } from "./models/database/hooks/useProjectActions";
 import { useUserActions } from "./models/database/hooks/useUserActions";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "./models/redux/store";
-import { setAuthStatus, setCurrentUser } from "./models/redux/authSlice";
-import axios from "axios";
-import { AuthEndpoints } from "./constants/endpoints";
 import ProjectAssigmentController from "./controllers/screens/ProjectAssignmentController";
 import Layout from "./Layout";
-import User from "./models/User";
+import useAuthStatusCheck from "./utils/useAuthStatusCheck";
 
 function App() {
-  const dispatch = useDispatch();
   const authStatus = useSelector((state: RootState) => state.auth.authStatus);
   const { readUsers } = useUserActions();
   const { readProjects } = useProjectActions();
   const { readTickets } = useTicketActions();
   const [loginInitiated, setLoginInitiated] = useState(false);
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const res = await axios.get(AuthEndpoints.STATUS, {
-          withCredentials: true,
-        });
-        const status = res.status;
-        const isAuth = status === 200;
-        if (isAuth) {
-          // User is authenticated
-          const user: User = { ...res.data, _id: res.data.id };
-          dispatch(setAuthStatus(isAuth));
-          dispatch(setCurrentUser(user));
-        }
-      } catch (error: any) {
-        console.log("Error checking auth status:", error);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
+  useAuthStatusCheck();
 
   useEffect(() => {
     if (authStatus && !loginInitiated) {
