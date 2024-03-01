@@ -27,7 +27,7 @@ const UsersController = () => {
     setSelectedRole(roles[0]);
   };
 
-  const handleIsAdminDropdown = (event: any) => {
+  const handleRoleDropdown = (event: any) => {
     setSelectedRole(event.target.value);
   };
 
@@ -68,7 +68,7 @@ const UsersController = () => {
       handleSubmit={handleSubmit}
       errors={errors}
       selectedRole={selectedRole}
-      handleIsAdminDropdown={handleIsAdminDropdown}
+      handleRoleDropdown={handleRoleDropdown}
       showPassword={showPassword}
       handleClickShowPassword={handleClickShowPassword}
       handleMouseDownPassword={handleMouseDownPassword}

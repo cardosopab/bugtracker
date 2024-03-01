@@ -39,7 +39,7 @@ interface UsersViewProps {
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
   errors: any;
   selectedRole: string;
-  handleIsAdminDropdown: (event: any) => void;
+  handleRoleDropdown: (event: any) => void;
 
   showPassword: boolean;
   handleClickShowPassword: () => void;
@@ -57,7 +57,7 @@ const UsersView = ({
   handleSubmit,
   errors,
   selectedRole,
-  handleIsAdminDropdown,
+  handleRoleDropdown,
   showPassword,
   handleClickShowPassword,
   handleMouseDownPassword,
@@ -143,7 +143,7 @@ const UsersView = ({
                     name="admin-dropdown"
                     value={selectedRole}
                     label="Is User Admin"
-                    onChange={handleIsAdminDropdown}
+                    onChange={handleRoleDropdown}
                   >
                     {roles.map((option) => (
                       <MenuItem key={option} value={option}>
