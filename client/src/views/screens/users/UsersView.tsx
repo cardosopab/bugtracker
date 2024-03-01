@@ -30,6 +30,7 @@ import {
 import { Clear, Visibility, VisibilityOff } from "@mui/icons-material";
 import User from "../../../models/User";
 import UserEditModalController from "../../../controllers/components/UserEditModalController";
+import { roles } from "../../../constants/userConstants";
 
 interface UsersViewProps {
   users: User[];
@@ -37,7 +38,7 @@ interface UsersViewProps {
   onSubmit: (values: any) => void;
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
   errors: any;
-  selectedIsAdmin: string;
+  selectedRole: string;
   handleIsAdminDropdown: (event: any) => void;
 
   showPassword: boolean;
@@ -55,7 +56,7 @@ const UsersView = ({
   onSubmit,
   handleSubmit,
   errors,
-  selectedIsAdmin,
+  selectedRole,
   handleIsAdminDropdown,
   showPassword,
   handleClickShowPassword,
@@ -133,21 +134,18 @@ const UsersView = ({
                 />
                 {errors.password && <p>{errors.password.message}</p>}
                 <FormControl margin="normal" fullWidth>
-                  <InputLabel
-                    // id="is_admin-dropdown-label"
-                    htmlFor="is_admin-dropdown"
-                  >
+                  <InputLabel id="admin-dropdown-label">
                     Is User Admin
                   </InputLabel>
                   <Select
-                    id="is_admin-dropdown"
-                    // labelId="is_admin-dropdown-label"
-                    value={selectedIsAdmin}
-                    name={selectedIsAdmin}
+                    labelId="admin-dropdown-label"
+                    id="admin-dropdown"
+                    name="admin-dropdown"
+                    value={selectedRole}
                     label="Is User Admin"
                     onChange={handleIsAdminDropdown}
                   >
-                    {["NO", "YES"].map((option) => (
+                    {roles.map((option) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
@@ -205,13 +203,10 @@ const UsersView = ({
                       {(filteredUsers?.length ? filteredUsers : users).map(
                         (user) => {
                           const { _id, name, email, role } = user;
-                          const isAdmin = role === "Admin";
                           return (
                             <TableRow key={_id}>
                               <TableCell>{name}</TableCell>
-                              <TableCell>
-                                {isAdmin ? "True" : "False"}
-                              </TableCell>
+                              <TableCell>{role}</TableCell>
                               <TableCell
                                 style={
                                   isLargeView

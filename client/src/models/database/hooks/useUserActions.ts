@@ -18,7 +18,7 @@ export const useUserActions = () => {
     name: string,
     email: string,
     password: string,
-    isAdmin: boolean
+    role: string
   ) => {
     if (currentUser?.role === "Demo") {
       return;
@@ -36,7 +36,6 @@ export const useUserActions = () => {
         newCompany
       );
 
-      const role = isAdmin ? "Admin" : "Unassigned";
       const newUser = {
         name: name,
         email: email,

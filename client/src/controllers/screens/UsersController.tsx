@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUserActions } from "../../models/database/hooks/useUserActions";
 import User from "../../models/User";
+import { roles } from "../../constants/userConstants";
 
 const UsersController = () => {
   const {
@@ -14,22 +15,20 @@ const UsersController = () => {
     reset,
   } = useForm();
   const users = useSelector((state: RootState) => state.users.value);
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [selectedRole, setSelectedRole] = useState(roles[0]);
   const createUser = useUserActions().createUser;
   const [searchValue, setSearchValue] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<User[]>();
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (values: any) => {
-    createUser(values.name, values.email, values.password, isAdmin);
+    createUser(values.name, values.email, values.password, selectedRole);
     reset();
-    setIsAdmin(false);
+    setSelectedRole(roles[0]);
   };
 
   const handleIsAdminDropdown = (event: any) => {
-    const eventValue = event.target.value as string;
-    const eventIsAdmin = eventValue === "YES";
-    setIsAdmin(eventIsAdmin);
+    setSelectedRole(event.target.value);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -68,7 +67,7 @@ const UsersController = () => {
       onSubmit={onSubmit}
       handleSubmit={handleSubmit}
       errors={errors}
-      selectedIsAdmin={isAdmin ? "YES" : "NO"}
+      selectedRole={selectedRole}
       handleIsAdminDropdown={handleIsAdminDropdown}
       showPassword={showPassword}
       handleClickShowPassword={handleClickShowPassword}
