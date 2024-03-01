@@ -2,7 +2,7 @@ import Ticket from "./../../Ticket";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
-import { TicketsEndpoints } from "../../../constants/endpoints";
+import { TicketsEndpoints } from "../../../constants/apiEndpoints";
 import { setTickets } from "../../redux/ticketsSlice";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 

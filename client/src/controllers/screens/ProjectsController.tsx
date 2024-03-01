@@ -5,7 +5,7 @@ import Project from "../../models/Project";
 import ProjectsView from "../../views/screens/projects/ProjectsView";
 import { useNavigate } from "react-router-dom";
 import { setProjectDetails } from "../../models/redux/projectDetailsSlice";
-import { PROJECT_DETAILS_URL } from "../../constants/screensUrls";
+import { PROJECT_DETAILS_URL } from "../../constants/viewEndpoints";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
 const ProjectsController = () => {

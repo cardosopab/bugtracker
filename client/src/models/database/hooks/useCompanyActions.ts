@@ -2,7 +2,7 @@ import Company from "./../../Company";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
-import { CompaniesEndpoints } from "../../../constants/endpoints";
+import { CompaniesEndpoints } from "../../../constants/apiEndpoints";
 import { setCompanies } from "../../redux/companiesSlice";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 

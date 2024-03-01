@@ -2,7 +2,7 @@ import Project from "../../Project";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
-import { ProjectsEndpoints } from "../../../constants/endpoints";
+import { ProjectsEndpoints } from "../../../constants/apiEndpoints";
 import { setProjects } from "../../redux/projectsSlice";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 

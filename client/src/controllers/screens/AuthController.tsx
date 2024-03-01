@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { DASHBOARD_URL } from "../../constants/screensUrls";
+import { DASHBOARD_URL } from "../../constants/viewEndpoints";
 import AuthView from "../../views/screens/auth/AuthView";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setAuthStatus, setCurrentUser } from "../../models/redux/authSlice";
-import { AuthEndpoints, UsersEndpoints } from "../../constants/endpoints";
+import { AuthEndpoints, UsersEndpoints } from "../../constants/apiEndpoints";
 import User from "../../models/User";
 
 const AuthController = () => {

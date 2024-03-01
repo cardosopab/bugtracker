@@ -4,7 +4,7 @@ import { RootState } from "../../redux/store";
 import {
   CompaniesEndpoints,
   UsersEndpoints,
-} from "../../../constants/endpoints";
+} from "../../../constants/apiEndpoints";
 import { setUsers } from "../../redux/usersSlice";
 import axios from "axios";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";

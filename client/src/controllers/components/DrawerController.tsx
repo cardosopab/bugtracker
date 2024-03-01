@@ -14,7 +14,7 @@ import {
 import DrawerView from "../../views/components/drawer/DrawerView";
 import { setAuthStatus, setCurrentUser } from "../../models/redux/authSlice";
 import axios from "axios";
-import { AuthEndpoints } from "../../constants/endpoints";
+import { AuthEndpoints } from "../../constants/apiEndpoints";
 
 interface DrawerControllerProps {
   children: React.ReactNode;

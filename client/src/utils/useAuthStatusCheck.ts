@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { AuthEndpoints } from "../constants/endpoints";
+import { AuthEndpoints } from "../constants/apiEndpoints";
 import { setAuthStatus, setCurrentUser } from "../models/redux/authSlice";
 import User from "../models/User";
 
@@ -33,7 +33,7 @@ const useAuthStatusCheck = () => {
     checkAuthStatus();
   }, [dispatch]);
 
-  return null; 
+  return null;
 };
 
 export default useAuthStatusCheck;
