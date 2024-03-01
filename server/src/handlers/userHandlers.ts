@@ -5,7 +5,10 @@ import { hashPassword } from "../utils/helpers";
 
 export const createUserHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   data.password = hashPassword(data.password);
   const newUser = new User(data);
@@ -37,7 +40,10 @@ export const readAllUsersHandler = async (req: Request, res: Response) => {
 
 export const readUserByEmailHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
     const user = await User.findOne(data);
@@ -52,7 +58,10 @@ export const readUserByEmailHandler = async (req: Request, res: Response) => {
 
 export const readUserByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
 
   const data = matchedData(req);
   try {
@@ -69,6 +78,7 @@ export const readUserByIdHandler = async (req: Request, res: Response) => {
 export const updateUserByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
+    console.log(result.array());
     return res.status(400).send(result.array());
   }
 
@@ -98,7 +108,10 @@ export const updateUserByIdHandler = async (req: Request, res: Response) => {
 
 export const deleteUserByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
     const user = await User.findByIdAndDelete(data.userId);
