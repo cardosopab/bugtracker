@@ -9,7 +9,8 @@
     "build": "tsc",
     "lint": "eslint --fix src test",
     "test": "TESTING=true jest --detectOpenHandles",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "conc:dev": "concurrently \"npm run dev\" \"cd ..; cd client; bun run dev\""
   },
   "keywords": [],
   "author": "CJ R. <cj@null.computer> (https://w3cj.now.sh)",
@@ -47,6 +48,7 @@
     "@types/supertest": "^2.0.16",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
+    "concurrently": "^8.2.2",
     "eslint": "^8.54.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
