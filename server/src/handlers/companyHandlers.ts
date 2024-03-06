@@ -13,7 +13,7 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
     const companies = await Company.find().sort({ createdAt: -1 });
     if (!companies) return res.status(404).send("Companies not found");
 
-    return res.status(200).send(companies);
+    return res.status(201).send(companies);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
