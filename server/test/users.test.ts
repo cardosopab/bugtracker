@@ -109,11 +109,12 @@ describe("User life cycle", () => {
         userId: secondMongoUserId,
         companyId: updatedCompanyId,
       });
-    expect(res.statusCode).toBe(200);
-    expect(res.body.name).toBe(secondName);
-    expect(JSON.stringify(res.body.companyId)).toEqual(
-      JSON.stringify(updatedCompanyId)
+    const updatedUser = res.body.find(
+      (user: any) => user._id == secondMongoUserId
     );
+    expect(res.statusCode).toBe(200);
+    expect(updatedUser.name).toBe(secondName);
+    expect(updatedUser.companyId).toBe(updatedCompanyId.toString());
   });
 
   test("should logout first user", async () => {
@@ -177,7 +178,7 @@ describe("User life cycle", () => {
       .send({
         userId: secondMongoUserId,
       });
-    expect(res.statusCode).toBe(204);
+    expect(res.statusCode).toBe(200);
   });
 
   test("should verify deletion", async () => {
