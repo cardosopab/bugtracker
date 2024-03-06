@@ -60,9 +60,12 @@ describe("Company life cycle", () => {
     });
     expect(res.statusCode).toBe(200);
     expect(res.body).toBeDefined();
-    expect(res.body.name).toBe(name);
-    expect(res.body._id).toBe(mongoCompanyId);
-    expect(res.body.personnel.map(String).sort()).toEqual(
+    const updatedCompany = res.body.find(
+      (company: any) => company._id == mongoCompanyId
+    );
+    expect(updatedCompany.name).toBe(name);
+    expect(updatedCompany._id).toBe(mongoCompanyId);
+    expect(updatedCompany.personnel.map(String).sort()).toEqual(
       updatedPersonnelIdArrary.map(String).sort()
     );
   });
@@ -74,9 +77,12 @@ describe("Company life cycle", () => {
     });
     expect(res.statusCode).toBe(200);
     expect(res.body).toBeDefined();
-    expect(res.body.name).toBe(name);
-    expect(res.body._id).toBe(mongoCompanyId);
-    expect(res.body.personnel.map(String).sort()).toEqual(
+    const updatedCompany = res.body.find(
+      (company: any) => company._id == mongoCompanyId
+    );
+    expect(updatedCompany.name).toBe(name);
+    expect(updatedCompany._id).toBe(mongoCompanyId);
+    expect(updatedCompany.personnel.map(String).sort()).toEqual(
       personnelIdArray.map(String).sort()
     );
   });
@@ -87,7 +93,7 @@ describe("Company life cycle", () => {
       .send({
         companyId: mongoCompanyId,
       });
-    expect(res.statusCode).toBe(204);
+    expect(res.statusCode).toBe(200);
   });
 
   afterAll(async () => {
