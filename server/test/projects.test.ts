@@ -64,9 +64,12 @@ describe("Project life cycle", () => {
     });
     expect(res.statusCode).toBe(200);
     expect(res.body).toBeDefined();
-    expect(res.body.name).toBe(name);
-    expect(res.body._id).toBe(mongoProjectId);
-    expect(res.body.personnel.map(String).sort()).toEqual(
+    const updatedProject = res.body.find(
+      (project: any) => project._id == mongoProjectId
+    );
+    expect(updatedProject.name).toBe(name);
+    expect(updatedProject._id).toBe(mongoProjectId);
+    expect(updatedProject.personnel.map(String).sort()).toEqual(
       updatedPersonnelIdArrary.map(String).sort()
     );
   });
@@ -78,9 +81,12 @@ describe("Project life cycle", () => {
     });
     expect(res.statusCode).toBe(200);
     expect(res.body).toBeDefined();
-    expect(res.body.name).toBe(name);
-    expect(res.body._id).toBe(mongoProjectId);
-    expect(res.body.personnel.map(String).sort()).toEqual(
+    const updatedProject = res.body.find(
+      (project: any) => project._id == mongoProjectId
+    );
+    expect(updatedProject.name).toBe(name);
+    expect(updatedProject._id).toBe(mongoProjectId);
+    expect(updatedProject.personnel.map(String).sort()).toEqual(
       personnelIdArray.map(String).sort()
     );
   });
@@ -91,7 +97,7 @@ describe("Project life cycle", () => {
       .send({
         projectId: mongoProjectId,
       });
-    expect(res.statusCode).toBe(204);
+    expect(res.statusCode).toBe(200);
   });
 
   afterAll(async () => {
