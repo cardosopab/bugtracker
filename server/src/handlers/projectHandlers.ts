@@ -16,7 +16,7 @@ export const createProjectHandler = async (req: Request, res: Response) => {
     const projects = await Project.find();
     if (!projects) return res.status(404).send("Project not found");
 
-    return res.status(200).send(projects);
+    return res.status(201).send(projects);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
