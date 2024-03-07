@@ -63,13 +63,13 @@ export const TicketValidationSchema = {
   },
 };
 
-export const TicketNameValidationSchema = {
-  name: {
+export const TicketTitleValidationSchema = {
+  title: {
     notEmpty: {
-      errorMessage: "name cannot be empty",
+      errorMessage: "title cannot be empty",
     },
     isString: {
-      errorMessage: "name is not a string",
+      errorMessage: "title is not a string",
     },
   },
 };

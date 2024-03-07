@@ -4,7 +4,7 @@ import { checkSchema } from "express-validator";
 import {
   TicketValidationSchema,
   TicketIdValidationSchema,
-  TicketNameValidationSchema,
+  TicketTitleValidationSchema,
   CommentValidationSchema,
 } from "../utils/validationSchemas/ticketValidationSchema";
 import {
@@ -14,7 +14,7 @@ import {
   deleteTicketHandler,
   readAllTicketsHandler,
   readTicketByIdHandler,
-  readTicketByNameHandler,
+  readTicketByTitleHandler,
 } from "../handlers/ticketHandler";
 import { TicketsEndpoints } from "../constants/endpoints";
 
@@ -37,15 +37,15 @@ router.post(
 // Read All
 router.get(
   TicketsEndpoints.TICKETS,
-  // checkSchema(TicketNameValidationSchema),
+  // checkSchema(TicketTitleValidationSchema),
   readAllTicketsHandler
 );
 
-// Read By NAME
+// Read By TITLE
 router.get(
-  TicketsEndpoints.TICKET_BY_NAME,
-  checkSchema(TicketNameValidationSchema),
-  readTicketByNameHandler
+  TicketsEndpoints.TICKET_BY_TITLE,
+  checkSchema(TicketTitleValidationSchema),
+  readTicketByTitleHandler
 );
 
 // Read By ID
