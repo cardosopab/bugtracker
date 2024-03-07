@@ -24,7 +24,7 @@ const TicketSchema = new mongoose.Schema(
     },
     personnelId: {
       type: mongoose.Schema.Types.ObjectId,
-      default: "",
+      required: true,
     },
     priority: {
       type: mongoose.Schema.Types.String,
@@ -41,10 +41,7 @@ const TicketSchema = new mongoose.Schema(
     comments: {
       type: [
         {
-          _id: String,
-          parentId: String,
-          message: String,
-          createdAt: Date,
+          type: mongoose.Schema.Types.ObjectId,
         },
       ],
       default: [],
