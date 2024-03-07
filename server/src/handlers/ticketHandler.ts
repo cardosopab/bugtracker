@@ -16,7 +16,7 @@ export const createTicketHandler = async (req: Request, res: Response) => {
     const tickets = await Ticket.find();
     if (!tickets) return res.status(404).send("Tickets not found");
 
-    return res.status(200).send(tickets);
+    return res.status(201).send(tickets);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
@@ -25,7 +25,10 @@ export const createTicketHandler = async (req: Request, res: Response) => {
 
 export const addCommentToArrayHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
 
   const data = matchedData(req);
   const { ticketId, commentId } = data;
@@ -59,12 +62,52 @@ export const readAllTicketsHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const readTicketByNameHandler = async (req: Request, res: Response) => {
+export const readPaginatedTicketsHandler = async (
+  req: Request,
+  res: Response
+) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
+  const data = matchedData(req);
+
+  try {
+    const page = parseInt(data.page as string) || 1;
+    const pageSize = parseInt(data.pageSize as string) || 10;
+
+    const totalCount = await Ticket.countDocuments();
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    if (page > totalPages) {
+      return res.status(404).send("Page not found");
+    }
+
+    const skip = (page - 1) * pageSize;
+
+    const tickets = await Ticket.find().skip(skip).limit(pageSize);
+
+    return res.status(200).json({
+      tickets,
+      currentPage: page,
+      totalPages,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const readTicketByTitleHandler = async (req: Request, res: Response) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
-    const ticket = await Ticket.findOne(data);
+    const ticket = await Ticket.findOne(data.ticketId);
     if (!ticket) return res.status(404).send("Ticket not found");
 
     return res.status(200).send(ticket);
@@ -76,7 +119,10 @@ export const readTicketByNameHandler = async (req: Request, res: Response) => {
 
 export const readTicketByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
     const ticket = await Ticket.findById(data.ticketId);
@@ -91,7 +137,10 @@ export const readTicketByIdHandler = async (req: Request, res: Response) => {
 
 export const updateTicketByIdHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
 
   const data = matchedData(req);
   try {
@@ -120,7 +169,10 @@ export const updateTicketByIdHandler = async (req: Request, res: Response) => {
 export const deleteTicketHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
   console.log(`result: ${JSON.stringify(result)}`);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
   const data = matchedData(req);
   try {
     const deletedTicket = await Ticket.findByIdAndDelete(data.ticketId);
@@ -141,7 +193,10 @@ export const deleteCommentFromArrayHandler = async (
   res: Response
 ) => {
   const result = validationResult(req);
-  if (!result.isEmpty()) return res.status(400).send(result.array());
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
 
   const data = matchedData(req);
   const { ticketId, commentId } = data;
