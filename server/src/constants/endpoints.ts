@@ -21,6 +21,7 @@ export const TicketsEndpoints = {
   TICKETS: "/api/tickets",
   TICKET_BY_TITLE: "/api/tickets/by-title",
   TICKET_BY_ID: "/api/tickets/by-id",
+  TICKET_BY_PAGE: "/api/tickets/by-page",
   COMMENTS: "/api/tickets/comments",
 };
 

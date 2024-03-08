@@ -22,6 +22,7 @@ export const TicketsEndpoints = {
   TICKETS: `${BASE_URL}/api/tickets`,
   TICKET_BY_TITLE: `${BASE_URL}/api/tickets/by-title`,
   TICKET_BY_ID: `${BASE_URL}/api/tickets/by-id`,
+  TICKET_BY_PAGE: `${BASE_URL}/api/tickets/by-page`,
   PERSONNEL: `${BASE_URL}/api/tickets/personnel`,
 };
 
