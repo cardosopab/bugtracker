@@ -103,3 +103,22 @@ export const CommentValidationSchema = {
     },
   },
 };
+
+export const PageValidationSchema = {
+  page: {
+    notEmpty: {
+      errorMessage: "page cannot be empty",
+    },
+    isInt: {
+      errorMessage: "page is not a number",
+    },
+  },
+  pageSize: {
+    notEmpty: {
+      errorMessage: "pageSize cannot be empty",
+    },
+    isInt: {
+      errorMessage: "pageSize is not a number",
+    },
+  },
+};
