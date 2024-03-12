@@ -18,7 +18,6 @@ const TicketsController = () => {
       const { tickets, currentPage, totalPages } = await readPaginatedTickets(
         page
       );
-      console.log(tickets, currentPage, totalPages);
       setTickets(tickets);
       setPage(currentPage);
       setTotalPages(totalPages);
@@ -31,6 +30,15 @@ const TicketsController = () => {
     fetchPaginatedTickets(page);
   }, [page, totalPages]);
 
+  const handlePageChange = async (page: number) => {
+    const { tickets, currentPage, totalPages } = await readPaginatedTickets(
+      page
+    );
+    setTickets(tickets);
+    setPage(currentPage);
+    setTotalPages(totalPages);
+  };
+
   return (
     <TicketsView
       tickets={tickets}
@@ -38,6 +46,7 @@ const TicketsController = () => {
       projects={projects}
       page={page}
       totalPages={totalPages}
+      handlePageChange={handlePageChange}
     />
   );
 };
