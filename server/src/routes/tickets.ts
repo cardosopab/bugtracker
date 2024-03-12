@@ -6,6 +6,7 @@ import {
   TicketIdValidationSchema,
   TicketTitleValidationSchema,
   CommentValidationSchema,
+  PageValidationSchema,
 } from "../utils/validationSchemas/ticketValidationSchema";
 import {
   addCommentToArrayHandler,
@@ -13,6 +14,7 @@ import {
   deleteCommentFromArrayHandler,
   deleteTicketHandler,
   readAllTicketsHandler,
+  readPaginatedTicketsHandler,
   readTicketByIdHandler,
   readTicketByTitleHandler,
 } from "../handlers/ticketHandler";
@@ -39,6 +41,13 @@ router.get(
   TicketsEndpoints.TICKETS,
   // checkSchema(TicketTitleValidationSchema),
   readAllTicketsHandler
+);
+
+// Read By PAGE
+router.post(
+  TicketsEndpoints.TICKET_BY_PAGE,
+  checkSchema(PageValidationSchema),
+  readPaginatedTicketsHandler
 );
 
 // Read By TITLE
