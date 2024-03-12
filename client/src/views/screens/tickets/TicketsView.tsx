@@ -17,6 +17,7 @@ import User from "../../../models/User";
 import Project from "../../../models/Project";
 import TicketEditModalController from "../../../controllers/components/TicketEditModalController";
 import TicketCreateModalController from "../../../controllers/components/TicketCreateModalController";
+import PaginationButtons from "../../components/PaginationButtons";
 
 interface TicketsProps {
   tickets: Ticket[];
@@ -24,9 +25,17 @@ interface TicketsProps {
   projects: Project[];
   page: any;
   totalPages: any;
+  handlePageChange: (page: number) => void;
 }
 
-const TicketsView = ({ tickets, users, projects, page, totalPages }: TicketsProps) => {
+const TicketsView = ({
+  tickets,
+  users,
+  projects,
+  page,
+  totalPages,
+  handlePageChange,
+}: TicketsProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
 
@@ -37,7 +46,6 @@ const TicketsView = ({ tickets, users, projects, page, totalPages }: TicketsProp
           {/* Title/Header */}
           <Grid item xs={12}>
             <h1>Tickets Overview</h1>
-            <p>{`Pages: ${page} TotalPages: ${totalPages}`}</p>
           </Grid>
 
           {/* Table */}
@@ -144,6 +152,13 @@ const TicketsView = ({ tickets, users, projects, page, totalPages }: TicketsProp
           <CardHeader title="No Projects have been created yet!" />
         </Card>
       )}
+      <Grid item xs={12}>
+        <PaginationButtons
+          page={page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </Grid>
     </>
   );
 };
