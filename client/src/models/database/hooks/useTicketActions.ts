@@ -32,6 +32,19 @@ export const useTicketActions = () => {
     }
   };
 
+  const readPaginatedTickets = async (page: number) => {
+    const pageSize = 6;
+    try {
+      const res = await axios.post(TicketsEndpoints.TICKET_BY_PAGE, {
+        page: page,
+        pageSize: pageSize,
+      });
+      return res.data;
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const updateTicket = async (ticket: Ticket) => {
     if (currentUser?.role === "Demo") {
       return;
@@ -65,5 +78,11 @@ export const useTicketActions = () => {
     }
   };
 
-  return { createTicket, readTickets, updateTicket, deleteTicket };
+  return {
+    createTicket,
+    readTickets,
+    readPaginatedTickets,
+    updateTicket,
+    deleteTicket,
+  };
 };
