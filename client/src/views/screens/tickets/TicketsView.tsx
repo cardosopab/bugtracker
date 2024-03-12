@@ -22,11 +22,11 @@ interface TicketsProps {
   tickets: Ticket[];
   users: User[];
   projects: Project[];
-  handleModal: any;
-  openTickets: { [id: string]: boolean };
+  page: any;
+  totalPages: any;
 }
 
-const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
+const TicketsView = ({ tickets, users, projects, page, totalPages }: TicketsProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
 
@@ -37,6 +37,7 @@ const TicketsView = ({ tickets, users, projects }: TicketsProps) => {
           {/* Title/Header */}
           <Grid item xs={12}>
             <h1>Tickets Overview</h1>
+            <p>{`Pages: ${page} TotalPages: ${totalPages}`}</p>
           </Grid>
 
           {/* Table */}
