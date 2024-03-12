@@ -17,11 +17,6 @@ describe("Ticket life cycle", () => {
   const companyId = new mongoose.Types.ObjectId();
   const personnelId = new mongoose.Types.ObjectId();
   const newCommentId = new mongoose.Types.ObjectId();
-  const commentsIdArray = [
-    new mongoose.Types.ObjectId(),
-    new mongoose.Types.ObjectId(),
-  ];
-  const updatedCommentsIdArrary = [...commentsIdArray, newCommentId];
   let mongoTicketId: string;
 
   beforeAll(async () => {
@@ -43,6 +38,17 @@ describe("Ticket life cycle", () => {
       comments: [],
     });
     expect(res.statusCode).toBe(201);
+  });
+
+  test("should read tickets by page", async () => {
+    const page = 1;
+    const pageSize = 10;
+    const res = await request(app).get(TicketsEndpoints.TICKET_BY_PAGE).send({
+      page: page,
+      pageSize: pageSize,
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeDefined();
   });
 
   test("should find ticket by title", async () => {
