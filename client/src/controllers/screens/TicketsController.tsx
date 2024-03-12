@@ -1,28 +1,43 @@
 import { useSelector } from "react-redux";
 import TicketsView from "../../views/screens/tickets/TicketsView";
 import { RootState } from "../../models/redux/store";
-import { useState } from "react";
+import Ticket from "../../models/Ticket";
+import { useEffect, useState } from "react";
+import { useTicketActions } from "../../models/database/hooks/useTicketActions";
 
 const TicketsController = () => {
-  const tickets = useSelector((state: RootState) => state.tickets.value);
   const users = useSelector((state: RootState) => state.users.value);
   const projects = useSelector((state: RootState) => state.projects.value);
-  const [openTickets, setOpenTickets] = useState<{ [id: string]: boolean }>({});
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const { readPaginatedTickets } = useTicketActions();
 
-  const handleModal = (ticketId: string) => {
-    setOpenTickets((prevOpenTickets) => ({
-      ...prevOpenTickets,
-      [ticketId]: !prevOpenTickets[ticketId],
-    }));
+  const fetchPaginatedTickets = async (page: number) => {
+    try {
+      const { tickets, currentPage, totalPages } = await readPaginatedTickets(
+        page
+      );
+      console.log(tickets, currentPage, totalPages);
+      setTickets(tickets);
+      setPage(currentPage);
+      setTotalPages(totalPages);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  useEffect(() => {
+    fetchPaginatedTickets(page);
+  }, [page, totalPages]);
 
   return (
     <TicketsView
       tickets={tickets}
       users={users}
       projects={projects}
-      openTickets={openTickets}
-      handleModal={handleModal}
+      page={page}
+      totalPages={totalPages}
     />
   );
 };
