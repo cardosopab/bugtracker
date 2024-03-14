@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
 import { TicketsEndpoints } from "../../../constants/apiEndpoints";
-import { setTickets } from "../../redux/ticketsSlice";
+import { setTickets, setTicketsData } from "../../redux/ticketsSlice";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 
 export const useTicketActions = () => {
@@ -32,14 +32,21 @@ export const useTicketActions = () => {
     }
   };
 
-  const readPaginatedTickets = async (page: number) => {
+  const readPaginatedTickets = async (page: number, companyId: string) => {
     const pageSize = 6;
     try {
       const res = await axios.post(TicketsEndpoints.TICKET_BY_PAGE, {
         page: page,
         pageSize: pageSize,
+        companyId: companyId,
       });
-      return res.data;
+      dispatch(
+        setTicketsData({
+          tickets: res.data.tickets as Ticket[],
+          page: res.data.page as number,
+          totalPages: res.data.totalPages as number,
+        })
+      );
     } catch (error: any) {
       handleAxiosError(error);
     }
