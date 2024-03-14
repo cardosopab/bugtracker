@@ -54,6 +54,17 @@ export const useProjectActions = () => {
     }
   };
 
+  const readCompanyProjects = async (companyId: string) => {
+    try {
+      const res = await axios.post(ProjectsEndpoints.PROJECT_BY_COMPANY, {
+        companyId: companyId,
+      });
+      dispatch(setProjects(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const readProjects = async () => {
     try {
       const res = await axios.get(ProjectsEndpoints.PROJECTS);
@@ -118,6 +129,7 @@ export const useProjectActions = () => {
     createProject,
     addUserToProject,
     readProjects,
+    readCompanyProjects,
     updateProject,
     deleteProject,
     deleteUserFromProject,
