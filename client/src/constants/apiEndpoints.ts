@@ -9,12 +9,14 @@ export const UsersEndpoints = {
   USERS: `${BASE_URL}/api/users`,
   USER_BY_EMAIL: `${BASE_URL}/api/users/by-email`,
   USER_BY_ID: `${BASE_URL}/api/users/by-id`,
+  USER_BY_COMPANY: `${BASE_URL}/api/users/by-company`,
 };
 
 export const ProjectsEndpoints = {
   PROJECTS: `${BASE_URL}/api/projects`,
   PROJECT_BY_NAME: `${BASE_URL}/api/projects/by-name`,
   PROJECT_BY_ID: `${BASE_URL}/api/projects/by-id`,
+  PROJECT_BY_COMPANY: `${BASE_URL}/api/projects/by-company`,
   PERSONNEL: `${BASE_URL}/api/projects/personnel`,
 };
 
