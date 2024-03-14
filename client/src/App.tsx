@@ -16,34 +16,12 @@ import UsersController from "./controllers/screens/UsersController";
 import ProjectDetailsController from "./controllers/screens/ProjectDetailsController";
 import KanbanController from "./controllers/screens/KanbanController";
 import DashboardController from "./controllers/screens/DashboardController";
-import { useTicketActions } from "./models/database/hooks/useTicketActions";
-import { useProjectActions } from "./models/database/hooks/useProjectActions";
-import { useUserActions } from "./models/database/hooks/useUserActions";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "./models/redux/store";
 import ProjectAssigmentController from "./controllers/screens/ProjectAssignmentController";
 import Layout from "./Layout";
 import useAuthStatusCheck from "./utils/useAuthStatusCheck";
 
 function App() {
-  const authStatus = useSelector((state: RootState) => state.auth.authStatus);
-  const { readUsers } = useUserActions();
-  const { readProjects } = useProjectActions();
-  const { readTickets } = useTicketActions();
-  const [loginInitiated, setLoginInitiated] = useState(false);
-
   useAuthStatusCheck();
-
-  useEffect(() => {
-    if (authStatus && !loginInitiated) {
-      // Fetch data if user is authenticated
-      readTickets();
-      readProjects();
-      readUsers();
-      setLoginInitiated(true);
-    }
-  }, [authStatus, loginInitiated, readTickets, readProjects, readUsers]);
 
   return (
     <BrowserRouter>
