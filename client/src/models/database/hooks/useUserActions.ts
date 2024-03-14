@@ -62,6 +62,18 @@ export const useUserActions = () => {
     }
   };
 
+  const readCompanyUsers = async (companyId: string) => {
+    try {
+      const res = await axios.post(UsersEndpoints.USER_BY_COMPANY, {
+        companyId: companyId,
+      });
+      dispatch(setUsers(res.data));
+      // return res.data;
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const updateUser = async (user: User) => {
     if (currentUser?.role === "Demo") {
       return;
@@ -119,5 +131,12 @@ export const useUserActions = () => {
     }
   };
 
-  return { createUser, readUsers, updateUser, updateUserRole, deleteUser };
+  return {
+    createUser,
+    readUsers,
+    readCompanyUsers,
+    updateUser,
+    updateUserRole,
+    deleteUser,
+  };
 };
