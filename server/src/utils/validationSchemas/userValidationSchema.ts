@@ -33,10 +33,18 @@ export const UserValidationSchema = {
   },
 };
 
+export const UserCompanyValidationSchema = {
+  companyId: {
+    notEmpty: {
+      errorMessage: "company id cannot be empty",
+    },
+  },
+};
+
 export const UserIdValidationSchema = {
   userId: {
     notEmpty: {
-      errorMessage: "userId cannot be empty",
+      errorMessage: "user id cannot be empty",
     },
   },
 };
