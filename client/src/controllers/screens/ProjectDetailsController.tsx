@@ -4,7 +4,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 
 const ProjectDetailsController = () => {
   const details = useSelector((state: RootState) => state.projectDetails.value);
-  let tickets = useSelector((state: RootState) => state.tickets.value);
+  let tickets = useSelector((state: RootState) => state.tickets.tickets);
   const users = useSelector((state: RootState) => state.users.value);
 
   if (details._id === undefined) {

@@ -11,7 +11,7 @@ import DashboardView from "../../views/screens/dashboard/DashboardView";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 const DashboardController = () => {
-  const tickets = useSelector((state: RootState) => state.tickets.value);
+  const tickets = useSelector((state: RootState) => state.tickets.tickets);
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
   const [priorityCount, setPriorityCount] = useState<number[]>(

@@ -7,7 +7,7 @@ import Project from "../../models/Project";
 import KanbanView from "../../views/screens/kanban/KanbanView";
 
 const KanbanController = () => {
-  const tickets = useSelector((state: RootState) => state.tickets.value);
+  const tickets = useSelector((state: RootState) => state.tickets.tickets);
   const projects = useSelector((state: RootState) => state.projects.value);
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
     undefined
