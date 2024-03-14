@@ -18,6 +18,10 @@ const PaginationButtons: React.FC<PaginationButtonsProps> = ({
       onPageChange(newPage);
     }
   };
+  // Don't render if totalPages is less than 1
+  if (totalPages < 2) {
+    return null;
+  }
 
   return (
     <Grid container justifyContent="center">
