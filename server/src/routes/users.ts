@@ -3,6 +3,7 @@ import "../strategies/local-strategies";
 import { checkSchema } from "express-validator";
 import {
   PatchUserValidationSchema,
+  UserCompanyValidationSchema,
   UserEmailValidationSchema,
   UserIdValidationSchema,
   UserValidationSchema,
@@ -10,6 +11,7 @@ import {
 import {
   createUserHandler,
   deleteUserByIdHandler,
+  readAllCompanyUsersHandler,
   readAllUsersHandler,
   readUserByEmailHandler,
   readUserByIdHandler,
@@ -32,8 +34,15 @@ router.post(
   createUserHandler
 );
 
-// Read By All
+// Read All
 router.get(UsersEndpoints.USERS, readAllUsersHandler);
+
+// Read ALL Company
+router.post(
+  UsersEndpoints.USER_BY_COMPANY,
+  checkSchema(UserCompanyValidationSchema),
+  readAllCompanyUsersHandler
+);
 
 // Read By EMAIL
 router.get(
