@@ -19,6 +19,17 @@ export const ProjectValidationSchema = {
   personnel: {},
 };
 
+export const ProjectCompanyValidationSchema = {
+  companyId: {
+    notEmpty: {
+      errorMessage: "company cannot be empty",
+    },
+    isString: {
+      errorMessage: "company is not a string",
+    },
+  },
+};
+
 export const ProjectNameValidationSchema = {
   name: {
     notEmpty: {
