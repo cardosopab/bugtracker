@@ -38,6 +38,29 @@ export const readAllUsersHandler = async (req: Request, res: Response) => {
   }
 };
 
+export const readAllCompanyUsersHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
+  const data = matchedData(req);
+  try {
+    const users = await User.find({ companyId: data.companyId }).select(
+      "name email role companyId"
+    );
+    if (!users) return res.status(404).send("Users not found");
+
+    return res.status(200).send(users);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
 export const readUserByEmailHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
