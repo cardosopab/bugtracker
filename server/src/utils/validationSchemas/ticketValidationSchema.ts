@@ -105,6 +105,14 @@ export const CommentValidationSchema = {
 };
 
 export const PageValidationSchema = {
+  companyId: {
+    notEmpty: {
+      errorMessage: "company cannot be empty",
+    },
+    isString: {
+      errorMessage: "company is not a number",
+    },
+  },
   page: {
     notEmpty: {
       errorMessage: "page cannot be empty",
