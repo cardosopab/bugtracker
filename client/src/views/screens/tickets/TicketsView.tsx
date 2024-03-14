@@ -41,7 +41,7 @@ const TicketsView = ({
 
   return (
     <>
-      {projects.length > 0 ? (
+      {tickets.length > 0 ? (
         <Grid container spacing={2} padding={2}>
           {/* Title/Header */}
           <Grid item xs={12}>
@@ -149,7 +149,7 @@ const TicketsView = ({
         </Grid>
       ) : (
         <Card className="center">
-          <CardHeader title="No Projects have been created yet!" />
+          <CardHeader title="No Tickets have been created yet!" />
         </Card>
       )}
       <Grid item xs={12}>
