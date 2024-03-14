@@ -71,11 +71,12 @@ export const readPaginatedTicketsHandler = async (
     console.log(result.array());
     return res.status(400).send(result.array());
   }
-  const data = matchedData(req);
+  const { companyId } = matchedData(req);
+  let { page, pageSize } = matchedData(req);
 
   try {
-    const page = parseInt(data.page as string) || 1;
-    const pageSize = parseInt(data.pageSize as string) || 10;
+    page = parseInt(page as string) || 1;
+    pageSize = parseInt(pageSize as string) || 10;
 
     const totalCount = await Ticket.countDocuments();
     const totalPages = Math.ceil(totalCount / pageSize);
@@ -86,11 +87,13 @@ export const readPaginatedTicketsHandler = async (
 
     const skip = (page - 1) * pageSize;
 
-    const tickets = await Ticket.find().skip(skip).limit(pageSize);
+    const tickets = await Ticket.find({ companyId: companyId })
+      .skip(skip)
+      .limit(pageSize);
 
     return res.status(200).json({
       tickets,
-      currentPage: page,
+      page,
       totalPages,
     });
   } catch (err) {
