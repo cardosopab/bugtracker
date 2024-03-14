@@ -1,42 +1,35 @@
 import { useSelector } from "react-redux";
 import TicketsView from "../../views/screens/tickets/TicketsView";
 import { RootState } from "../../models/redux/store";
-import Ticket from "../../models/Ticket";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTicketActions } from "../../models/database/hooks/useTicketActions";
+import { useUserActions } from "../../models/database/hooks/useUserActions";
+import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
 const TicketsController = () => {
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+  const companyId = user!.companyId;
+  const { tickets, page, totalPages } = useSelector(
+    (state: RootState) => state.tickets
+  );
   const users = useSelector((state: RootState) => state.users.value);
   const projects = useSelector((state: RootState) => state.projects.value);
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const { readPaginatedTickets } = useTicketActions();
-
-  const fetchPaginatedTickets = async (page: number) => {
-    try {
-      const { tickets, currentPage, totalPages } = await readPaginatedTickets(
-        page
-      );
-      setTickets(tickets);
-      setPage(currentPage);
-      setTotalPages(totalPages);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const { readCompanyUsers } = useUserActions();
+  const { readCompanyProjects } = useProjectActions();
 
   useEffect(() => {
-    fetchPaginatedTickets(page);
-  }, [page, totalPages]);
+    readPaginatedTickets(page, companyId);
+  }, [page, companyId]);
+
+  useEffect(() => {
+    readCompanyUsers(companyId);
+
+    readCompanyProjects(companyId);
+  }, [companyId]);
 
   const handlePageChange = async (page: number) => {
-    const { tickets, currentPage, totalPages } = await readPaginatedTickets(
-      page
-    );
-    setTickets(tickets);
-    setPage(currentPage);
-    setTotalPages(totalPages);
+    await readPaginatedTickets(page, user!.companyId);
   };
 
   return (
