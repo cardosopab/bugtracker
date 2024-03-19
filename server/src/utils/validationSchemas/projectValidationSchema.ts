@@ -52,7 +52,7 @@ export const ProjectIdValidationSchema = {
   },
 };
 
-export const PersonnelValidationSchema = {
+export const ProjectPersonnelValidationSchema = {
   projectId: {
     notEmpty: {
       errorMessage: "project id cannot be empty",

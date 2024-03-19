@@ -85,7 +85,7 @@ export const TicketIdValidationSchema = {
   },
 };
 
-export const CommentValidationSchema = {
+export const TicketCommentValidationSchema = {
   ticketId: {
     notEmpty: {
       errorMessage: "ticket id cannot be empty",
@@ -104,7 +104,18 @@ export const CommentValidationSchema = {
   },
 };
 
-export const PageValidationSchema = {
+export const TicketCompanyValidationSchema = {
+  companyId: {
+    notEmpty: {
+      errorMessage: "company cannot be empty",
+    },
+    isString: {
+      errorMessage: "company is not a string",
+    },
+  },
+};
+
+export const TicketPageValidationSchema = {
   companyId: {
     notEmpty: {
       errorMessage: "company cannot be empty",
