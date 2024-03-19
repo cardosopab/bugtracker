@@ -43,7 +43,7 @@ describe("Ticket life cycle", () => {
   test("should read tickets by page", async () => {
     const page = 1;
     const pageSize = 10;
-    const res = await request(app).get(TicketsEndpoints.TICKET_BY_PAGE).send({
+    const res = await request(app).get(TicketsEndpoints.TICKETS_BY_PAGE).send({
       page: page,
       pageSize: pageSize,
     });
