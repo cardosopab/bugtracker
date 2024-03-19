@@ -62,6 +62,27 @@ export const readAllTicketsHandler = async (req: Request, res: Response) => {
   }
 };
 
+export const readTicketByCompanyHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
+  const data = matchedData(req);
+  try {
+    const projects = await Ticket.find(data);
+    if (!projects) return res.status(404).send("Tickets not found");
+
+    return res.status(200).send(projects);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
 export const readPaginatedTicketsHandler = async (
   req: Request,
   res: Response
