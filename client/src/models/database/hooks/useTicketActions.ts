@@ -32,10 +32,21 @@ export const useTicketActions = () => {
     }
   };
 
+  const readCompanyTickets = async (companyId: string) => {
+    try {
+      const res = await axios.post(TicketsEndpoints.TICKETS_BY_COMPANY, {
+        companyId: companyId,
+      });
+      dispatch(setTickets(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const readPaginatedTickets = async (page: number, companyId: string) => {
     const pageSize = 6;
     try {
-      const res = await axios.post(TicketsEndpoints.TICKET_BY_PAGE, {
+      const res = await axios.post(TicketsEndpoints.TICKETS_BY_PAGE, {
         page: page,
         pageSize: pageSize,
         companyId: companyId,
@@ -88,6 +99,7 @@ export const useTicketActions = () => {
   return {
     createTicket,
     readTickets,
+    readCompanyTickets,
     readPaginatedTickets,
     updateTicket,
     deleteTicket,
