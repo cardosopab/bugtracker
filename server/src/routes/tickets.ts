@@ -5,8 +5,9 @@ import {
   TicketValidationSchema,
   TicketIdValidationSchema,
   TicketTitleValidationSchema,
-  CommentValidationSchema,
-  PageValidationSchema,
+  TicketCommentValidationSchema,
+  TicketPageValidationSchema,
+  TicketCompanyValidationSchema,
 } from "../utils/validationSchemas/ticketValidationSchema";
 import {
   addCommentToArrayHandler,
@@ -15,6 +16,7 @@ import {
   deleteTicketHandler,
   readAllTicketsHandler,
   readPaginatedTicketsHandler,
+  readTicketByCompanyHandler,
   readTicketByIdHandler,
   readTicketByTitleHandler,
 } from "../handlers/ticketHandler";
@@ -32,7 +34,7 @@ router.post(
 // Create Comment By ID
 router.post(
   TicketsEndpoints.COMMENTS,
-  checkSchema(CommentValidationSchema),
+  checkSchema(TicketCommentValidationSchema),
   addCommentToArrayHandler
 );
 
@@ -43,10 +45,17 @@ router.get(
   readAllTicketsHandler
 );
 
+// Read By COMPANY
+router.post(
+  TicketsEndpoints.TICKETS_BY_COMPANY,
+  checkSchema(TicketCompanyValidationSchema),
+  readTicketByCompanyHandler
+);
+
 // Read By PAGE
 router.post(
-  TicketsEndpoints.TICKET_BY_PAGE,
-  checkSchema(PageValidationSchema),
+  TicketsEndpoints.TICKETS_BY_PAGE,
+  checkSchema(TicketPageValidationSchema),
   readPaginatedTicketsHandler
 );
 
@@ -80,7 +89,7 @@ router.delete(
 // Delete Comment By ID
 router.delete(
   TicketsEndpoints.COMMENTS,
-  checkSchema(CommentValidationSchema),
+  checkSchema(TicketCommentValidationSchema),
   deleteCommentFromArrayHandler
 );
 
