@@ -64,7 +64,7 @@ export const useUserActions = () => {
 
   const readCompanyUsers = async (companyId: string) => {
     try {
-      const res = await axios.post(UsersEndpoints.USER_BY_COMPANY, {
+      const res = await axios.post(UsersEndpoints.USERS_BY_COMPANY, {
         companyId: companyId,
       });
       dispatch(setUsers(res.data));

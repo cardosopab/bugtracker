@@ -8,14 +8,14 @@ export const UsersEndpoints = {
   USERS: "/api/users",
   USER_BY_EMAIL: "/api/users/by-email",
   USER_BY_ID: "/api/users/by-id",
-  USER_BY_COMPANY: "/api/users/by-company",
+  USERS_BY_COMPANY: "/api/users/by-company",
 };
 
 export const ProjectsEndpoints = {
   PROJECTS: "/api/projects",
   PROJECT_BY_NAME: "/api/projects/by-name",
   PROJECT_BY_ID: "/api/projects/by-id",
-  PROJECT_BY_COMPANY: "/api/projects/by-company",
+  PROJECTS_BY_COMPANY: "/api/projects/by-company",
   PERSONNEL: "/api/projects/personnel",
 };
 
@@ -23,7 +23,8 @@ export const TicketsEndpoints = {
   TICKETS: "/api/tickets",
   TICKET_BY_TITLE: "/api/tickets/by-title",
   TICKET_BY_ID: "/api/tickets/by-id",
-  TICKET_BY_PAGE: "/api/tickets/by-page",
+  TICKETS_BY_COMPANY: "/api/tickets/by-company",
+  TICKETS_BY_PAGE: "/api/tickets/by-page",
   COMMENTS: "/api/tickets/comments",
 };
 

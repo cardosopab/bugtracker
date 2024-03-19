@@ -56,7 +56,7 @@ export const useProjectActions = () => {
 
   const readCompanyProjects = async (companyId: string) => {
     try {
-      const res = await axios.post(ProjectsEndpoints.PROJECT_BY_COMPANY, {
+      const res = await axios.post(ProjectsEndpoints.PROJECTS_BY_COMPANY, {
         companyId: companyId,
       });
       dispatch(setProjects(res.data));

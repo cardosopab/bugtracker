@@ -5,7 +5,7 @@ import {
   ProjectValidationSchema,
   ProjectIdValidationSchema,
   ProjectNameValidationSchema,
-  PersonnelValidationSchema,
+  ProjectPersonnelValidationSchema,
   ProjectCompanyValidationSchema,
 } from "../utils/validationSchemas/projectValidationSchema";
 import {
@@ -32,7 +32,7 @@ router.post(
 // Create Personnel By ID
 router.post(
   ProjectsEndpoints.PERSONNEL,
-  checkSchema(PersonnelValidationSchema),
+  checkSchema(ProjectPersonnelValidationSchema),
   addPersonnelToArrayHandler
 );
 
@@ -45,7 +45,7 @@ router.get(
 
 // Read By COMPANY
 router.post(
-  ProjectsEndpoints.PROJECT_BY_COMPANY,
+  ProjectsEndpoints.PROJECTS_BY_COMPANY,
   checkSchema(ProjectCompanyValidationSchema),
   readProjectByCompanyHandler
 );
@@ -74,7 +74,7 @@ router.delete(
 // Delete Personnel By ID
 router.delete(
   ProjectsEndpoints.PERSONNEL,
-  checkSchema(PersonnelValidationSchema),
+  checkSchema(ProjectPersonnelValidationSchema),
   deletePersonnelFromArrayHandler
 );
 

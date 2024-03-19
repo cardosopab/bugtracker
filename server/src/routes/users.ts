@@ -39,7 +39,7 @@ router.get(UsersEndpoints.USERS, readAllUsersHandler);
 
 // Read ALL Company
 router.post(
-  UsersEndpoints.USER_BY_COMPANY,
+  UsersEndpoints.USERS_BY_COMPANY,
   checkSchema(UserCompanyValidationSchema),
   readAllCompanyUsersHandler
 );
