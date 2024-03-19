@@ -9,7 +9,7 @@ import { useProjectActions } from "../../models/database/hooks/useProjectActions
 const TicketsController = () => {
   const user = useSelector((state: RootState) => state.auth.currentUser);
   const companyId = user!.companyId;
-  const { tickets, page, totalPages } = useSelector(
+  const { paginatedTickets, page, totalPages } = useSelector(
     (state: RootState) => state.tickets
   );
   const users = useSelector((state: RootState) => state.users.value);
@@ -34,7 +34,7 @@ const TicketsController = () => {
 
   return (
     <TicketsView
-      tickets={tickets}
+      paginatedTickets={paginatedTickets}
       users={users}
       projects={projects}
       page={page}

@@ -5,6 +5,7 @@ export const ticketsSlice = createSlice({
   name: "tickets",
   initialState: {
     tickets: [] as Ticket[],
+    paginatedTickets: [] as Ticket[],
     page: 0 as number,
     totalPages: 0 as number,
   },
@@ -12,21 +13,21 @@ export const ticketsSlice = createSlice({
     setTickets: (state, action: PayloadAction<Ticket[]>) => {
       state.tickets = action.payload;
     },
-    setTicketsData: (
+    setPaginatedTickets: (
       state,
       action: PayloadAction<{
-        tickets: Ticket[];
+        paginatedTickets: Ticket[];
         page: number;
         totalPages: number;
       }>
     ) => {
-      state.tickets = action.payload.tickets;
+      state.paginatedTickets = action.payload.paginatedTickets;
       state.page = action.payload.page;
       state.totalPages = action.payload.totalPages;
     },
   },
 });
 
-export const { setTickets, setTicketsData } = ticketsSlice.actions;
+export const { setTickets, setPaginatedTickets } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

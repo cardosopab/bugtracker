@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
 import { TicketsEndpoints } from "../../../constants/apiEndpoints";
-import { setTickets, setTicketsData } from "../../redux/ticketsSlice";
+import { setTickets, setPaginatedTickets } from "../../redux/ticketsSlice";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 
 export const useTicketActions = () => {
@@ -52,8 +52,8 @@ export const useTicketActions = () => {
         companyId: companyId,
       });
       dispatch(
-        setTicketsData({
-          tickets: res.data.tickets as Ticket[],
+        setPaginatedTickets({
+          paginatedTickets: res.data.tickets as Ticket[],
           page: res.data.page as number,
           totalPages: res.data.totalPages as number,
         })

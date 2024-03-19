@@ -20,7 +20,7 @@ import TicketCreateModalController from "../../../controllers/components/TicketC
 import PaginationButtons from "../../components/PaginationButtons";
 
 interface TicketsProps {
-  tickets: Ticket[];
+  paginatedTickets: Ticket[];
   users: User[];
   projects: Project[];
   page: any;
@@ -29,7 +29,7 @@ interface TicketsProps {
 }
 
 const TicketsView = ({
-  tickets,
+  paginatedTickets,
   users,
   projects,
   page,
@@ -41,7 +41,7 @@ const TicketsView = ({
 
   return (
     <>
-      {tickets.length > 0 ? (
+      {paginatedTickets.length > 0 ? (
         <Grid container spacing={2} padding={2}>
           {/* Title/Header */}
           <Grid item xs={12}>
@@ -82,7 +82,7 @@ const TicketsView = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tickets.map((ticket) => {
+                  {paginatedTickets.map((ticket) => {
                     const {
                       _id,
                       title,
