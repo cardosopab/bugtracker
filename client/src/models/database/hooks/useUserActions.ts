@@ -53,6 +53,18 @@ export const useUserActions = () => {
     }
   };
 
+  const findUserByEmail = async (email: string) => {
+    try {
+      const res = await axios.post(UsersEndpoints.USER_BY_EMAIL, {
+        email: email,
+      });
+      // dispatch(setUsers(res.data));
+      return res.data;
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const readUsers = async () => {
     try {
       const res = await axios.get(UsersEndpoints.USERS);
@@ -133,6 +145,7 @@ export const useUserActions = () => {
 
   return {
     createUser,
+    findUserByEmail,
     readUsers,
     readCompanyUsers,
     updateUser,
