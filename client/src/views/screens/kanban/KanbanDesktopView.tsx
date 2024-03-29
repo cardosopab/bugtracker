@@ -17,6 +17,8 @@ import TicketCreateModalController from "../../../controllers/components/TicketC
 import TicketEditModalController from "../../../controllers/components/TicketEditModalController";
 import { statusOptions } from "../../../constants/ticketConstants";
 import Ticket from "../../../models/Ticket";
+import KanbanSelect from "./KanbanSelect";
+import UserAddModalController from "../../../controllers/components/UserAddModalController";
 
 interface KanbanMobileViewProps {
   projects: Project[];
@@ -46,37 +48,19 @@ const KanbanMobileView = ({
             >
               Select a Project
             </InputLabel>
-            <Select
-              labelId="project-dropdown-label"
-              value={selectedProject.name}
-              name={selectedProject.name}
-              label="Select a Project"
-              onChange={handleProjectDropdown}
-              sx={{
-                color: "white",
-                ".MuiOutlinedInput-notchedOutline": {
-                  borderColor: "rgba(228, 219, 233, 0.25)",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "rgba(228, 219, 233, 0.25)",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "rgba(228, 219, 233, 0.25)",
-                },
-                ".MuiSvgIcon-root ": {
-                  fill: "white !important",
-                },
-              }}
-            >
-              {projects.map((option) => (
-                <MenuItem key={option._id} value={option.name}>
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Select>
+            <KanbanSelect
+              selectedProject={selectedProject}
+              projects={projects}
+              handleProjectDropdown={handleProjectDropdown}
+            />
           </FormControl>
         }
-        action={<TicketCreateModalController />}
+        action={
+          <>
+            <UserAddModalController projectId={selectedProject._id} />
+            <TicketCreateModalController />
+          </>
+        }
       />
       <Table style={{ tableLayout: "fixed" }}>
         <TableHead>
