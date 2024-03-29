@@ -45,7 +45,7 @@ router.post(
 );
 
 // Read By EMAIL
-router.get(
+router.post(
   UsersEndpoints.USER_BY_EMAIL,
   isAdminMiddleware,
   checkSchema(UserEmailValidationSchema),
