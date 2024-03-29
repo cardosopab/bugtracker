@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { setProjectDetails } from "../../models/redux/projectDetailsSlice";
 import { PROJECT_DETAILS_URL } from "../../constants/viewEndpoints";
 import { useProjectActions } from "../../models/database/hooks/useProjectActions";
+import { useEffect } from "react";
 
 const ProjectsController = () => {
-  const { createProject } = useProjectActions();
+  const { createProject, readPaginatedProjects } = useProjectActions();
   const navigateTo = useNavigate();
   const {
     handleSubmit,
@@ -18,10 +19,15 @@ const ProjectsController = () => {
     reset,
   } = useForm();
   const dispatch = useDispatch();
-  const projects = useSelector((state: RootState) => state.projects.value);
-  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
+
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+  const companyId = user!.companyId;
+  const { paginatedProjects, page, totalPages } = useSelector(
+    (state: RootState) => state.projects
+  );
+
   const onSubmit = (values: any) => {
-    createProject(values.name, values.description, currentUser!.companyId);
+    createProject(values.name, values.description, companyId);
     reset();
   };
 
@@ -30,15 +36,26 @@ const ProjectsController = () => {
     dispatch(setProjectDetails(details));
   };
 
+  const handlePageChange = async (page: number) => {
+    await readPaginatedProjects(page, companyId);
+  };
+
+  useEffect(() => {
+    readPaginatedProjects(page, companyId);
+  }, []);
+
   return (
     <>
       <ProjectsView
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
-        projects={projects}
+        paginatedProjects={paginatedProjects}
         errors={errors}
         navigateToDetails={navigateToDetails}
+        page={page}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
       />
     </>
   );
