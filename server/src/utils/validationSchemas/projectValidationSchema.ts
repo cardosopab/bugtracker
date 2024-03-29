@@ -52,6 +52,25 @@ export const ProjectIdValidationSchema = {
   },
 };
 
+export const ProjectEmailPersonnelValidationSchema = {
+  projectId: {
+    notEmpty: {
+      errorMessage: "project id cannot be empty",
+    },
+    isString: {
+      errorMessage: "project id is not a string",
+    },
+  },
+  email: {
+    notEmpty: {
+      errorMessage: "email cannot be empty",
+    },
+    isString: {
+      errorMessage: "email is not a string",
+    },
+  },
+};
+
 export const ProjectPersonnelValidationSchema = {
   projectId: {
     notEmpty: {
@@ -67,6 +86,33 @@ export const ProjectPersonnelValidationSchema = {
     },
     isString: {
       errorMessage: "personnel id is not a string",
+    },
+  },
+};
+
+export const ProjectPageValidationSchema = {
+  companyId: {
+    notEmpty: {
+      errorMessage: "company cannot be empty",
+    },
+    isString: {
+      errorMessage: "company is not a number",
+    },
+  },
+  page: {
+    notEmpty: {
+      errorMessage: "page cannot be empty",
+    },
+    isInt: {
+      errorMessage: "page is not a number",
+    },
+  },
+  pageSize: {
+    notEmpty: {
+      errorMessage: "pageSize cannot be empty",
+    },
+    isInt: {
+      errorMessage: "pageSize is not a number",
     },
   },
 };
