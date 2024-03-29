@@ -7,13 +7,17 @@ import {
   ProjectNameValidationSchema,
   ProjectPersonnelValidationSchema,
   ProjectCompanyValidationSchema,
+  ProjectPageValidationSchema,
+  ProjectEmailPersonnelValidationSchema,
 } from "../utils/validationSchemas/projectValidationSchema";
 import {
+  addPersonnelByEmailHandler,
   addPersonnelToArrayHandler,
   createProjectHandler,
   deletePersonnelFromArrayHandler,
   deleteProjectHandler,
   readAllProjectsHandler,
+  readPaginatedProjectsHandler,
   readProjectByCompanyHandler,
   readProjectByIdHandler,
   readProjectByNameHandler,
@@ -36,6 +40,13 @@ router.post(
   addPersonnelToArrayHandler
 );
 
+// Create Personnel By EMAIL
+router.post(
+  ProjectsEndpoints.PROJECT_BY_EMAIL,
+  checkSchema(ProjectEmailPersonnelValidationSchema),
+  addPersonnelByEmailHandler
+);
+
 // Read All
 router.get(
   ProjectsEndpoints.PROJECTS,
@@ -48,6 +59,13 @@ router.post(
   ProjectsEndpoints.PROJECTS_BY_COMPANY,
   checkSchema(ProjectCompanyValidationSchema),
   readProjectByCompanyHandler
+);
+
+// Read By PAGE
+router.post(
+  ProjectsEndpoints.PROJECTS_BY_PAGE,
+  checkSchema(ProjectPageValidationSchema),
+  readPaginatedProjectsHandler
 );
 
 // Read By NAME
