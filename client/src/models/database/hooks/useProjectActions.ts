@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
 import { ProjectsEndpoints } from "../../../constants/apiEndpoints";
-import { setProjects } from "../../redux/projectsSlice";
+import { setPaginatedProjects, setProjects } from "../../redux/projectsSlice";
 import { handleAxiosError } from "../../../utils/axiosErrorHandler";
 
 export const useProjectActions = () => {
@@ -36,6 +36,23 @@ export const useProjectActions = () => {
     }
   };
 
+  const addUserByEmailToProject = async (email: string, projectId: string) => {
+    if (currentUser?.role === "Demo") {
+      return;
+    }
+
+    try {
+      const res = await axios.post(ProjectsEndpoints.PROJECT_BY_EMAIL, {
+        email: email,
+        projectId: projectId,
+      });
+      // dispatch(setProjects(res.data));
+      return res.data;
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const addUserToProject = async (personnelId: string, projectId: string) => {
     if (currentUser?.role === "Demo") {
       return;
@@ -60,6 +77,26 @@ export const useProjectActions = () => {
         companyId: companyId,
       });
       dispatch(setProjects(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
+  const readPaginatedProjects = async (page: number, companyId: string) => {
+    const pageSize = 6;
+    try {
+      const res = await axios.post(ProjectsEndpoints.PROJECTS_BY_PAGE, {
+        page: page,
+        pageSize: pageSize,
+        companyId: companyId,
+      });
+      dispatch(
+        setPaginatedProjects({
+          paginatedProjects: res.data.projects as Project[],
+          page: res.data.page as number,
+          totalPages: res.data.totalPages as number,
+        })
+      );
     } catch (error: any) {
       handleAxiosError(error);
     }
@@ -127,9 +164,11 @@ export const useProjectActions = () => {
 
   return {
     createProject,
+    addUserByEmailToProject,
     addUserToProject,
     readProjects,
     readCompanyProjects,
+    readPaginatedProjects,
     updateProject,
     deleteProject,
     deleteUserFromProject,
