@@ -15,7 +15,9 @@ export const ProjectsEndpoints = {
   PROJECTS: "/api/projects",
   PROJECT_BY_NAME: "/api/projects/by-name",
   PROJECT_BY_ID: "/api/projects/by-id",
+  PROJECT_BY_EMAIL: "/api/projects/by-email",
   PROJECTS_BY_COMPANY: "/api/projects/by-company",
+  PROJECTS_BY_PAGE: "/api/projects/by-page",
   PERSONNEL: "/api/projects/personnel",
 };
 
