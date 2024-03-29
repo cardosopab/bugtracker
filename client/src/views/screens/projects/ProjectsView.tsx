@@ -19,14 +19,18 @@ import {
 } from "react-hook-form";
 import Project from "../../../models/Project";
 import ProjectDeleteModalController from "../../../controllers/components/ProjectDeleteModalController";
+import PaginationButtons from "../../components/PaginationButtons";
 
 interface ProjectsViewProps {
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
   navigateToDetails: (project: Project) => void;
   onSubmit: (values: any) => void;
   register: (name: string, options?: RegisterOptions) => any;
-  projects: Project[];
   errors: any;
+  paginatedProjects: Project[];
+  page: number;
+  totalPages: number;
+  onPageChange: (page: number) => {};
 }
 
 const ProjectsView = ({
@@ -35,8 +39,12 @@ const ProjectsView = ({
   onSubmit,
   register,
   errors,
-  projects,
+  paginatedProjects,
+  page,
+  totalPages,
+  onPageChange,
 }: ProjectsViewProps) => {
+  console.log(paginatedProjects);
   return (
     <>
       <Grid container spacing={2} padding={2}>
@@ -90,7 +98,7 @@ const ProjectsView = ({
               style={{ backgroundColor: "#1976d2", color: "white" }}
               subheaderTypographyProps={{ color: "white" }}
             />
-            {projects.length !== 0 ? (
+            {paginatedProjects.length > 0 ? (
               <TableContainer component={Paper}>
                 <Table style={{ tableLayout: "fixed" }}>
                   <TableHead>
@@ -101,7 +109,7 @@ const ProjectsView = ({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {projects.map((project) => {
+                    {paginatedProjects.map((project) => {
                       const { _id, name, description } = project;
                       return (
                         <TableRow key={_id}>
@@ -127,6 +135,11 @@ const ProjectsView = ({
               <p style={{ textAlign: "center" }}>No Projects found</p>
             )}
           </Card>
+          <PaginationButtons
+            page={page}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
         </Grid>
       </Grid>
     </>
