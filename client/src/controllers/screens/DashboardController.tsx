@@ -9,11 +9,19 @@ import { useEffect, useState } from "react";
 import Ticket from "../../models/Ticket";
 import DashboardView from "../../views/screens/dashboard/DashboardView";
 import { useMediaQuery, useTheme } from "@mui/material";
+import { useTicketActions } from "../../models/database/hooks/useTicketActions";
+import { useProjectActions } from "../../models/database/hooks/useProjectActions";
+import { useUserActions } from "../../models/database/hooks/useUserActions";
 
 const DashboardController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.tickets);
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+  const companyId = user!.companyId;
+  const { readCompanyTickets } = useTicketActions();
+  const { readCompanyProjects } = useProjectActions();
+  const { readCompanyUsers } = useUserActions();
   const [priorityCount, setPriorityCount] = useState<number[]>(
     new Array(priorityOptions.length).fill(0)
   );
@@ -28,6 +36,12 @@ const DashboardController = () => {
   >([]);
   const theme = useTheme();
   const isLarge = useMediaQuery(theme.breakpoints.down("lg")); // Check for lg screen
+
+  useEffect(() => {
+    readCompanyTickets(companyId);
+    readCompanyProjects(companyId);
+    readCompanyUsers(companyId);
+  }, [companyId]);
 
   useEffect(() => {
     const updatedPriorityCount = new Array(priorityOptions.length).fill(0);

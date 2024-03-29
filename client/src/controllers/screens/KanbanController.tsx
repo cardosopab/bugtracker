@@ -5,10 +5,16 @@ import Ticket from "../../models/Ticket";
 import { useEffect, useState } from "react";
 import Project from "../../models/Project";
 import KanbanView from "../../views/screens/kanban/KanbanView";
+import { useTicketActions } from "../../models/database/hooks/useTicketActions";
+import { useProjectActions } from "../../models/database/hooks/useProjectActions";
 
 const KanbanController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.tickets);
   const projects = useSelector((state: RootState) => state.projects.value);
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+  const companyId = user!.companyId;
+  const { readCompanyTickets } = useTicketActions();
+  const { readCompanyProjects } = useProjectActions();
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
     undefined
   );
@@ -16,8 +22,10 @@ const KanbanController = () => {
     [status: string]: Ticket[];
   }>({});
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
+  useEffect(() => {
+    readCompanyProjects(companyId);
+    readCompanyTickets(companyId);
+  }, [companyId]);
 
   useEffect(() => {
     if (projects.length > 0) {
@@ -52,6 +60,9 @@ const KanbanController = () => {
       setSelectedProject(selectedProjectObj);
     }
   };
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
 
   return (
     <KanbanView
