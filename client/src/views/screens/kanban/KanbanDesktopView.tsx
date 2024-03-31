@@ -58,7 +58,7 @@ const KanbanMobileView = ({
         action={
           <>
             <UserAddModalController projectId={selectedProject._id} />
-            <TicketCreateModalController />
+            <TicketCreateModalController project={selectedProject} />
           </>
         }
       />
