@@ -9,6 +9,7 @@ export const UsersEndpoints = {
   USER_BY_EMAIL: "/api/users/by-email",
   USER_BY_ID: "/api/users/by-id",
   USERS_BY_COMPANY: "/api/users/by-company",
+  USERS_BY_PROJECT: "/api/users/by-project",
 };
 
 export const ProjectsEndpoints = {
