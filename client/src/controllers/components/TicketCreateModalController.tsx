@@ -1,19 +1,21 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../models/redux/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Project from "../../models/Project";
 import { useTicketActions } from "../../models/database/hooks/useTicketActions";
 import TicketCreateModalView from "../../views/components/ticket_create_modal/TicketCreateModalView";
 import Ticket from "../../models/Ticket";
+import { useUserActions } from "../../models/database/hooks/useUserActions";
 
 interface CreateTicketProps {
-  project?: Project;
+  project: Project;
 }
 
 const TicketCreateModalController = ({ project }: CreateTicketProps) => {
   const createTicket = useTicketActions().createTicket;
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
+  const { readProjectUsers } = useUserActions();
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const [open, setOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState("");
@@ -36,7 +38,7 @@ const TicketCreateModalController = ({ project }: CreateTicketProps) => {
   };
 
   const handleTicketCreate = () => {
-    const currentUserId = currentUser._id;
+    const currentUserId = currentUser!._id;
     const personnelId =
       users.find((user) => user.name === selectedPersonnel)?._id ?? "";
     const projectId =
@@ -68,6 +70,9 @@ const TicketCreateModalController = ({ project }: CreateTicketProps) => {
     setDescriptionValue("");
   };
 
+  useEffect(() => {
+    readProjectUsers(project!._id);
+  }, [project]);
   return (
     <TicketCreateModalView
       project={project}
