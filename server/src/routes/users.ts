@@ -6,12 +6,14 @@ import {
   UserCompanyValidationSchema,
   UserEmailValidationSchema,
   UserIdValidationSchema,
+  UserProjectValidationSchema,
   UserValidationSchema,
 } from "../utils/validationSchemas/userValidationSchema";
 import {
   createUserHandler,
   deleteUserByIdHandler,
   readAllCompanyUsersHandler,
+  readAllProjectUsersHandler,
   readAllUsersHandler,
   readUserByEmailHandler,
   readUserByIdHandler,
@@ -37,11 +39,18 @@ router.post(
 // Read All
 router.get(UsersEndpoints.USERS, readAllUsersHandler);
 
-// Read ALL Company
+// Read ALL COMPANY
 router.post(
   UsersEndpoints.USERS_BY_COMPANY,
   checkSchema(UserCompanyValidationSchema),
   readAllCompanyUsersHandler
+);
+
+// Read ALL PROJECT
+router.post(
+  UsersEndpoints.USERS_BY_PROJECT,
+  checkSchema(UserProjectValidationSchema),
+  readAllProjectUsersHandler
 );
 
 // Read By EMAIL
