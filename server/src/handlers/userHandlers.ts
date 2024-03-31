@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validationResult, matchedData } from "express-validator";
 import User from "../mongoose/schemas/User";
 import { hashPassword } from "../utils/helpers";
+import Project from "../mongoose/schemas/Project";
 
 export const createUserHandler = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -30,6 +31,31 @@ export const readAllUsersHandler = async (req: Request, res: Response) => {
   try {
     const users = await User.find().select("name email role companyId");
     if (!users) return res.status(404).send("Users not found");
+
+    return res.status(200).send(users);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const readAllProjectUsersHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
+  const data = matchedData(req);
+  try {
+    const project = await Project.findById(data.projectId);
+    if (!project) return res.status(404).send("Project not found");
+
+    const users = await User.find({ _id: { $in: project.personnel } }).select(
+      "name email role"
+    );
 
     return res.status(200).send(users);
   } catch (err) {
