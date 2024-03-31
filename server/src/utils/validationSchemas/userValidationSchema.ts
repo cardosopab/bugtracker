@@ -41,6 +41,14 @@ export const UserCompanyValidationSchema = {
   },
 };
 
+export const UserProjectValidationSchema = {
+  projectId: {
+    notEmpty: {
+      errorMessage: "project id cannot be empty",
+    },
+  },
+};
+
 export const UserIdValidationSchema = {
   userId: {
     notEmpty: {
