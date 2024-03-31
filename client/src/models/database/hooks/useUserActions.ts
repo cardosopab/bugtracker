@@ -86,6 +86,18 @@ export const useUserActions = () => {
     }
   };
 
+  const readProjectUsers = async (projectId: string) => {
+    try {
+      const res = await axios.post(UsersEndpoints.USERS_BY_PROJECT, {
+        projectId: projectId,
+      });
+      dispatch(setUsers(res.data));
+      // return res.data;
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const updateUser = async (user: User) => {
     if (currentUser?.role === "Demo") {
       return;
@@ -148,6 +160,7 @@ export const useUserActions = () => {
     findUserByEmail,
     readUsers,
     readCompanyUsers,
+    readProjectUsers,
     updateUser,
     updateUserRole,
     deleteUser,
