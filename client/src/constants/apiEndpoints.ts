@@ -10,6 +10,7 @@ export const UsersEndpoints = {
   USER_BY_EMAIL: `${BASE_URL}/api/users/by-email`,
   USER_BY_ID: `${BASE_URL}/api/users/by-id`,
   USERS_BY_COMPANY: `${BASE_URL}/api/users/by-company`,
+  USERS_BY_PROJECT: `${BASE_URL}/api/users/by-project`,
 };
 
 export const ProjectsEndpoints = {
