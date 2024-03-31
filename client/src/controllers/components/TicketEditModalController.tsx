@@ -10,8 +10,7 @@ interface EditTicketProps {
   title?: string;
 }
 const TicketEditModalController = ({ ticket, title }: EditTicketProps) => {
-  const deleteTicket = useTicketActions().deleteTicket;
-  const updateTicket = useTicketActions().updateTicket;
+  const { deleteTicket, updateTicket } = useTicketActions();
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,9 +31,9 @@ const TicketEditModalController = ({ ticket, title }: EditTicketProps) => {
     setIsModalOpen((prev) => !prev);
   };
 
-  const handleUpdate = (tickeId: string, ticket: Ticket) => {
+  const handleUpdate = (ticket: Ticket) => {
     handleModalToggle();
-    updateTicket(tickeId, ticket);
+    updateTicket(ticket);
   };
   const handleTicketRemoval = (ticketId: string) => {
     deleteTicket(ticketId);

@@ -42,7 +42,7 @@ interface TicketEditModalViewProps {
   setSelectedProject: React.Dispatch<React.SetStateAction<string>>;
   setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
   setSelectedType: React.Dispatch<React.SetStateAction<string>>;
-  handleUpdate: (ticketId: string, ticket: Ticket) => void;
+  handleUpdate: (ticket: Ticket) => void;
   handleTicketRemoval: (ticketId: string) => void;
   handleModalToggle: () => void;
 }
@@ -222,7 +222,7 @@ const TicketEditModalView = ({
                       variant="contained"
                       color="primary"
                       onClick={() =>
-                        handleUpdate(ticket._id, {
+                        handleUpdate({
                           _id: ticket._id,
                           projectId: projects.find(
                             (project) => project.name === selectedProject
