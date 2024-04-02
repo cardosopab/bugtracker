@@ -71,6 +71,17 @@ export const ProjectEmailPersonnelValidationSchema = {
   },
 };
 
+export const ProjectsPersonnelValidationSchema = {
+  personnelId: {
+    notEmpty: {
+      errorMessage: "personnel id cannot be empty",
+    },
+    isString: {
+      errorMessage: "personnel id is not a string",
+    },
+  },
+};
+
 export const ProjectPersonnelValidationSchema = {
   projectId: {
     notEmpty: {
