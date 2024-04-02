@@ -9,9 +9,9 @@ import Project from "../../models/Project";
 
 const DashboardController = () => {
   const { readProjectData } = useDashboardActions();
-  const { readCompanyProjects } = useProjectActions();
-  const companyId = useSelector(
-    (state: RootState) => state.auth.currentUser!.companyId
+  const { readProjectsByPersonnelId } = useProjectActions();
+  const personnelId = useSelector(
+    (state: RootState) => state.auth.currentUser!._id
   );
   const projects = useSelector((state: RootState) => state.projects.value);
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
@@ -31,8 +31,8 @@ const DashboardController = () => {
   >(undefined);
 
   useEffect(() => {
-    readCompanyProjects(companyId);
-  }, [companyId]);
+    readProjectsByPersonnelId(personnelId);
+  }, [personnelId]);
 
   useEffect(() => {
     if (projects.length > 0 && !selectedProject) {
@@ -43,14 +43,12 @@ const DashboardController = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (selectedProject) {
-          const data = await readProjectData(selectedProject!._id);
-          // Update the state variables
-          setPriorityCount(data.priorityCount);
-          setStatusCount(data.statusCount);
-          setTypeCount(data.typeCount);
-          setPersonnelCount(data.topPersonnelCount);
-        }
+        const data = await readProjectData(selectedProject!._id);
+        // Update the state variables
+        setPriorityCount(data.priorityCount);
+        setStatusCount(data.statusCount);
+        setTypeCount(data.typeCount);
+        setPersonnelCount(data.topPersonnelCount);
       } catch (error) {
         console.error("Error fetching project data:", error);
       }
