@@ -5,6 +5,10 @@ export const AuthEndpoints = {
   LOGOUT: `${BASE_URL}/api/auth/logout`,
 };
 
+export const DashboardEndpoints = {
+  DATA: `${BASE_URL}/api/dashboard/data`,
+};
+
 export const UsersEndpoints = {
   USERS: `${BASE_URL}/api/users`,
   USER_BY_EMAIL: `${BASE_URL}/api/users/by-email`,

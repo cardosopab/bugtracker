@@ -4,6 +4,10 @@ export const AuthEndpoints = {
   LOGOUT: "/api/auth/logout",
 };
 
+export const DashboardEndpoints = {
+  DATA: "/api/dashboard/data",
+};
+
 export const UsersEndpoints = {
   USERS: "/api/users",
   USER_BY_EMAIL: "/api/users/by-email",
