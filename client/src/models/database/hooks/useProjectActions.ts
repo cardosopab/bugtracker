@@ -71,6 +71,17 @@ export const useProjectActions = () => {
     }
   };
 
+  const readProjectsByPersonnelId = async (personnelId: string) => {
+    try {
+      const res = await axios.post(ProjectsEndpoints.PROJECT_BY_ID, {
+        personnelId: personnelId,
+      });
+      dispatch(setProjects(res.data));
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
   const readCompanyProjects = async (companyId: string) => {
     try {
       const res = await axios.post(ProjectsEndpoints.PROJECTS_BY_COMPANY, {
@@ -168,6 +179,7 @@ export const useProjectActions = () => {
     addUserToProject,
     readProjects,
     readCompanyProjects,
+    readProjectsByPersonnelId,
     readPaginatedProjects,
     updateProject,
     deleteProject,

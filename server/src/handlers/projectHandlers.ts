@@ -98,6 +98,32 @@ export const readAllProjectsHandler = async (req: Request, res: Response) => {
   }
 };
 
+export const readProjectsByPersonnelHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    console.log(result.array());
+    return res.status(400).send(result.array());
+  }
+  const data = matchedData(req);
+  try {
+    // Find projects where the personnel array contains the specified personnel id
+    const projects = await Project.find({ personnel: data.personnelId });
+
+    if (!projects || projects.length === 0) {
+      console.log("Projects not found");
+      return res.status(404).send("Projects not found");
+    }
+
+    return res.status(200).send(projects);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
 export const readProjectByCompanyHandler = async (
   req: Request,
   res: Response
