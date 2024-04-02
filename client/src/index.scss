@@ -1,5 +1,5 @@
 $Mui-blue: #1976d2;
-$Small-Viewport: 600px;
+$Small-Viewport: 800px;
 $Medium-Viewport: 1300px;
 $Large-Viewport: 1200px;
 $Secondary-Header: #eee;
@@ -22,8 +22,8 @@ $Secondary-Header: #eee;
 
     @media (min-width:$Small-Viewport) {
       .chart-container {
-        width: min(40vw, 40vh);
-        height: min(40vw, 40vh);
+        width: min(45vw, 45vh);
+        height: min(30vw, 30vh);
       }
     }
 
@@ -37,7 +37,7 @@ $Secondary-Header: #eee;
     @media (min-width:$Large-Viewport) {
       .chart-container {
         width: 60vw;
-        height: 35vh;
+        height: 30vh;
       }
     }
   }
