@@ -14,18 +14,25 @@ const TicketEditModalController = ({ ticket, title }: EditTicketProps) => {
   const projects = useSelector((state: RootState) => state.projects.value);
   const users = useSelector((state: RootState) => state.users.value);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [titleValue, setTitleValue] = useState(ticket.title);
-  const [descriptionValue, setDescriptionValue] = useState(ticket.description);
+  const [titleValue, setTitleValue] = useState(ticket?.title ?? "");
+  const [descriptionValue, setDescriptionValue] = useState(
+    ticket?.description ?? ""
+  );
   const [selectedProject, setSelectedProject] = useState(
-    projects.find((project) => project._id === ticket.projectId)?.name ??
-      projects[0].name
+    ticket
+      ? projects.find((project) => project._id === ticket.projectId)?.name
+      : projects[0]?.name
   );
-  const [selectedPriority, setSelectedPriority] = useState(ticket.priority);
-  const [selectedType, setSelectedType] = useState(ticket.type);
+  const [selectedPriority, setSelectedPriority] = useState(
+    ticket?.priority ?? ""
+  );
+  const [selectedType, setSelectedType] = useState(ticket?.type ?? "");
   const [selectedPersonnel, setSelectedPersonnel] = useState(
-    users.find((user) => user._id === ticket.personnelId)?.name ?? users[0].name
+    ticket
+      ? users.find((user) => user._id === ticket.personnelId)?.name
+      : users[0]?.name
   );
-  const [selectedStatus, setSelectedStatus] = useState(ticket.status);
+  const [selectedStatus, setSelectedStatus] = useState(ticket?.status ?? "");
 
   const handleModalToggle = () => {
     setIsModalOpen((prev) => !prev);

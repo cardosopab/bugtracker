@@ -30,16 +30,18 @@ interface TicketEditModalViewProps {
   titleValue: string;
   isModalOpen: boolean;
   descriptionValue: string;
-  selectedPersonnel: string;
+  selectedPersonnel: string | undefined;
   selectedPriority: string;
-  selectedProject: string;
+  selectedProject: string | undefined;
   selectedStatus: string;
   selectedType: string;
   setTitleValue: React.Dispatch<React.SetStateAction<string>>;
   setDescriptionValue: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedPersonnel: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedPersonnel: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
   setSelectedPriority: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedProject: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedProject: React.Dispatch<React.SetStateAction<string | undefined>>;
   setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
   setSelectedType: React.Dispatch<React.SetStateAction<string>>;
   handleUpdate: (ticket: Ticket) => void;
