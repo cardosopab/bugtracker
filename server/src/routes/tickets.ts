@@ -19,6 +19,7 @@ import {
   readTicketByCompanyHandler,
   readTicketByIdHandler,
   readTicketByTitleHandler,
+  updateTicketByIdHandler,
 } from "../handlers/ticketHandler";
 import { TicketsEndpoints } from "../constants/endpoints";
 
@@ -76,7 +77,8 @@ router.get(
 // Update By ID
 router.patch(
   TicketsEndpoints.TICKET_BY_ID,
-  checkSchema(TicketValidationSchema)
+  checkSchema(TicketValidationSchema),
+  updateTicketByIdHandler
 );
 
 // Delete
