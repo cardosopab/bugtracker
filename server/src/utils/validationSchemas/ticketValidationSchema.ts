@@ -1,4 +1,10 @@
 export const TicketValidationSchema = {
+  ticketId: {
+    optional: true,
+    isString: {
+      errorMessage: "ticket id is not a string",
+    },
+  },
   title: {
     notEmpty: {
       errorMessage: "Title cannot be empty",
