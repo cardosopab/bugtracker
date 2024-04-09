@@ -32,10 +32,10 @@ export const useTicketActions = () => {
     }
   };
 
-  const readCompanyTickets = async (companyId: string) => {
+  const readProjectTickets = async (projectId: string) => {
     try {
-      const res = await axios.post(TicketsEndpoints.TICKETS_BY_COMPANY, {
-        companyId: companyId,
+      const res = await axios.post(TicketsEndpoints.TICKETS_BY_PROJECT, {
+        projectId: projectId,
       });
       dispatch(setTickets(res.data));
     } catch (error: any) {
@@ -99,7 +99,7 @@ export const useTicketActions = () => {
   return {
     createTicket,
     readTickets,
-    readCompanyTickets,
+    readProjectTickets,
     readPaginatedTickets,
     updateTicket,
     deleteTicket,
