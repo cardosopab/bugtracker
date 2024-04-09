@@ -25,8 +25,8 @@ const AuthController = () => {
     axios
       .post(authEndpoint, values, { withCredentials: true })
       .then((res) => {
-        const user: User = { ...res.data, _id: res.data.id };
-        const isAuth = res.status === 200;
+        const user: User = { ...res.data };
+        const isAuth = res.status === (isSignIn ? 200 : 201);
         dispatch(setAuthStatus(isAuth));
         dispatch(setCurrentUser(user));
         navigateTo(DASHBOARD_URL);
