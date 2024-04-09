@@ -31,7 +31,6 @@ if (isTesting) console.log(`isTesting: ${isTesting}`);
 // Create
 router.post(
   UsersEndpoints.USERS,
-  isTesting ? [] : isAdminMiddleware,
   checkSchema(UserValidationSchema),
   createUserHandler
 );
