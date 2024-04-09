@@ -11,10 +11,11 @@ import { useProjectActions } from "../../models/database/hooks/useProjectActions
 const KanbanController = () => {
   const tickets = useSelector((state: RootState) => state.tickets.tickets);
   const projects = useSelector((state: RootState) => state.projects.value);
-  const user = useSelector((state: RootState) => state.auth.currentUser);
-  const companyId = user!.companyId;
-  const { readCompanyTickets } = useTicketActions();
-  const { readCompanyProjects } = useProjectActions();
+  const personnelId = useSelector(
+    (state: RootState) => state.auth.currentUser?._id
+  );
+  const { readProjectTickets } = useTicketActions();
+  const { readProjectsByPersonnelId } = useProjectActions();
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
     undefined
   );
@@ -23,15 +24,22 @@ const KanbanController = () => {
   }>({});
 
   useEffect(() => {
-    readCompanyProjects(companyId);
-    readCompanyTickets(companyId);
-  }, [companyId]);
+    if (personnelId) {
+      readProjectsByPersonnelId(personnelId);
+    }
+  }, [personnelId]);
 
   useEffect(() => {
     if (projects.length > 0) {
       setSelectedProject(projects[0]);
     }
   }, [projects]);
+
+  useEffect(() => {
+    if (selectedProject) {
+      readProjectTickets(selectedProject._id);
+    }
+  }, [selectedProject]);
 
   useEffect(() => {
     if (selectedProject) {
@@ -61,14 +69,10 @@ const KanbanController = () => {
     }
   };
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
-
   return (
     <KanbanView
       projects={projects}
       selectedProject={selectedProject}
-      isMobile={isMobile}
       handleProjectDropdown={handleProjectDropdown}
       ticketsByStatus={ticketsByStatus}
     />
