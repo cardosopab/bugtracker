@@ -1,4 +1,11 @@
-import { Grid, CardHeader, Card, SelectChangeEvent } from "@mui/material";
+import {
+  Grid,
+  CardHeader,
+  Card,
+  SelectChangeEvent,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import Ticket from "../../../models/Ticket";
 import Project from "../../../models/Project";
 import KanbanMobileView from "./KanbanMobileView";
@@ -7,7 +14,6 @@ import KanbanDesktopView from "./KanbanDesktopView";
 interface KanbanViewProps {
   projects: Project[];
   selectedProject: Project | undefined;
-  isMobile: boolean;
   handleProjectDropdown: (event: SelectChangeEvent) => void;
   ticketsByStatus: { [status: string]: Ticket[] };
 }
@@ -15,10 +21,11 @@ interface KanbanViewProps {
 const KanbanView = ({
   projects,
   selectedProject,
-  isMobile,
   handleProjectDropdown,
   ticketsByStatus,
 }: KanbanViewProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
   return (
     <>
       {projects.length > 0 && selectedProject !== undefined ? (
