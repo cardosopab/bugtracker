@@ -17,10 +17,7 @@ export const createUserHandler = async (req: Request, res: Response) => {
     const savedUser = await newUser.save();
     if (!savedUser) return res.status(404).send("User not created");
 
-    const users = await User.find().select("name email role companyId");
-    if (!users) return res.status(404).send("User not found");
-
-    return res.status(201).send(users);
+    return res.status(201).send(savedUser);
   } catch (err) {
     console.log(err);
     return res.sendStatus(400);
