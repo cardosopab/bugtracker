@@ -7,7 +7,7 @@ import {
   TicketTitleValidationSchema,
   TicketCommentValidationSchema,
   TicketPageValidationSchema,
-  TicketCompanyValidationSchema,
+  TicketProjectValidationSchema,
 } from "../utils/validationSchemas/ticketValidationSchema";
 import {
   addCommentToArrayHandler,
@@ -16,8 +16,8 @@ import {
   deleteTicketHandler,
   readAllTicketsHandler,
   readPaginatedTicketsHandler,
-  readTicketByCompanyHandler,
   readTicketByIdHandler,
+  readTicketByProjectHandler,
   readTicketByTitleHandler,
   updateTicketByIdHandler,
 } from "../handlers/ticketHandler";
@@ -46,11 +46,11 @@ router.get(
   readAllTicketsHandler
 );
 
-// Read By COMPANY
+// Read By PROJECT
 router.post(
-  TicketsEndpoints.TICKETS_BY_COMPANY,
-  checkSchema(TicketCompanyValidationSchema),
-  readTicketByCompanyHandler
+  TicketsEndpoints.TICKETS_BY_PROJECT,
+  checkSchema(TicketProjectValidationSchema),
+  readTicketByProjectHandler
 );
 
 // Read By PAGE

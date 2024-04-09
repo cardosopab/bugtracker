@@ -83,7 +83,7 @@ export const readTicketsByProjectHandler = async (
   }
 };
 
-export const readTicketByCompanyHandler = async (
+export const readTicketByProjectHandler = async (
   req: Request,
   res: Response
 ) => {

@@ -30,7 +30,7 @@ export const TicketsEndpoints = {
   TICKETS: "/api/tickets",
   TICKET_BY_TITLE: "/api/tickets/by-title",
   TICKET_BY_ID: "/api/tickets/by-id",
-  TICKETS_BY_COMPANY: "/api/tickets/by-company",
+  TICKETS_BY_PROJECT: "/api/tickets/by-project",
   TICKETS_BY_PAGE: "/api/tickets/by-page",
   COMMENTS: "/api/tickets/comments",
 };

@@ -110,13 +110,13 @@ export const TicketCommentValidationSchema = {
   },
 };
 
-export const TicketCompanyValidationSchema = {
-  companyId: {
+export const TicketProjectValidationSchema = {
+  projectId: {
     notEmpty: {
-      errorMessage: "company cannot be empty",
+      errorMessage: "project cannot be empty",
     },
     isString: {
-      errorMessage: "company is not a string",
+      errorMessage: "project is not a string",
     },
   },
 };
