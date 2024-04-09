@@ -10,7 +10,7 @@ export const loginHandler = (
 
   if (user) {
     const responseData: SerializedUser = {
-      id: user.id,
+      _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -32,7 +32,7 @@ export const statusHandler = (
 
   if (user) {
     const responseData: SerializedUser = {
-      id: user.id,
+      _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,

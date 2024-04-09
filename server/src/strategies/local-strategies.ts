@@ -5,12 +5,15 @@ import SerializedUser from "../models/SerializedUser";
 import { comparePassword } from "../utils/helpers";
 
 passport.serializeUser((user: SerializedUser, done) => {
-  done(null, { id: user.id, role: user.role });
+  console.log("serializedUser", user);
+  done(null, { _id: user._id, role: user.role });
 });
 
-passport.deserializeUser(async (serializedUser: SerializedUser, done) => {
+passport.deserializeUser(async (serializedUser: any, done) => {
   try {
-    const { id } = serializedUser;
+    // TODO: passport using id, instead of _id
+    const id = serializedUser._id;
+    console.log("deserializedUser", id, serializedUser);
     const findUser = await User.findById(id).exec();
     if (!findUser) throw new Error("User Not Found.");
 
