@@ -11,7 +11,7 @@ const DashboardController = () => {
   const { readProjectData } = useDashboardActions();
   const { readProjectsByPersonnelId } = useProjectActions();
   const personnelId = useSelector(
-    (state: RootState) => state.auth.currentUser!._id
+    (state: RootState) => state.auth.currentUser?._id
   );
   const projects = useSelector((state: RootState) => state.projects.value);
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
@@ -31,11 +31,13 @@ const DashboardController = () => {
   >(undefined);
 
   useEffect(() => {
-    readProjectsByPersonnelId(personnelId);
+    if (personnelId) {
+      readProjectsByPersonnelId(personnelId);
+    }
   }, [personnelId]);
 
   useEffect(() => {
-    if (projects.length > 0 && !selectedProject) {
+    if (projects.length > 0) {
       setSelectedProject(projects[0]);
     }
   }, [projects, selectedProject]);
