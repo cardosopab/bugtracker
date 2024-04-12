@@ -4,8 +4,6 @@ import {
   Card,
   FormControl,
   InputLabel,
-  Select,
-  MenuItem,
   Typography,
   ImageList,
   ImageListItem,
@@ -16,10 +14,13 @@ import TicketCreateModalController from "../../../controllers/components/TicketC
 import TicketEditModalController from "../../../controllers/components/TicketEditModalController";
 import { statusOptions } from "../../../constants/ticketConstants";
 import Ticket from "../../../models/Ticket";
+import KanbanSelect from "./KanbanSelect";
+import UserAddModalController from "../../../controllers/components/UserAddModalController";
+import ProjectCreateModalController from "../../../controllers/components/ProjectCreateModalController";
 
 interface KanbanMobileViewProps {
   projects: Project[];
-  selectedProject: Project;
+  selectedProject: Project | undefined;
   ticketsByStatus: { [status: string]: Ticket[] };
   handleProjectDropdown: (event: SelectChangeEvent) => void;
 }
@@ -34,74 +35,75 @@ const KanbanMobileView = ({
       <Card style={{ background: "white" }}>
         <CardHeader
           title={
-            <FormControl margin={"normal"} fullWidth>
-              <InputLabel
-                id="project-dropdown-label"
-                sx={{
-                  color: "white",
-                  "&.Mui-focused": {
+            selectedProject != undefined ? (
+              <FormControl margin={"normal"} fullWidth>
+                <InputLabel
+                  id="project-dropdown-label"
+                  sx={{
                     color: "white",
-                  },
-                }}
-              >
-                Select a Project
-              </InputLabel>
-              <Select
-                labelId="project-dropdown-label"
-                value={selectedProject.name}
-                name={selectedProject.name}
-                label="Select a Project"
-                onChange={handleProjectDropdown}
-                sx={{
-                  color: "white",
-                  ".MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgba(228, 219, 233, 0.25)",
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgba(228, 219, 233, 0.25)",
-                  },
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgba(228, 219, 233, 0.25)",
-                  },
-                  ".MuiSvgIcon-root ": {
-                    fill: "white !important",
-                  },
-                }}
-              >
-                {projects.map((option) => (
-                  <MenuItem key={option._id} value={option.name}>
-                    {option.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                    "&.Mui-focused": {
+                      color: "white",
+                    },
+                  }}
+                >
+                  Select a Project
+                </InputLabel>
+                <KanbanSelect
+                  selectedProject={selectedProject}
+                  projects={projects}
+                  handleProjectDropdown={handleProjectDropdown}
+                />
+              </FormControl>
+            ) : (
+              "Create a Project"
+            )
           }
           subheader={
-            <Grid item xs={12} sx={{ justifyContent: "end", textAlign: "end" }}>
-              <TicketCreateModalController />
-            </Grid>
+            selectedProject && (
+              <Grid
+                item
+                xs={12}
+                sx={{ justifyContent: "end", textAlign: "end" }}
+              >
+                <>
+                  {selectedProject && (
+                    <>
+                      <TicketCreateModalController project={selectedProject} />
+                      <UserAddModalController projectId={selectedProject._id} />
+                    </>
+                  )}
+                  <ProjectCreateModalController isPrimary={true} />
+                </>
+              </Grid>
+            )
           }
         />
-        <ImageList cols={1}>
-          {statusOptions.map((status) => (
-            <ImageListItem key={status} style={{ marginBottom: "16px" }}>
-              <Typography variant="h6" sx={{ backgroundColor: "#eee" }}>
-                {status}
-              </Typography>
-              {ticketsByStatus[status]?.map((ticket: Ticket) => {
-                return (
-                  <div key={`ticket-${ticket._id}`}>
-                    <TicketEditModalController
-                      key={`edit-${ticket._id}`}
-                      ticket={ticket}
-                      title={ticket.title}
-                    />
-                  </div>
-                );
-              })}
-            </ImageListItem>
-          ))}
-        </ImageList>
+        {projects.length > 0 && selectedProject !== undefined ? (
+          <ImageList cols={1}>
+            {statusOptions.map((status) => (
+              <ImageListItem key={status} style={{ marginBottom: "16px" }}>
+                <Typography variant="h6" sx={{ backgroundColor: "#eee" }}>
+                  {status}
+                </Typography>
+                {ticketsByStatus[status]?.map((ticket: Ticket) => {
+                  return (
+                    <div key={`ticket-${ticket._id}`}>
+                      <TicketEditModalController
+                        key={`edit-${ticket._id}`}
+                        ticket={ticket}
+                        title={ticket.title}
+                      />
+                    </div>
+                  );
+                })}
+              </ImageListItem>
+            ))}
+          </ImageList>
+        ) : (
+          <Card className="center">
+            <CardHeader title="No Projects have been created yet!" />
+          </Card>
+        )}
       </Card>
     </Grid>
   );
