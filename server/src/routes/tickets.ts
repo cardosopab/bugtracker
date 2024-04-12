@@ -4,7 +4,6 @@ import { checkSchema } from "express-validator";
 import {
   TicketValidationSchema,
   TicketIdValidationSchema,
-  TicketTitleValidationSchema,
   TicketCommentValidationSchema,
   TicketPageValidationSchema,
   TicketProjectValidationSchema,
@@ -14,11 +13,9 @@ import {
   createTicketHandler,
   deleteCommentFromArrayHandler,
   deleteTicketHandler,
-  readAllTicketsHandler,
   readPaginatedTicketsHandler,
   readTicketByIdHandler,
-  readTicketByProjectHandler,
-  readTicketByTitleHandler,
+  readTicketsByProjectHandler,
   updateTicketByIdHandler,
 } from "../handlers/ticketHandler";
 import { TicketsEndpoints } from "../constants/endpoints";
@@ -39,18 +36,11 @@ router.post(
   addCommentToArrayHandler
 );
 
-// Read All
-router.get(
-  TicketsEndpoints.TICKETS,
-  // checkSchema(TicketTitleValidationSchema),
-  readAllTicketsHandler
-);
-
 // Read By PROJECT
 router.post(
   TicketsEndpoints.TICKETS_BY_PROJECT,
   checkSchema(TicketProjectValidationSchema),
-  readTicketByProjectHandler
+  readTicketsByProjectHandler
 );
 
 // Read By PAGE
@@ -58,13 +48,6 @@ router.post(
   TicketsEndpoints.TICKETS_BY_PAGE,
   checkSchema(TicketPageValidationSchema),
   readPaginatedTicketsHandler
-);
-
-// Read By TITLE
-router.get(
-  TicketsEndpoints.TICKET_BY_TITLE,
-  checkSchema(TicketTitleValidationSchema),
-  readTicketByTitleHandler
 );
 
 // Read By ID
@@ -81,7 +64,7 @@ router.patch(
   updateTicketByIdHandler
 );
 
-// Delete
+// Delete By ID
 router.delete(
   TicketsEndpoints.TICKET_BY_ID,
   checkSchema(TicketIdValidationSchema),
