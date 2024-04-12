@@ -69,17 +69,6 @@ export const TicketValidationSchema = {
   },
 };
 
-export const TicketTitleValidationSchema = {
-  title: {
-    notEmpty: {
-      errorMessage: "title cannot be empty",
-    },
-    isString: {
-      errorMessage: "title is not a string",
-    },
-  },
-};
-
 export const TicketIdValidationSchema = {
   ticketId: {
     notEmpty: {
@@ -122,12 +111,12 @@ export const TicketProjectValidationSchema = {
 };
 
 export const TicketPageValidationSchema = {
-  companyId: {
+  projectId: {
     notEmpty: {
-      errorMessage: "company cannot be empty",
+      errorMessage: "project cannot be empty",
     },
     isString: {
-      errorMessage: "company is not a number",
+      errorMessage: "project is not a number",
     },
   },
   page: {
