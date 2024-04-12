@@ -50,40 +50,7 @@ export const addCommentToArrayHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const readAllTicketsHandler = async (req: Request, res: Response) => {
-  try {
-    const tickets = await Ticket.find();
-    if (!tickets) return res.status(404).send("Tickets not found");
-
-    return res.status(200).send(tickets);
-  } catch (err) {
-    console.log(err);
-    return res.sendStatus(500);
-  }
-};
-
 export const readTicketsByProjectHandler = async (
-  req: Request,
-  res: Response
-) => {
-  const result = validationResult(req);
-  if (!result.isEmpty()) {
-    console.log(result.array());
-    return res.status(400).send(result.array());
-  }
-  const data = matchedData(req);
-  try {
-    const projects = await Ticket.find(data);
-    if (!projects) return res.status(404).send("Tickets not found");
-
-    return res.status(200).send(projects);
-  } catch (err) {
-    console.log(err);
-    return res.sendStatus(500);
-  }
-};
-
-export const readTicketByProjectHandler = async (
   req: Request,
   res: Response
 ) => {
@@ -138,24 +105,6 @@ export const readPaginatedTicketsHandler = async (
       page,
       totalPages,
     });
-  } catch (err) {
-    console.log(err);
-    return res.sendStatus(500);
-  }
-};
-
-export const readTicketByTitleHandler = async (req: Request, res: Response) => {
-  const result = validationResult(req);
-  if (!result.isEmpty()) {
-    console.log(result.array());
-    return res.status(400).send(result.array());
-  }
-  const data = matchedData(req);
-  try {
-    const ticket = await Ticket.findOne(data.ticketId);
-    if (!ticket) return res.status(404).send("Ticket not found");
-
-    return res.status(200).send(ticket);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);
