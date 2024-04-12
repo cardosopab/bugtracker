@@ -1,7 +1,5 @@
 import {
   Grid,
-  CardHeader,
-  Card,
   SelectChangeEvent,
   useTheme,
   useMediaQuery,
@@ -28,37 +26,31 @@ const KanbanView = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check for sm screen
   return (
     <>
-      {projects.length > 0 && selectedProject !== undefined ? (
-        <Grid container spacing={2} padding={2}>
-          {/* Title/Header */}
-          <Grid item xs={12}>
-            <h1>Kanban Board</h1>
-          </Grid>
-
-          {/* Kanban Board */}
-          {isMobile ? (
-            // Mobile viewport layout
-            <KanbanMobileView
-              projects={projects}
-              selectedProject={selectedProject}
-              ticketsByStatus={ticketsByStatus}
-              handleProjectDropdown={handleProjectDropdown}
-            />
-          ) : (
-            // Desktop viewport layout
-            <KanbanDesktopView
-              projects={projects}
-              selectedProject={selectedProject}
-              ticketsByStatus={ticketsByStatus}
-              handleProjectDropdown={handleProjectDropdown}
-            />
-          )}
+      <Grid container spacing={2} padding={2}>
+        {/* Title/Header */}
+        <Grid item xs={12}>
+          <h1>Kanban Board</h1>
         </Grid>
-      ) : (
-        <Card className="center">
-          <CardHeader title="No Projects have been created yet!" />
-        </Card>
-      )}
+
+        {/* Kanban Board */}
+        {isMobile ? (
+          // Mobile viewport layout
+          <KanbanMobileView
+            projects={projects}
+            selectedProject={selectedProject}
+            ticketsByStatus={ticketsByStatus}
+            handleProjectDropdown={handleProjectDropdown}
+          />
+        ) : (
+          // Desktop viewport layout
+          <KanbanDesktopView
+            projects={projects}
+            selectedProject={selectedProject}
+            ticketsByStatus={ticketsByStatus}
+            handleProjectDropdown={handleProjectDropdown}
+          />
+        )}
+      </Grid>
     </>
   );
 };
