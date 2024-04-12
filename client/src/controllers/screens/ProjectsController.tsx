@@ -27,7 +27,7 @@ const ProjectsController = () => {
   );
 
   const onSubmit = (values: any) => {
-    createProject(values.name, values.description, companyId);
+    createProject(values.name, values.description);
     reset();
   };
 

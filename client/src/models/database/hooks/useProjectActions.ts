@@ -10,11 +10,7 @@ export const useProjectActions = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
-  const createProject = async (
-    name: string,
-    description: string,
-    companyId: string
-  ) => {
+  const createProject = async (name: string, description: string) => {
     if (currentUser?.role === "Demo") {
       return;
     }
@@ -23,7 +19,7 @@ export const useProjectActions = () => {
       _id: "",
       name: name,
       description: description,
-      companyId: companyId,
+      companyId: "",
       createdAt: new Date(),
       personnel: [],
     };
