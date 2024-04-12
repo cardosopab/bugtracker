@@ -39,7 +39,12 @@ export const readDashboardData = async (req: Request, res: Response) => {
     ]);
 
     if (!project || !tickets)
-      return res.status(404).send("Project or Tickets not found");
+      return res.status(200).send({
+        priorityCount: [],
+        statusCount: [],
+        typeCount: [],
+        topPersonnelCount: [],
+      });
 
     // Fetch users associated with the project
     const users = await User.find({ _id: { $in: project.personnel } }).select(
@@ -52,10 +57,10 @@ export const readDashboardData = async (req: Request, res: Response) => {
     let typeCount = new Array(typeOptions.length)
       .fill(0)
       .map((_, id) => ({ id, value: 0, label: typeOptions[id] }));
-    const personnelCountMap = new Map<string, number>();
+    const personnelCountMap = new Map();
 
     // Iterate over tickets to update counters
-    tickets.forEach((ticket: any) => {
+    tickets.forEach((ticket) => {
       const priorityIdx = priorityOptions.indexOf(ticket.priority);
       if (priorityIdx !== -1) {
         priorityCount[priorityIdx]++;
@@ -72,14 +77,14 @@ export const readDashboardData = async (req: Request, res: Response) => {
       }
 
       // Count personnel tickets
-      let personnelName = users.find(
+      const personnelName = users.find(
         (user) => user._id.toString() === ticket.personnelId.toString()
       )?.name;
       if (personnelName) {
-        personnelName = personnelName.split(" ")[0];
+        const firstName = personnelName.split(" ")[0];
         personnelCountMap.set(
-          personnelName,
-          (personnelCountMap.get(personnelName) || 0) + 1
+          firstName,
+          (personnelCountMap.get(firstName) || 0) + 1
         );
       }
     });
